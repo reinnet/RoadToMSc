@@ -4,8 +4,7 @@
 %Set the slide theme
 %Change to meet your taste
 % Madrid, Copenhagen, Berlin, ... works
-\usetheme{Madrid}
-%\usetheme{metropolis}
+\usetheme{metropolis}
 
 
 \usepackage{xecolor}
@@ -58,23 +57,29 @@
 	\begin{itemize}\RTList
 		\item سمت کاربر
 		\item سمت دیتاسنتر
+		\begin{itemize}\RTList
+			\item \lr{ETSI GS MANO}
+		\end{itemize}
 	\end{itemize}
 \end{frame}
-\begin{frame}{طرح مساله}
-\begin{latin}\begin{thebibliography}{9}
-
-\bibitem{eramo1}
-Eramo, V., Miucci, E., Ammar, M., Lavacca, F. G. (2017).
-\emph{An approach for service function chain routing and virtual function network instance migration in network function virtualization architectures.}
-\relax IEEE/ACM Transactions on Networking, 25(4), 2008–2025.
-
-\end{thebibliography}\end{latin}
+\begin{frame}{مساله اول}
+	\par
+	\lr{NFVO} وظیفه‌ی استقرار زنجیره‌های کارکر سرویس را برعهده دارد.
+	همانگونه که در مستند \lr{ETSI} نیز آمده است هر نمونه از کارکردهای مجازی شبکه نیاز دارد
+	تحت مدیریت یکی از \lr{VNFM}های موجود در شبکه باشد.
 \end{frame}
-\begin{frame}{طرح مساله}
-\par
-دیتاسنترها مصرف انرژی زیادی دارند، یکی از مسائل مطرح کاهش انرژی دیتاسنترها می‌باشد.
-این کاهش مصرف می‌بایست در تکنولوژی‌های جدید نیز صورت گیرد. یکی از این تکنولوژی‌های جدید NFV
-است. 
+\begin{frame}
+	\begin{center}\begin{figure}
+		\includegraphics[scale=0.4]{images/nfv-arch.jpg}
+		\caption{معماری سطح بالای مجازی‌سازی کارکردهای شبکه}
+	\end{figure}\end{center}
+\end{frame}
+\begin{frame}
+	\par
+	یکی از وظایف \lr{VNFM} مانیتور کردن وضعیت و خطاهای نمونه‌ها می‌باشد
+	این امر باعث افزایش بار پردازشی \lr{VNFM} می‌گردد
+	و از سوی دیگر تحلیل این اطلاعات می‌بایست با تاخیر معقولی صورت پذیرد که این امر
+	نیاز به یک بستر ارتباطی مطمئن دارد.
 \end{frame}
 
 \end{persian}
