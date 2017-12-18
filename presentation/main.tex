@@ -88,11 +88,17 @@
 \begin{frame}
 	\begin{itemize}\RTList
 		\item توپولوژی زیرساخت شامل پنهای باند لینک‌ها و ظرفیت \lr{NFVI-PoP}ها موجود است.
-		\item n تقاضای زنجیره‌ کارکرد سرویس به صورت کامل داریم.
-		\item هر تقاضا شامل نوع نمونه، تعداد و پنهای باند لینک‌های مجازی می‌باشد.
+		\item n تقاضای زنجیره‌ کارکرد سرویس به صورت کامل و از پیش مشخص شده داریم.
+		\item هر تقاضا شامل نوع و تعداد نمونه‌های مجازی و پنهای باند لینک‌های مجازی می‌باشد.
 		\item F نوع کارکرد مجازی شبکه تعریف شده است که هر یک مقدار مشخصی از حافظه را مصرف می‌کنند.
 		\item تعداد پردازنده‌هایی که به هر نمونه تخصیص می‌یابد با توجه به ترافیک ورودی نمونه مشخص می‌شود.
 		\item نمونه‌ها بین زنجیره‌ها به اشتراک گذاشته نمی‌شوند.
+	\end{itemize}
+\end{frame}
+\begin{frame}
+	\begin{itemize}\RTList
+		\item محدودیت ظرفیت لینک‌ها
+		\item محدودیت توان پردازش سرورهای فیزیکی با توجه به میزان حافظه و تعداد پردازنده‌ها
 	\end{itemize}
 \end{frame}
 \begin{frame}
@@ -102,6 +108,47 @@
 		\item هر نمونه از \lr{VNFM}ها می‌تواند تعداد مشخصی از نمونه‌های کارکرد مجازی شبکه را سرویس دهد. 
 		\item برای ارتباط میان هر نمونه از \lr{VNFM}ها و \lr{VNF}ها پهنای باند مشخصی رزرو می‌گردد.
 		\item بر روی هر \lr{NFVI-PoP} حداکثر یک نمونه \lr{VNFM} مستقر می‌گردد.
+	\end{itemize}
+\end{frame}
+\begin{frame}
+	\begin{latin}\begin{thebibliography}{9}
+		\bibitem{latexcompanion} 
+		Mohammad Abu-Ledbeh, Diala Naboulsi, Roch Glitho, Constant Wette Tchouati.
+		\textit{On the Placement of VNF Managers in Large-Scale and Distributed NFV Systems}. 
+		IEEE Transactions on Network and Service Management, 2017
+	\end{thebibliography}\end{latin}
+	\par
+	هدف کاهش هزینه‌ی عملیاتی در حالی که تاخیرهای ارتباطی و محدودیت‌های ظرفیت رعایت می‌شوند.
+\end{frame}
+\begin{frame}{مساله‌ی دوم}
+	\par
+	مساله از منظر \lr{VNFM} برای \lr{scale} کردن یک \lr{VNF instance}
+	زمانی که سیستم به صورت کامل مستقر شده است استفاده می‌گردد.
+	این \lr{scale} کردن به دلیل تغییرات ترافیکی در سیستم به وقوع پیوسته است.
+\end{frame}
+\begin{frame}
+	\par
+	کمترین هزینه برای اعمال تغییرات بر روی دیتاسنتر.
+	در اینجا منظور از هزینه، توان مصرفی سرورها و هزینه‌هایی است که جهت مهاجرت و ساخت نمونه‌ها پرداخت می‌شود.
+\end{frame}
+\begin{frame}
+	\begin{itemize}\RTList
+		\item توپولوژی زیرساخت شامل پنهای باند لینک‌ها و ظرفیت \lr{NFVI-PoP}ها موجود است.
+		\item وضعیت \lr{NFVI-PoP}ها و نمونه‌هایی که روی آن‌ها مستقر است موجود است.
+		\item وضعیت لینک‌های فیزیکی و لینک‌های مجازی که روی آن‌ها قرار دارند موجود است.
+		\item تعداد نمونه‌های لازم از پیش مشخص است.
+		\item با ایجاد نمونه‌های جدید ترافیک ورودی و خروجی نمونه‌ی اولیه بین نمونه‌های جدید تقسیم می‌گردد.
+		\item تنها در مورد یک نمونه از یک زجیره بحث می‌گردد.
+	\end{itemize}
+\end{frame}
+\begin{frame}
+	\begin{itemize}\RTList
+		\item محدودیت توان پردازشی سرورهای فیزیکی با توجه به تعداد پردازنده‌ها
+		\begin{itemize}\RTList
+			\item هزینه‌ی ساخت نمونه
+			\item هزینه‌ی مهاجرت نمونه
+			\item هزینه‌ی روشن کردن سرور جدید
+		\end{itemize}
 	\end{itemize}
 \end{frame}
 
