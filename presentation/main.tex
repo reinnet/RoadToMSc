@@ -147,11 +147,53 @@
 	\end{tabular}\end{latin}
 \end{frame}
 \begin{frame}
-	\begin{latin}
-	$$
+	\begin{latin}\begin{align}
 	max \sum_{h=1}^Tx_h
-	$$
-	\end{latin}
+	\end{align}\end{latin}
+\end{frame}
+\begin{frame}
+	\par
+	محدودیت حافظه نودها
+	\begin{latin}\begin{align}
+	\sum_{k=1}^Fy_{wk} memory(k) + \bar{y_w} \bar{memory} <= N_{ram}^{PN}(w)
+	\quad
+	\forall w \in V_s^{PN}
+	\end{align}\end{latin}
+	\par
+	محدودیت تعداد پردازنده‌های نودها
+	\begin{latin}\begin{align}
+	\sum_{k=1}^Fy_{wk} core(k) + \bar{y_w} \bar{core} <= N_{core}^{PN}(w)
+	\quad
+	\forall w \in V_s^{PN}
+	\end{align}\end{latin}
+\end{frame}
+\begin{frame}
+	\par
+	یک \lr{VNF} حداکثر یکبار سرویس داده شود.
+	\begin{latin}\begin{align}
+	\sum_{k=1}^Fy_{wk}\sum_{w \in V_s^{PN}} z_{vw}^{k} \le 1
+	\quad
+	\forall v \in \cup_{i=1}^T V_{i, F}^{SFC}
+	\end{align}\end{latin}
+	\par
+	اگر \lr{VNF}, \lr{v}
+	توسط \lr{VNF instance} نوع \lr{k}
+	روی سرور \lr{w} سرویس شود می‌بایست
+	\lr{VNF instance} نوع \lr{k}
+	روی سرور \lr{w} فعال شود.
+	\begin{latin}\begin{align}
+	\sum_{v \in \cup_{i=1}^T V_{i, F}^{SFC}} z_{vw}^k <= y_{wk}
+	\quad
+	\forall w \in V_s^{PN}, \forall k \in [1, ..., F]
+	\end{align}\end{latin}
+\end{frame}
+\begin{frame}
+	\par
+	اگر تقاضای \lr{h}ام پذیرفته شده باشد
+	می‌بایست تمام \lr{VNF node}های آن‌
+	سرویس شده باشند.
+	\begin{latin}\begin{align}
+	\end{align}\end{latin}
 \end{frame}
 \begin{frame}{مساله‌ی دوم}
 	\par
