@@ -155,14 +155,14 @@
 	\par
 	محدودیت حافظه نودها
 	\begin{latin}\begin{align}
-	\sum_{k=1}^Fy_{wk} memory(k) + \bar{y_w} \bar{memory} <= N_{ram}^{PN}(w)
+	\sum_{k=1}^Fy_{wk} memory(k) + \bar{y_w} \bar{memory} \le N_{ram}^{PN}(w)
 	\quad
 	\forall w \in V_s^{PN}
 	\end{align}\end{latin}
 	\par
 	محدودیت تعداد پردازنده‌های نودها
 	\begin{latin}\begin{align}
-	\sum_{k=1}^Fy_{wk} core(k) + \bar{y_w} \bar{core} <= N_{core}^{PN}(w)
+	\sum_{k=1}^Fy_{wk} core(k) + \bar{y_w} \bar{core} \le N_{core}^{PN}(w)
 	\quad
 	\forall w \in V_s^{PN}
 	\end{align}\end{latin}
@@ -182,7 +182,7 @@
 	\lr{VNF instance} نوع \lr{k}
 	روی سرور \lr{w} فعال شود.
 	\begin{latin}\begin{align}
-	\sum_{v \in \cup_{i=1}^T V_{i, F}^{SFC}} z_{vw}^k <= y_{wk}
+	\sum_{v \in \cup_{i=1}^T V_{i, F}^{SFC}} z_{vw}^k \le y_{wk}
 	\quad
 	\forall w \in V_s^{PN}, \forall k \in [1, ..., F]
 	\end{align}\end{latin}
