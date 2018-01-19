@@ -6,6 +6,7 @@
 % Madrid, Copenhagen, Berlin, ... works
 \usetheme{metropolis}
 
+\usepackage{multicol}
 
 \usepackage{xecolor}
 \usepackage{amsmath}
@@ -62,7 +63,7 @@
 		\end{itemize}
 	\end{itemize}
 \end{frame}
-\begin{frame}
+\begin{frame}{طرح مساله}
 	\begin{latin}
 		\begin{itemize}
 			\item NFVO
@@ -71,30 +72,42 @@
 		\end{itemize}
 	\end{latin}
 \end{frame}
+\begin{frame}
+	\begin{multicols}{3}
+		\begin{center}	
+			مساله‌ی اول
+		\end{center}
+	\end{multicols}
+	\begin{center}	
+		پذیرش زنجیره‌های کارکرد سرویس
+		\\
+		و مدیریت آن‌ها با استفاده از \lr{VNFM}
+	\end{center}
+\end{frame}
 \begin{frame}{مساله اول}
 	\par
 	\lr{NFVO} وظیفه‌ی استقرار زنجیره‌های کارکرد سرویس را برعهده دارد.
 	همانگونه که در مستند \lr{ETSI} نیز آمده است هر نمونه از کارکردهای مجازی شبکه نیاز دارد
 	تحت مدیریت یکی از \lr{VNFM}های موجود در شبکه باشد.
 \end{frame}
-\begin{frame}
+\begin{frame}{مساله اول}
 	\begin{center}\begin{figure}
 		\includegraphics[scale=0.4]{images/nfv-arch.jpg}
 		\caption{معماری سطح بالای مجازی‌سازی کارکردهای شبکه}
 	\end{figure}\end{center}
 \end{frame}
-\begin{frame}
+\begin{frame}{مساله اول}
 	\par
 	یکی از وظایف \lr{VNFM} مانیتور کردن وضعیت و خطاهای نمونه‌ها می‌باشد
 	این امر باعث افزایش بار پردازشی \lr{VNFM} می‌گردد
 	و از سوی دیگر تحلیل این اطلاعات می‌بایست با تاخیر معقولی صورت پذیرد که این امر
 	نیاز به یک بستر ارتباطی مطمئن دارد.
 \end{frame}
-\begin{frame}
+\begin{frame}{مساله اول}
 	\par
 	پذیرفتن بیشترین تقاضای زنجیره‌ کارکرد سرویس با در نظر گرفتن نیاز هر نمونه کارکرد مجازی شبکه به یک \lr{VNFM}.
 \end{frame}
-\begin{frame}
+\begin{frame}{مساله اول}
 	\begin{itemize}\RTList
 		\item توپولوژی زیرساخت شامل پنهای باند لینک‌ها و ظرفیت \lr{NFVI-PoP}ها موجود است.
 		\item n تقاضای زنجیره‌ کارکرد سرویس به صورت کامل و از پیش مشخص شده داریم.
@@ -104,13 +117,13 @@
 		\item نمونه‌ها بین زنجیره‌ها به اشتراک گذاشته نمی‌شوند.
 	\end{itemize}
 \end{frame}
-\begin{frame}
+\begin{frame}{مساله اول}
 	\begin{itemize}\RTList
 		\item محدودیت ظرفیت لینک‌ها
 		\item محدودیت توان پردازش سرورهای فیزیکی با توجه به میزان حافظه و تعداد پردازنده‌ها
 	\end{itemize}
 \end{frame}
-\begin{frame}
+\begin{frame}{مساله اول}
 	\begin{itemize}\RTList
 		\item برای سادگی مساله برای هر زنجیره یک \lr{VNFM} تخصیص می‌دهیم.
 		\item \lr{VNFM}ها می‌توانند بین زنجیره به اشتراک گذاشته شوند.
@@ -119,7 +132,7 @@
 		\item بر روی هر \lr{NFVI-PoP} حداکثر یک نمونه \lr{VNFM} مستقر می‌گردد.
 	\end{itemize}
 \end{frame}
-\begin{frame}
+\begin{frame}{مساله اول}
 	\begin{latin}\begin{thebibliography}{9}
 		\bibitem{P11}
 		Mohammad Abu-Ledbeh, Diala Naboulsi, Roch Glitho, Constant Wette Tchouati.
@@ -129,7 +142,7 @@
 	\par
 	هدف کاهش هزینه‌ی عملیاتی در حالی که تاخیرهای ارتباطی و محدودیت‌های ظرفیت رعایت می‌شوند.
 \end{frame}
-\begin{frame}
+\begin{frame}{مساله اول}
 	\par
 	متغیرهای تصمیم‌گیری
 	\begin{latin}\begin{tabular}{c p{10cm}}
@@ -138,7 +151,7 @@
 		$z^k_{vw}$ & binary variable assuming the value 1 if the VNF node $v \in \cup_{i=1}^{T} V_{i, F}^{SFC}$ is served by the VNF instance of type k in the server $w \in V_s^{PN}$ \\
 	\end{tabular}\end{latin}
 \end{frame}
-\begin{frame}
+\begin{frame}{مساله اول}
 	\par
 	متغیرهای تصمیم‌گیری
 	\begin{latin}\begin{tabular}{c p{10cm}}
@@ -146,12 +159,12 @@
 		$\bar{z}_{hw}$ & binary variable assuming the value 1 if $h$th SFC is assigned to VNFM on server $w \in V_s^{PN}$\\
 	\end{tabular}\end{latin}
 \end{frame}
-\begin{frame}
+\begin{frame}{مساله اول}
 	\begin{latin}\begin{align}
 	max \sum_{h=1}^Tx_h
 	\end{align}\end{latin}
 \end{frame}
-\begin{frame}
+\begin{frame}{مساله اول}
 	\par
 	محدودیت حافظه نودها
 	\begin{latin}\begin{align}
@@ -167,7 +180,7 @@
 	\forall w \in V_s^{PN}
 	\end{align}\end{latin}
 \end{frame}
-\begin{frame}
+\begin{frame}{مساله اول}
 	\par
 	یک \lr{VNF} حداکثر یکبار سرویس داده شود.
 	\begin{latin}\begin{align}
@@ -187,7 +200,7 @@
 	\forall w \in V_s^{PN}, \forall k \in [1, ..., F]
 	\end{align}\end{latin}
 \end{frame}
-\begin{frame}
+\begin{frame}{مساله اول}
 	\par
 	اگر تقاضای \lr{h}ام پذیرفته شده باشد
 	می‌بایست تمام \lr{VNF node}های آن‌
