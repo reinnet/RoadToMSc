@@ -210,13 +210,39 @@
 	\begin{latin}\begin{align}
 		x_h \le \sum_{k=1}^{F} \sum_{w \in V_{s}^{PN}} z_{vw}^{k}
 		\quad
-		\forall v \in V_{h,F}^{SFC}, \forall h in [1, ..., T]
+		\forall v \in V_{h,F}^{SFC}, \forall h \in [1, ..., T]
 	\end{align}\end{latin}
 \end{frame}
 \begin{frame}{مساله اول}
 	\par
 	اگر تقاضای \lr{h}ام پذیرفته شده باشد
 	می‌بایست توسط یک \lr{VNFM} سرویس شده باشد.
+	\begin{latin}\begin{align}
+		x_h \le \sum_{w \in V_{s}^{PN}} \bar{z}_{hw}
+		\quad
+		\forall h \in [1, ..., T]
+	\end{align}\end{latin}
+\end{frame}
+\begin{frame}{مساله اول}
+	\par
+	اگر \lr{SFC}، \lr{i}
+	توسط \lr{VNFM} روی سرور \lr{w}
+	سرویس شود می‌بایست \lr{VNFM} سرور \lr{w}
+	فعال شود.
+	\begin{latin}\begin{align}
+		\bar{z}_{hw} \le \bar{y}_w
+		\quad
+		\forall w \in V_{s}^{PN}, \forall h \in [1, ..., T]
+	\end{align}\end{latin}
+	\par
+	محدودیت ظرفیت سرویس‌دهی \lr{VNFM}
+	\begin{latin}\begin{align}
+		\sum_{i=1}^{T} z_{iw} \le capacity
+		\quad
+		\forall w \in V_{s}^{PN}
+	\end{align}\end{latin}
+\end{frame}
+\begin{frame}{مساله اول}
 \end{frame}
 \begin{frame}{مساله‌ی دوم}
 	\par
