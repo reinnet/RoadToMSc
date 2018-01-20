@@ -247,16 +247,10 @@
 	متغیرهای تصمیم‌گیری
 	\begin{latin}\begin{tabular}{c p{10cm}}
 		$\tau^{(u,v)}_{ij}$ & binary variable assuming the value 1 if the virual link $(u,v)$ is routed on the physical network link $(i,j)$\\
+		$\bar{\tau}^{(u,v)}_{ij}$ & binary variable assuming the value 1 if the managemnt of VNF node $v$ is routed on the physical network link $(i,j)$\\
 	\end{tabular}\end{latin}
 \end{frame}
 \begin{frame}{مساله اول}
-	\par
-	هر لینک حداکثر یکبار مسیریابی شود.
-	\begin{latin}\begin{align}
-		\sum_{(i,j) \in E^{PN}} \tau_{ij}^{(u,v)} \le 1
-		\quad
-		\forall (u,v) \in \cup_{i=1}^{T} E_i^{SFC}
-	\end{align}\end{latin}
 	\par
 	اگر تقاضای \lr{h}ام پذیرفته شده باشد می‌بایست تمام لینک‌های آن
 	مسیریابی شوند.
@@ -272,6 +266,32 @@
 	\begin{latin}\begin{align}
 		\sum_{(i,j) \in E^{PN}} \tau_{ij}^{(u,v)} - \sum_{(j,i) \in E^{PN}} \tau_{ji}^{(u,v)} = \sum_{k=1}^{F} z_{vi}^{k} - \sum_{k=1}^{F} z_{ui}^{k} \nonumber \\
 		\forall i \in V_{S}^{PN}, (u,v) \in E_{h}^{SFC}, h \in [1, ..., T]
+	\end{align}\end{latin}
+\end{frame}
+\begin{frame}{مساله اول}
+	\par
+	اگر تقاضای \lr{h}ام پذیرفته شده باشد
+	می‌بایست تمام \lr{VNF}های آن به \lr{VNFM}
+	مسیریابی شده باشند.
+	\begin{latin}\begin{align}
+		x_h \le \sum_{(i,j) \in E^{PN}} \bar{\tau}_{ij}^{v}
+		\quad
+		\forall h \in [1, ..., T], \forall v \in V_{h,F}^{SFC}
+	\end{align}\end{latin}
+\end{frame}
+\begin{frame}{مساله اول}
+	\par
+	\lr{Flow Conservation}
+	\begin{latin}\begin{align}
+		\sum_{(i,j) \in E^{PN}} \bar{\tau}_{ij}^{v} - \sum_{(j,i) \in E^{PN}} \bar{\tau}_{ji}^{v} = \sum_{k=1}^{F} z_{vi}^{k} - \bar{z}_{hi} \nonumber \\
+		\forall i \in V_{S}^{PN}, v \in V_{h, F}^{SFC}, h \in [1, ..., T]
+	\end{align}\end{latin}
+\end{frame}
+\begin{frame}{مساله‌ی اول}
+	\par
+	محدودیت ظرفیت لینک‌ها
+	\begin{latin}\begin{align}
+		\sum_{v \in \cup_{i=1}^{T} V_{i,F}^{SFC}} \bar{\tau}_{ij}^{v} * \bar{bandwidth} + \sum_{(u,v) \in \cup_{i=1}^{T} E_{i}^{SFC}} \tau_{ij}^{(u,v)} * bandwidth(u,v) \le C_{ij}
 	\end{align}\end{latin}
 \end{frame}
 \begin{frame}{مساله‌ی دوم}
