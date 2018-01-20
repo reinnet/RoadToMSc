@@ -243,6 +243,28 @@
 	\end{align}\end{latin}
 \end{frame}
 \begin{frame}{مساله اول}
+	\par
+	متغیرهای تصمیم‌گیری
+	\begin{latin}\begin{tabular}{c p{10cm}}
+		$\tau^{(u,v)}_{ij}$ & binary variable assuming the value 1 if the virual link $(u,v)$ is routed on the physical network link $(i,j)$\\
+	\end{tabular}\end{latin}
+\end{frame}
+\begin{frame}{مساله اول}
+	\par
+	هر لینک حداکثر یکبار مسیریابی شود.
+	\begin{latin}\begin{align}
+		\sum_{(i,j) \in E^{PN}} \tau_{ij}^{(u,v)} \le 1
+		\quad
+		\forall (u,v) \in \cup_{i=1}^{T} E_i^{SFC}
+	\end{align}\end{latin}
+	\par
+	اگر تقاضای \lr{h}ام پذیرفته شده باشد می‌بایست تمام لینک‌های آن
+	مسیریابی شوند.
+	\begin{latin}\begin{align}
+		x_h \le \sum_{(i,j) \in E^{PN}} \tau_{ij}^{(u,v)}
+		\quad
+		\forall h \in [1, ..., T], \forall (u,v) \in E_h^{SFC}
+	\end{align}\end{latin}
 \end{frame}
 \begin{frame}{مساله‌ی دوم}
 	\par
