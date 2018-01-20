@@ -266,6 +266,14 @@
 		\forall h \in [1, ..., T], \forall (u,v) \in E_h^{SFC}
 	\end{align}\end{latin}
 \end{frame}
+\begin{frame}{مساله اول}
+	\par
+	\lr{Flow Conservation}
+	\begin{latin}\begin{align}
+		\sum_{(i,j) \in E^{PN}} \tau_{ij}^{(u,v)} - \sum_{(j,i) \in E^{PN}} \tau_{ji}^{(u,v)} = \sum_{k=1}^{F} z_{vi}^{k} - \sum_{k=1}^{F} z_{ui}^{k} \nonumber \\
+		\forall i \in V_{S}^{PN}, (u,v) \in E_{h}^{SFC}, h \in [1, ..., T]
+	\end{align}\end{latin}
+\end{frame}
 \begin{frame}{مساله‌ی دوم}
 	\par
 	مساله از منظر \lr{VNFM} برای \lr{scale} کردن یک \lr{VNF instance}
