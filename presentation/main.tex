@@ -294,18 +294,30 @@
 		\sum_{v \in \cup_{i=1}^{T} V_{i,F}^{SFC}} \bar{\tau}_{ij}^{v} * \bar{bandwidth} + \sum_{(u,v) \in \cup_{i=1}^{T} E_{i}^{SFC}} \tau_{ij}^{(u,v)} * bandwidth(u,v) \le C_{ij}
 	\end{align}\end{latin}
 \end{frame}
+\begin{frame}
+	\begin{multicols}{3}
+		\begin{center}	
+			مساله‌ی دوم
+		\end{center}
+	\end{multicols}
+	\begin{center}	
+		گسترش زنجیره‌های کارکرد سرویس
+		\\
+		با در نظر گرفتن نقش \lr{VNFM}
+	\end{center}
+\end{frame}
 \begin{frame}{مساله‌ی دوم}
 	\par
 	مساله از منظر \lr{VNFM} برای \lr{scale} کردن یک \lr{VNF instance}
 	زمانی که سیستم به صورت کامل مستقر شده است استفاده می‌گردد.
 	این \lr{scale} کردن به دلیل تغییرات ترافیکی در سیستم به وقوع پیوسته است.
 \end{frame}
-\begin{frame}
+\begin{frame}{مساله‌ی دوم}
 	\par
 	کمترین هزینه برای اعمال تغییرات بر روی دیتاسنتر.
 	در اینجا منظور از هزینه، توان مصرفی سرورها و هزینه‌هایی است که جهت مهاجرت و ساخت نمونه‌ها پرداخت می‌شود.
 \end{frame}
-\begin{frame}
+\begin{frame}{مساله‌ی دوم}
 	\begin{itemize}\RTList
 		\item توپولوژی زیرساخت شامل پنهای باند لینک‌ها و ظرفیت \lr{NFVI-PoP}ها موجود است.
 		\item وضعیت \lr{NFVI-PoP}ها و نمونه‌هایی که روی آن‌ها مستقر است موجود است.
@@ -315,7 +327,7 @@
 		\item تنها در مورد یک نمونه از یک زجیره بحث می‌گردد.
 	\end{itemize}
 \end{frame}
-\begin{frame}
+\begin{frame}{مساله‌ی دوم}
 	\begin{itemize}\RTList
 		\item نمونه‌ها به صورت عمودی مقیاس‌پذیر نیستند.
 		\item محدودیت توان پردازشی سرورهای فیزیکی با توجه به تعداد پردازنده‌ها
@@ -326,7 +338,7 @@
 		\end{itemize}
 	\end{itemize}
 \end{frame}
-\begin{frame}
+\begin{frame}{مساله‌ی دوم}
 	\begin{latin}\begin{thebibliography}{9}
 		\bibitem{P21}
 		Vincenzo Eramo, Emanuele Miucci, Mostafa Ammar.
@@ -336,6 +348,83 @@
 	\par
 	کاهش توان مصرفی در یک ترافیک \lr{cycle-stationary}
 	با مهاجرت و مقیاس‌دهی عمودی نمونه‌ها در وضعیت‌های ترافیکی مختلف
+\end{frame}
+\begin{frame}{مساله‌ی دوم}
+	\par
+	متغیرهای تصمیم‌گیری
+	\begin{latin}\begin{tabular}{c p{10cm}}
+		$y_w$ & the number of VNF instances that are run on server w\\
+		$\tau_{ij}$ & the number of virtual links that are routed on physical link $(i,j)$\\
+		$P_w$ & binary variable assuming the value 1 if server $w$ has at least one instance of target VNF or has VNFM\\
+		$\bar{y}_w$ & the number of VNF instances that are connected to VNFM on server $w$\\	
+		$\bar{\tau}$ & the number of management virtual links that are routed on physical link $(i,j)$\\
+	\end{tabular}\end{latin}
+\end{frame}
+\begin{frame}{مساله‌ی دوم}
+	\par
+	محدودیت حافظه نودها
+	\begin{latin}\begin{align}
+		y_{w} * memory \le N_{ram}^{PN}(w)
+		\quad
+		\forall w \in V_s^{PN}
+		\end{align}\end{latin}
+	\par
+	محدودیت تعداد پردازنده‌های نودها
+	\begin{latin}\begin{align}
+		y_{w} * core \le N_{core}^{PN}(w)
+		\quad
+		\forall w \in V_s^{PN}
+	\end{align}\end{latin}
+	\par
+	محدودیت ظرفیت \lr{VNFM}
+	\begin{latin}\begin{align}
+		\bar{y}_w \le capacity
+	\end{align}\end{latin}
+\end{frame}
+\begin{frame}{مساله‌ی دوم}
+	\par
+	می‌بایست تمام نمونه‌ها سرویس شده باشند
+	\begin{latin}\begin{align}
+		\sum_{w in V_{S}^{PN}} y_w \le V\\
+		\sum_{w in V_{S}^{PN}} \bar{y}_w \le V
+	\end{align}\end{latin}
+	\par
+	اگر نمونه روی سرور \lr{w} باشد می‌بایست آن سرور روشن باشد.
+	\begin{latin}\begin{align}
+		y_w \le M * P_w
+		\quad
+		\forall w \in V_{s}^{PN}\\
+		\bar{y}_w \le M * P_w
+		\quad
+		\forall w \in V_{s}^{PN}
+	\end{align}\end{latin}
+\end{frame}
+\begin{frame}{مساله‌ی دوم}
+	\par
+	\lr{Flow Conservation}
+	\begin{latin}\begin{align}
+		\sum_{(i,j) \in E^{PN}} \tau_{ij} - \sum_{(j,i) \in E^{PN}} \tau_{ji} = is_source(i) - y_i \nonumber \\
+		\forall i \in V_{S}^{PN}
+	\end{align}\end{latin}
+	\begin{latin}\begin{align}
+		\sum_{(i,j) \in E^{PN}} \tau_{ij} - \sum_{(j,i) \in E^{PN}} \tau_{ji} = y_i - is_destination(i) \nonumber \\
+		\forall i \in V_{S}^{PN}
+	\end{align}\end{latin}
+\end{frame}
+\begin{frame}{مساله‌ی دوم}
+	\par
+	\lr{Flow Conservation}
+	\begin{latin}\begin{align}
+		\sum_{(i,j) \in E^{PN}} \bar{\tau}_{ij} - \sum_{(j,i) \in E^{PN}} \bar{\tau}_{ji} = y_i - \bar{y}_i \nonumber \\
+		\forall i \in V_{S}^{PN}
+	\end{align}\end{latin}
+\end{frame}
+\begin{frame}{مساله‌ی دوم}
+	\par
+	محدودیت ظرفیت لینک‌ها	
+	\begin{latin}\begin{align}
+		\bar{\tau}_{ij} * \bar{bandwidth} + \tau_{ij} * bandwidth \le C_{ij}
+	\end{align}\end{latin}
 \end{frame}
 \begin{frame}{مساله‌ی سوم}
 	\par
