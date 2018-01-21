@@ -302,8 +302,6 @@
 	\end{multicols}
 	\begin{center}	
 		گسترش زنجیره‌های کارکرد سرویس
-		\\
-		با در نظر گرفتن نقش \lr{VNFM}
 	\end{center}
 \end{frame}
 \begin{frame}{مساله‌ی دوم}
@@ -351,13 +349,17 @@
 \end{frame}
 \begin{frame}{مساله‌ی دوم}
 	\par
+	فقط و فقط یک فانکشن در یک زنجیره در حال گسترش است.
+	\par
+	تعداد نمونه‌ها و پهنای باند هر کدام را می‌دانیم و مساله مسیریابی و جاگذاری نمونه‌ها می‌باشد.
+\end{frame}
+\begin{frame}{مساله‌ی دوم}
+	\par
 	متغیرهای تصمیم‌گیری
 	\begin{latin}\begin{tabular}{c p{10cm}}
 		$y_w$ & the number of VNF instances that are run on server w\\
 		$\tau_{ij}$ & the number of virtual links that are routed on physical link $(i,j)$\\
 		$P_w$ & binary variable assuming the value 1 if server $w$ has at least one instance of target VNF or has VNFM\\
-		$\bar{y}_w$ & the number of VNF instances that are connected to VNFM on server $w$\\	
-		$\bar{\tau}$ & the number of management virtual links that are routed on physical link $(i,j)$\\
 	\end{tabular}\end{latin}
 \end{frame}
 \begin{frame}{مساله‌ی دوم}
@@ -375,26 +377,17 @@
 		\quad
 		\forall w \in V_s^{PN}
 	\end{align}\end{latin}
-	\par
-	محدودیت ظرفیت \lr{VNFM}
-	\begin{latin}\begin{align}
-		\bar{y}_w \le capacity
-	\end{align}\end{latin}
 \end{frame}
 \begin{frame}{مساله‌ی دوم}
 	\par
 	می‌بایست تمام نمونه‌ها سرویس شده باشند
 	\begin{latin}\begin{align}
-		\sum_{w in V_{S}^{PN}} y_w \le V\\
-		\sum_{w in V_{S}^{PN}} \bar{y}_w \le V
+		\sum_{w in V_{S}^{PN}} y_w \le V
 	\end{align}\end{latin}
 	\par
 	اگر نمونه روی سرور \lr{w} باشد می‌بایست آن سرور روشن باشد.
 	\begin{latin}\begin{align}
 		y_w \le M * P_w
-		\quad
-		\forall w \in V_{s}^{PN}\\
-		\bar{y}_w \le M * P_w
 		\quad
 		\forall w \in V_{s}^{PN}
 	\end{align}\end{latin}
@@ -403,19 +396,11 @@
 	\par
 	\lr{Flow Conservation}
 	\begin{latin}\begin{align}
-		\sum_{(i,j) \in E^{PN}} \tau_{ij} - \sum_{(j,i) \in E^{PN}} \tau_{ji} = is_source(i) - y_i \nonumber \\
+		\sum_{(i,j) \in E^{PN}} \tau_{ij} - \sum_{(j,i) \in E^{PN}} \tau_{ji} = isSource(i) * V - y_i \nonumber \\
 		\forall i \in V_{S}^{PN}
 	\end{align}\end{latin}
 	\begin{latin}\begin{align}
-		\sum_{(i,j) \in E^{PN}} \tau_{ij} - \sum_{(j,i) \in E^{PN}} \tau_{ji} = y_i - is_destination(i) \nonumber \\
-		\forall i \in V_{S}^{PN}
-	\end{align}\end{latin}
-\end{frame}
-\begin{frame}{مساله‌ی دوم}
-	\par
-	\lr{Flow Conservation}
-	\begin{latin}\begin{align}
-		\sum_{(i,j) \in E^{PN}} \bar{\tau}_{ij} - \sum_{(j,i) \in E^{PN}} \bar{\tau}_{ji} = y_i - \bar{y}_i \nonumber \\
+		\sum_{(i,j) \in E^{PN}} \tau_{ij} - \sum_{(j,i) \in E^{PN}} \tau_{ji} = y_i - isDestination(i) * V \nonumber \\
 		\forall i \in V_{S}^{PN}
 	\end{align}\end{latin}
 \end{frame}
@@ -423,7 +408,14 @@
 	\par
 	محدودیت ظرفیت لینک‌ها	
 	\begin{latin}\begin{align}
-		\bar{\tau}_{ij} * \bar{bandwidth} + \tau_{ij} * bandwidth \le C_{ij}
+		\tau_{ij} * bandwidth \le C_{ij}
+	\end{align}\end{latin}
+\end{frame}
+\begin{frame}{مساله‌ی دوم}
+	\par
+	تابع هدف
+	\begin{latin}\begin{align}
+		min \sum_{w \in V_{s}^{PN}} y_w * c_1 + \sum_{w \in V_{s}^{PN}} P_w * isOff(w) * c_2 + \sum_{(i,j) \in E^{PN}} \tau_{ij} * c_3
 	\end{align}\end{latin}
 \end{frame}
 \begin{frame}{مساله‌ی سوم}
