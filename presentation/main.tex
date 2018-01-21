@@ -147,7 +147,7 @@
 	متغیرهای تصمیم‌گیری
 	\begin{latin}\begin{tabular}{c p{10cm}}
 		$x_h$ & binary variable assuming the value 1 if the $h$th SFC request is accepted; otherwise its value is zero \\
-		$y_{wu}$ & the number of VNF instances of type $k$ that are used in server $w \in V_s^{PN}$ \\
+		$y_{wk}$ & the number of VNF instances of type $k$ that are used in server $w \in V_s^{PN}$ \\
 		$z^k_{vw}$ & binary variable assuming the value 1 if the VNF node $v \in \cup_{i=1}^{T} V_{i, F}^{SFC}$ is served by the VNF instance of type k in the server $w \in V_s^{PN}$ \\
 	\end{tabular}\end{latin}
 \end{frame}
@@ -184,7 +184,7 @@
 	\par
 	یک \lr{VNF} حداکثر یکبار سرویس داده شود.
 	\begin{latin}\begin{align}
-	\sum_{k=1}^Fy_{wk}\sum_{w \in V_s^{PN}} z_{vw}^{k} \le 1
+	\sum_{k=1}^F\sum_{w \in V_s^{PN}} z_{vw}^{k} \le 1
 	\quad
 	\forall v \in \cup_{i=1}^T V_{i, F}^{SFC}
 	\end{align}\end{latin}
@@ -247,7 +247,7 @@
 	متغیرهای تصمیم‌گیری
 	\begin{latin}\begin{tabular}{c p{10cm}}
 		$\tau^{(u,v)}_{ij}$ & binary variable assuming the value 1 if the virual link $(u,v)$ is routed on the physical network link $(i,j)$\\
-		$\bar{\tau}^{(u,v)}_{ij}$ & binary variable assuming the value 1 if the managemnt of VNF node $v$ is routed on the physical network link $(i,j)$\\
+		$\bar{\tau}^{v}_{ij}$ & binary variable assuming the value 1 if the managemnt of VNF node $v$ is routed on the physical network link $(i,j)$\\
 	\end{tabular}\end{latin}
 \end{frame}
 \begin{frame}{مساله اول}
@@ -264,7 +264,7 @@
 	\par
 	\lr{Flow Conservation}
 	\begin{latin}\begin{align}
-		\sum_{(i,j) \in E^{PN}} \tau_{ij}^{(u,v)} - \sum_{(j,i) \in E^{PN}} \tau_{ji}^{(u,v)} = \sum_{k=1}^{F} z_{vi}^{k} - \sum_{k=1}^{F} z_{ui}^{k} \nonumber \\
+		\sum_{(i,j) \in E^{PN}} \tau_{ij}^{(u,v)} - \sum_{(j,i) \in E^{PN}} \tau_{ji}^{(u,v)} = \sum_{k=1}^{F} z_{ui}^{k} - \sum_{k=1}^{F} z_{vi}^{k} \nonumber \\
 		\forall i \in V_{S}^{PN}, (u,v) \in E_{h}^{SFC}, h \in [1, ..., T]
 	\end{align}\end{latin}
 \end{frame}
