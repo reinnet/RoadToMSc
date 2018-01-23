@@ -182,13 +182,6 @@
 \end{frame}
 \begin{frame}{مساله اول}
 	\par
-	یک \lr{VNF} حداکثر یکبار سرویس داده شود.
-	\begin{latin}\begin{align}
-	\sum_{k=1}^F\sum_{w \in V_s^{PN}} z_{vw}^{k} \le 1
-	\quad
-	\forall v \in \cup_{i=1}^T V_{i, F}^{SFC}
-	\end{align}\end{latin}
-	\par
 	اگر \lr{VNF}, \lr{v}
 	توسط \lr{VNF instance} نوع \lr{k}
 	روی سرور \lr{w} سرویس شود می‌بایست
@@ -207,8 +200,9 @@
 	اگر تقاضای \lr{h}ام پذیرفته شده باشد
 	می‌بایست تمام \lr{VNF node}های آن‌
 	سرویس شده باشند.
+	یک \lr{VNF} حداکثر یکبار سرویس داده شود.
 	\begin{latin}\begin{align}
-		x_h \le \sum_{k=1}^{F} \sum_{w \in V_{s}^{PN}} z_{vw}^{k}
+		x_h = \sum_{k=1}^{F} \sum_{w \in V_{s}^{PN}} z_{vw}^{k}
 		\quad
 		\forall v \in V_{h,F}^{SFC}, \forall h \in [1, ..., T]
 	\end{align}\end{latin}
@@ -218,7 +212,7 @@
 	اگر تقاضای \lr{h}ام پذیرفته شده باشد
 	می‌بایست توسط یک \lr{VNFM} سرویس شده باشد.
 	\begin{latin}\begin{align}
-		x_h \le \sum_{w \in V_{s}^{PN}} \bar{z}_{hw}
+		x_h = \sum_{w \in V_{s}^{PN}} \bar{z}_{hw}
 		\quad
 		\forall h \in [1, ..., T]
 	\end{align}\end{latin}
@@ -252,31 +246,10 @@
 \end{frame}
 \begin{frame}{مساله اول}
 	\par
-	اگر تقاضای \lr{h}ام پذیرفته شده باشد می‌بایست تمام لینک‌های آن
-	مسیریابی شوند.
-	\begin{latin}\begin{align}
-		x_h \le \sum_{(i,j) \in E^{PN}} \tau_{ij}^{(u,v)}
-		\quad
-		\forall h \in [1, ..., T], \forall (u,v) \in E_h^{SFC}
-	\end{align}\end{latin}
-\end{frame}
-\begin{frame}{مساله اول}
-	\par
 	\lr{Flow Conservation}
 	\begin{latin}\begin{align}
 		\sum_{(i,j) \in E^{PN}} \tau_{ij}^{(u,v)} - \sum_{(j,i) \in E^{PN}} \tau_{ji}^{(u,v)} = \sum_{k=1}^{F} z_{ui}^{k} - \sum_{k=1}^{F} z_{vi}^{k} \nonumber \\
 		\forall i \in V_{S}^{PN}, (u,v) \in E_{h}^{SFC}, h \in [1, ..., T]
-	\end{align}\end{latin}
-\end{frame}
-\begin{frame}{مساله اول}
-	\par
-	اگر تقاضای \lr{h}ام پذیرفته شده باشد
-	می‌بایست تمام \lr{VNF}های آن به \lr{VNFM}
-	مسیریابی شده باشند.
-	\begin{latin}\begin{align}
-		x_h \le \sum_{(i,j) \in E^{PN}} \bar{\tau}_{ij}^{v}
-		\quad
-		\forall h \in [1, ..., T], \forall v \in V_{h,F}^{SFC}
 	\end{align}\end{latin}
 \end{frame}
 \begin{frame}{مساله اول}
