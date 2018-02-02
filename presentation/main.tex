@@ -55,10 +55,10 @@
 \everypar{\rightskip\rightmargin}
 %-------------------------------------------------------------------------------
 \begin{frame}{طرح مساله}
-	\begin{itemize}\RTList
+	\begin{itemize}\RTList{}
 		\item سمت کاربر
 		\item سمت دیتاسنتر
-		\begin{itemize}\RTList
+		\begin{itemize}\RTList{}
 			\item \lr{ETSI GS MANO}
 		\end{itemize}
 	\end{itemize}
@@ -108,7 +108,7 @@
 	پذیرفتن بیشترین تقاضای زنجیره‌ کارکرد سرویس با در نظر گرفتن نیاز هر نمونه کارکرد مجازی شبکه به یک \lr{VNFM}.
 \end{frame}
 \begin{frame}{مساله اول}
-	\begin{itemize}\RTList
+	\begin{itemize}\RTList{}
 		\item توپولوژی زیرساخت شامل پنهای باند لینک‌ها و ظرفیت \lr{NFVI-PoP}ها موجود است.
 		\item n تقاضای زنجیره‌ کارکرد سرویس به صورت کامل و از پیش مشخص شده داریم.
 		\item هر تقاضا شامل نوع و تعداد نمونه‌های مجازی و پنهای باند لینک‌های مجازی می‌باشد.
@@ -118,13 +118,13 @@
 	\end{itemize}
 \end{frame}
 \begin{frame}{مساله اول}
-	\begin{itemize}\RTList
+	\begin{itemize}\RTList{}
 		\item محدودیت ظرفیت لینک‌ها
 		\item محدودیت توان پردازش سرورهای فیزیکی با توجه به میزان حافظه و تعداد پردازنده‌ها
 	\end{itemize}
 \end{frame}
 \begin{frame}{مساله اول}
-	\begin{itemize}\RTList
+	\begin{itemize}\RTList{}
 		\item برای سادگی مساله برای هر زنجیره یک \lr{VNFM} تخصیص می‌دهیم.
 		\item \lr{VNFM}ها می‌توانند بین زنجیره به اشتراک گذاشته شوند.
 		\item هر نمونه از \lr{VNFM}ها می‌تواند تعداد مشخصی از نمونه‌های کارکرد مجازی شبکه را سرویس دهد. 
@@ -161,21 +161,21 @@
 \end{frame}
 \begin{frame}{مساله اول}
 	\begin{latin}\begin{align}
-	max \sum_{h=1}^Tx_h
+	\max \sum_{h=1}^T x_h
 	\end{align}\end{latin}
 \end{frame}
 \begin{frame}{مساله اول}
 	\par
 	محدودیت حافظه نودها
 	\begin{latin}\begin{align}
-	\sum_{k=1}^Fy_{wk} memory(k) + \bar{y_w} \bar{memory} \le N_{ram}^{PN}(w)
+	\sum_{k=1}^F y_{wk} memory(k) + \bar{y_w} \bar{memory} \le N_{ram}^{PN}(w)
 	\quad
 	\forall w \in V_s^{PN}
 	\end{align}\end{latin}
 	\par
 	محدودیت تعداد پردازنده‌های نودها
 	\begin{latin}\begin{align}
-	\sum_{k=1}^Fy_{wk} core(k) + \bar{y_w} \bar{core} \le N_{core}^{PN}(w)
+	\sum_{k=1}^F y_{wk} core(k) + \bar{y_w} \bar{core} \le N_{core}^{PN}(w)
 	\quad
 	\forall w \in V_s^{PN}
 	\end{align}\end{latin}
@@ -192,7 +192,7 @@
 	\begin{latin}\begin{align}
 	\sum_{v \in \cup_{i=1}^T V_{i, F}^{SFC}} z_{vw}^k \le y_{wk}
 	\quad
-	\forall w \in V_s^{PN}, \forall k \in [1, ..., F]
+	\forall w \in V_s^{PN}, \forall k \in [1,\ldots, F]
 	\end{align}\end{latin}
 \end{frame}
 \begin{frame}{مساله اول}
@@ -204,7 +204,7 @@
 	\begin{latin}\begin{align}
 		x_h = \sum_{k=1}^{F} \sum_{w \in V_{s}^{PN}} z_{vw}^{k}
 		\quad
-		\forall v \in V_{h,F}^{SFC}, \forall h \in [1, ..., T]
+		\forall v \in V_{h,F}^{SFC}, \forall h \in [1,\ldots, T]
 	\end{align}\end{latin}
 \end{frame}
 \begin{frame}{مساله اول}
@@ -214,7 +214,7 @@
 	\begin{latin}\begin{align}
 		x_h = \sum_{w \in V_{s}^{PN}} \bar{z}_{hw}
 		\quad
-		\forall h \in [1, ..., T]
+		\forall h \in [1,\ldots, T]
 	\end{align}\end{latin}
 \end{frame}
 \begin{frame}{مساله اول}
@@ -226,7 +226,7 @@
 	\begin{latin}\begin{align}
 		\bar{z}_{hw} \le \bar{y}_w
 		\quad
-		\forall w \in V_{s}^{PN}, \forall h \in [1, ..., T]
+		\forall w \in V_{s}^{PN}, \forall h \in [1,\ldots, T]
 	\end{align}\end{latin}
 	\par
 	محدودیت ظرفیت سرویس‌دهی \lr{VNFM}
@@ -249,7 +249,7 @@
 	\lr{Flow Conservation}
 	\begin{latin}\begin{align}
 		\sum_{(i,j) \in E^{PN}} \tau_{ij}^{(u,v)} - \sum_{(j,i) \in E^{PN}} \tau_{ji}^{(u,v)} = \sum_{k=1}^{F} z_{ui}^{k} - \sum_{k=1}^{F} z_{vi}^{k} \nonumber \\
-		\forall i \in V_{S}^{PN}, (u,v) \in E_{h}^{SFC}, h \in [1, ..., T]
+		\forall i \in V_{S}^{PN}, (u,v) \in E_{h}^{SFC}, h \in [1,\ldots, T]
 	\end{align}\end{latin}
 \end{frame}
 \begin{frame}{مساله اول}
@@ -257,7 +257,7 @@
 	\lr{Flow Conservation}
 	\begin{latin}\begin{align}
 		\sum_{(i,j) \in E^{PN}} \bar{\tau}_{ij}^{v} - \sum_{(j,i) \in E^{PN}} \bar{\tau}_{ji}^{v} = \sum_{k=1}^{F} z_{vi}^{k} - \bar{z}_{hi} \nonumber \\
-		\forall i \in V_{S}^{PN}, v \in V_{h, F}^{SFC}, h \in [1, ..., T]
+		\forall i \in V_{S}^{PN}, v \in V_{h, F}^{SFC}, h \in [1,\ldots, T]
 	\end{align}\end{latin}
 \end{frame}
 \begin{frame}{مساله‌ی اول}
@@ -289,7 +289,7 @@
 	در اینجا منظور از هزینه، توان مصرفی سرورها و هزینه‌هایی است که جهت مهاجرت و ساخت نمونه‌ها پرداخت می‌شود.
 \end{frame}
 \begin{frame}{مساله‌ی دوم}
-	\begin{itemize}\RTList
+	\begin{itemize}\RTList{}
 		\item توپولوژی زیرساخت شامل پنهای باند لینک‌ها و ظرفیت \lr{NFVI-PoP}ها موجود است.
 		\item وضعیت \lr{NFVI-PoP}ها و نمونه‌هایی که روی آن‌ها مستقر است موجود است.
 		\item وضعیت لینک‌های فیزیکی و لینک‌های مجازی که روی آن‌ها قرار دارند موجود است.
@@ -299,10 +299,10 @@
 	\end{itemize}
 \end{frame}
 \begin{frame}{مساله‌ی دوم}
-	\begin{itemize}\RTList
+	\begin{itemize}\RTList{}
 		\item نمونه‌ها به صورت عمودی مقیاس‌پذیر نیستند.
 		\item محدودیت توان پردازشی سرورهای فیزیکی با توجه به تعداد پردازنده‌ها
-		\begin{itemize}\RTList
+		\begin{itemize}\RTList{}
 			\item هزینه‌ی ساخت نمونه
 			\item هزینه‌ی مهاجرت نمونه (\lr{hot migration}) بر اساس جابجایی حافظه
 			\item هزینه‌ی روشن کردن سرور جدید
@@ -388,7 +388,7 @@
 	\par
 	تابع هدف
 	\begin{latin}\begin{align}
-		min \sum_{w \in V_{s}^{PN}} y_w * c_1 + \sum_{w \in V_{s}^{PN}} P_w * isOff(w) * c_2 + \sum_{(i,j) \in E^{PN}} \tau_{ij} * c_3
+		\min \sum_{w \in V_{s}^{PN}} y_w * c_1 + \sum_{w \in V_{s}^{PN}} P_w * isOff(w) * c_2 + \sum_{(i,j) \in E^{PN}} \tau_{ij} * c_3
 	\end{align}\end{latin}
 \end{frame}
 \begin{frame}{مساله‌ی سوم}
@@ -402,12 +402,12 @@
 	در یک سیستم مستقر شده
 \end{frame}
 \begin{frame}
-	\begin{itemize}\RTList
+	\begin{itemize}\RTList{}
 		\item توپولوژی زیرساخت شامل پنهای باند لینک‌ها و ظرفیت \lr{NFVI-PoP}ها موجود است.
 		\item وضعیت \lr{NFVI-PoP}ها و نمونه‌هایی که روی آن‌ها مستقر است موجود است.
 		\item وضعیت لینک‌های فیزیکی و لینک‌های مجازی که روی آن‌ها قرار دارند موجود است.
 		\item تغییرات شامل اضافه و کم شدن نمونه‌ها و لینک‌ها می‌باشد.
-		\begin{itemize}\RTList
+		\begin{itemize}\RTList{}
 			\item هزینه‌ی ساخت نمونه
 			\item هزینه‌ی مهاجرت نمونه (\lr{hot migration}) بر اساس جابجایی حافظه
 			\item هزینه‌ی روشن کردن سرور جدید
