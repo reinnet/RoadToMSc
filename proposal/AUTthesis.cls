@@ -98,7 +98,7 @@
   \by}\par
 \par
 \vspace*{-0.8cm}
-{\fontsize{18pt}{19pt}\selectfont\bfseries{\fname \lname}}\par
+{\fontsize{18pt}{19pt}\selectfont\bfseries{\fname\hspace{5pt}\lname}}\par
 \fontsize{16pt}{17pt}\selectfont\bfseries
 {\ifx\ffirstsupervisor\undefined%
 \ifx\fsecondsupervisor\undefined%
