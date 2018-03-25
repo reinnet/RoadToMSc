@@ -12,3 +12,6 @@ all: AUTthesis
 
 AUTthesis: AUTthesis.tex fonts
 	xelatex AUTthesis.tex
+	bibtex AUTthesis
+	xelatex AUTthesis.tex
+	xelatex AUTthesis.tex
