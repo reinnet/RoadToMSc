@@ -62,7 +62,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\AUTtitle}{\begin{titlepage}
 %\topmargin=-30pt
-\vspace{-1cm}\centerline{{\includegraphics[height=3.8cm]{fa-logo}}}
+\vspace{-1cm}\centerline{{\includegraphics[height=3.8cm]{images/fa-logo}}}
 \vspace{-1cm}
 {\bf{\fontsize{16pt}{16pt}\selectfont دانشگاه صنعتی امیرکبیر}\par
 \vspace{-1cm}\fontsize{14pt}{15pt}\selectfont(پلی‌تکنیک تهران)\par
@@ -220,7 +220,7 @@
 
 %---------------------------------------------------------------------------- end of En table
 \begin{titlepage}
-\vspace{-1cm}{\includegraphics[height=3.8cm]{fa-logo}}
+\vspace{-1cm}{\includegraphics[height=3.8cm]{images/fa-logo}}
 \centerline{\fontsize{18pt}{19pt}\selectfont\bf Amirkabir University of Technology}\space 
 \vskip -.2cm
 \fontsize{16pt}{17pt}\selectfont\bfseries (Tehran Polytechnic)\par \vskip .2cm
