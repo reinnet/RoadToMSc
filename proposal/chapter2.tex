@@ -1,12 +1,12 @@
 \chapter{تعریف مساله}
 
 \section{مساله}
-پذیرفتن بیشترین تقاضای زنجیره‌ کارکرد سرویس با در نظر گرفتن نیاز هر نمونه کارکرد مجازی شبکه به یک \lr{VNFM}.
+پذیرفتن بیشترین تقاضای زنجیره‌ کارکرد سرویس با در نظر گرفتن انتساب هر نمونه کارکرد مجازی شبکه به یک \lr{VNFM}.
 همانطور که در مستند \cite{ETSI-MAN} نیز آمده است، نیاز است که هر یک نمونه‌های کارکردهای مجازی شبکه
 توسط حداقل یک \lr{NNFM} مدیریت شوند.
-در این مساله قصد داریم مساله پذیریش تقاضاهای زنجیره‌های کارکرد سرویس را با نظر گرفتن این نیازمندی در کنار
+در این مساله قصد داریم مساله پذیرش تقاضاهای زنجیره‌های کارکرد سرویس را با نظر گرفتن این نیازمندی در کنار
 نیازمندی‌های پردازشی و پهنای‌باند هر یک از تقاضاها حل کنیم.
-در ادامه به صورت تیتروار شرایط مساله را بررسی می‌کنیم:
+در ادامه به صورت خلاصه شرایط مساله را بررسی می‌کنیم:
 
 \begin{itemize}
     \item توپولوژی زیرساخت شامل پنهای باند لینک‌ها و ظرفیت \lr{NFVI-PoP}ها موجود است.
@@ -17,16 +17,12 @@
     \item نمونه‌ها بین زنجیره‌ها به اشتراک گذاشته نمی‌شوند.
     \item محدودیت ظرفیت لینک‌ها
     \item محدودیت توان پردازش سرورهای فیزیکی با توجه به میزان حافظه و تعداد پردازنده‌ها
-    \item برای مدیریت یکدست و آسان‌تر زنجیره‌ها و در عین حال جمع‌آوری راحتر خطاها، برای هر زنجیره یک \lr{VNFM} تخصیص می‌دهیم.
+    \item برای مدیریت یکدست و آسان‌تر زنجیره‌ها و در عین حال جمع‌آوری راحت‌تر خطاها، برای هر زنجیره یک \lr{VNFM} تخصیص می‌دهیم.
     \item \lr{VNFM}ها می‌توانند بین زنجیره به اشتراک گذاشته شوند.
     \item هر نمونه از \lr{VNFM}ها می‌تواند تعداد مشخصی از نمونه‌های کارکرد مجازی شبکه را سرویس دهد. 
     \item برای ارتباط میان هر نمونه از \lr{VNFM}ها و \lr{VNF}ها پهنای باند مشخصی رزرو می‌گردد.
     \item بر روی هر \lr{NFVI-PoP} حداکثر یک نمونه \lr{VNFM} مستقر می‌گردد.
 \end{itemize}
-
-استفاده از \lr{VNFM} در این ادبیات موضوعی بسیار جدید می‌باشد
-و برای اولین بار می‌باشد که جایگذاری \lr{VNFM} در کنار جایگذاری
-زنجیره‌های کارکرد سرویس مدنظر قرار داده می‌شود.
 
 اگر جایگذاری \lr{VNFM}ها به صورت غیر برنامه‌ریزی شده صورت بپذیرد
 ممکن است به تاخیرهای غیرقابل تحمل منجر شده و به این ترتیب تاثیر منفی بر روی کارآیی سیستم
@@ -36,6 +32,8 @@
 برای این امر نیاز است که پهنای باند کوچک اما اختصاصی به \lr{VNFM}ها
 تخصیص داده شود بنابراین نمی‌توان جایگذاری آن‌ها را با روش‌های سابق و مانند سایر
 کارکردهای مجازی شبکه فرض کرد.
+
+در نظرگرفتن \lr{VNFM} همراه با \lr{VNF}ها مساله‌ی جدیدی است.
 
 \section{فرمول‌بندی}
 
@@ -56,15 +54,15 @@
 محدودیت حافظه نودها
 \begin{latin}\begin{align}
     \sum_{k=1}^F y_{wk} memory(k) + \bar{y_w} \bar{memory} \le N_{ram}^{PN}(w)
-	\quad
-	\forall w \in V_s^{PN}
+    \quad
+    \forall w \in V_s^{PN}
 \end{align}\end{latin}
 
 محدودیت تعداد پردازنده‌های نودها
 \begin{latin}\begin{align}
-	\sum_{k=1}^F y_{wk} core(k) + \bar{y_w} \bar{core} \le N_{core}^{PN}(w)
-	\quad
-	\forall w \in V_s^{PN}
+    \sum_{k=1}^F y_{wk} core(k) + \bar{y_w} \bar{core} \le N_{core}^{PN}(w)
+    \quad
+    \forall w \in V_s^{PN}
 \end{align}\end{latin}
 
 اگر \lr{VNF}, \lr{v}
@@ -84,17 +82,17 @@
 سرویس شده باشند.
 یک \lr{VNF} حداکثر یکبار سرویس داده شود.
 \begin{latin}\begin{align}
-	x_h = \sum_{k=1}^{F} \sum_{w \in V_{s}^{PN}} z_{vw}^{k}
-	\quad
-	\forall v \in V_{h,F}^{SFC}, \forall h \in [1,\ldots, T]
+    x_h = \sum_{k=1}^{F} \sum_{w \in V_{s}^{PN}} z_{vw}^{k}
+    \quad
+    \forall v \in V_{h,F}^{SFC}, \forall h \in [1,\ldots, T]
 \end{align}\end{latin}
 
 اگر تقاضای \lr{h}ام پذیرفته شده باشد
 می‌بایست توسط یک \lr{VNFM} سرویس شده باشد.
 \begin{latin}\begin{align}
-	x_h = \sum_{w \in V_{s}^{PN}} \bar{z}_{hw}
-	\quad
-	\forall h \in [1,\ldots, T]
+    x_h = \sum_{w \in V_{s}^{PN}} \bar{z}_{hw}
+    \quad
+    \forall h \in [1,\ldots, T]
 \end{align}\end{latin}
 
 اگر \lr{SFC}، \lr{i}
@@ -102,16 +100,16 @@
 سرویس شود می‌بایست \lr{VNFM} سرور \lr{w}
 فعال شود.
 \begin{latin}\begin{align}
-	\bar{z}_{hw} \le \bar{y}_w
-	\quad
-	\forall w \in V_{s}^{PN}, \forall h \in [1,\ldots, T]
+    \bar{z}_{hw} \le \bar{y}_w
+    \quad
+    \forall w \in V_{s}^{PN}, \forall h \in [1,\ldots, T]
 \end{align}\end{latin}
 
 محدودیت ظرفیت سرویس‌دهی \lr{VNFM}
 \begin{latin}\begin{align}
-	\sum_{i=1}^{T} z_{iw} \le capacity
-	\quad
-	\forall w \in V_{s}^{PN}
+    \sum_{i=1}^{T} z_{iw} \le capacity
+    \quad
+    \forall w \in V_{s}^{PN}
 \end{align}\end{latin}
 
 \begin{center}\begin{latin}\begin{tabular}{|c|p{10cm}|}
@@ -124,15 +122,15 @@
 
 \lr{Flow Conservation}
 \begin{latin}\begin{align}
-	\sum_{(i,j) \in E^{PN}} \tau_{ij}^{(u,v)} - \sum_{(j,i) \in E^{PN}} \tau_{ji}^{(u,v)} = \sum_{k=1}^{F} z_{ui}^{k} - \sum_{k=1}^{F} z_{vi}^{k} \nonumber \\
-	\forall i \in V_{S}^{PN}, (u,v) \in E_{h}^{SFC}, h \in [1,\ldots, T]
+    \sum_{(i,j) \in E^{PN}} \tau_{ij}^{(u,v)} - \sum_{(j,i) \in E^{PN}} \tau_{ji}^{(u,v)} = \sum_{k=1}^{F} z_{ui}^{k} - \sum_{k=1}^{F} z_{vi}^{k} \nonumber \\
+    \forall i \in V_{S}^{PN}, (u,v) \in E_{h}^{SFC}, h \in [1,\ldots, T]
 \end{align}\end{latin}
 \begin{latin}\begin{align}
-	\sum_{(i,j) \in E^{PN}} \bar{\tau}_{ij}^{v} - \sum_{(j,i) \in E^{PN}} \bar{\tau}_{ji}^{v} = \sum_{k=1}^{F} z_{vi}^{k} - \bar{z}_{hi} \nonumber \\
-	\forall i \in V_{S}^{PN}, v \in V_{h, F}^{SFC}, h \in [1,\ldots, T]
+    \sum_{(i,j) \in E^{PN}} \bar{\tau}_{ij}^{v} - \sum_{(j,i) \in E^{PN}} \bar{\tau}_{ji}^{v} = \sum_{k=1}^{F} z_{vi}^{k} - \bar{z}_{hi} \nonumber \\
+    \forall i \in V_{S}^{PN}, v \in V_{h, F}^{SFC}, h \in [1,\ldots, T]
 \end{align}\end{latin}
 
 محدودیت ظرفیت لینک‌ها
 \begin{latin}\begin{align}
-	\sum_{v \in \cup_{i=1}^{T} V_{i,F}^{SFC}} \bar{\tau}_{ij}^{v} * \bar{bandwidth} + \sum_{(u,v) \in \cup_{i=1}^{T} E_{i}^{SFC}} \tau_{ij}^{(u,v)} * bandwidth(u,v) \le C_{ij}
+    \sum_{v \in \cup_{i=1}^{T} V_{i,F}^{SFC}} \bar{\tau}_{ij}^{v} * \bar{bandwidth} + \sum_{(u,v) \in \cup_{i=1}^{T} E_{i}^{SFC}} \tau_{ij}^{(u,v)} * bandwidth(u,v) \le C_{ij}
 \end{align}\end{latin}
