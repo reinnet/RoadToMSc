@@ -1,6 +1,5 @@
 \chapter{کارهای مرتبط}
 
-\package{multirow}
 
 در \cite{Eramo2016}
 نویسندگان قصد دارند با در نظر گرفتن محدودیت ظرفیت لینک‌ها و محدودیت پردازشی نودها
@@ -104,13 +103,34 @@
 در این مساله تعدادی تقاضا در نظر گرفته می‌شود که کوتاهترین مسیرها بین مبدا و مقصد آن‌ها مشخص است
 و در نهایت بار در این مسیرها توزیع شده و کارکردها شبکه‌ای نیز در این مسیرها مستقر می‌شوند.
 
-\begin{table}[h]\begin{center}
+\begin{table}[h]
     \caption{مقایسه مقالات}
     \vspace{0.5cm}
-    \begin{tabular}{|c|c|}
+    \begin{tabularx}{\textwidth}{|X|X|X|X|X|X|X|X|X|X|X|X|X|X|X|}
         \hline
         منبع &
-        منابع تخصیص یافته \\
+        \multicolumn{4}{X|}{منابع تخصیص یافته} &
+        \multicolumn{2}{X|}{محدودیت ظرفیت پردازشی نمونه} &
+        \multicolumn{2}{X|}{برخط یا برون خط} &
+        \multicolumn{2}{X|}{نگاشت کارکرد و لینک} &
+        \multicolumn{2}{X|}{انتساب کارکرد} &
+        \multicolumn{2}{X|}{اشتراک نمونه} \\
         \hline
-    \end{tabular}
-\end{center}\end{table}
+        \lr{\#} &
+        \lr{other} &
+        \lr{MEM} &
+        \lr{BW} &
+        \lr{CPU} &
+        دارد &
+        ندارد &
+        برخط &
+        برون خط &
+        کارکرد &
+        لینک &
+        یک نمونه &
+        چند نمونه &
+        دارد &
+        ندارد \\
+        \hline
+    \end{tabularx}
+\end{table}
