@@ -98,7 +98,7 @@
   \by}\par
 \par
 \vspace*{-0.8cm}
-{\fontsize{18pt}{19pt}\selectfont\bfseries{\fname\hspace{5pt}\lname}}\par
+{\fontsize{18pt}{19pt}\selectfont\bfseries{\fname \ \lname}}\par
 \fontsize{16pt}{17pt}\selectfont\bfseries
 {\ifx\ffirstsupervisor\undefined%
 \ifx\fsecondsupervisor\undefined%
@@ -228,7 +228,7 @@
 \fontsize{16pt}{17pt}\selectfont\@latinfaculty\space 
 \vskip 5mm
  \if@mscthesis
-MSc Thesis\par
+MSc Proposal\par
 \else
 Ph.D Thesis\par
 \fi\par
@@ -241,7 +241,7 @@ Ph.D Thesis\par
 \vskip 1.5cm
 {\bfseries\latinby}\par
 {\fontsize{18pt}{19pt}\selectfont\bfseries
-\@latinname \; \@latinsurname}\par
+\@latinname \ \@latinsurname}\par
 \vskip 1cm
 
 \fontsize{16pt}{17pt}\selectfont\bfseries
