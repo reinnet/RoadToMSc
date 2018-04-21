@@ -1,0 +1,146 @@
+\chapter{تعریف مساله}
+
+\section{مساله}
+پذیرفتن بیشترین تقاضای زنجیره‌ کارکرد سرویس با در نظر گرفتن انتساب هر نمونه کارکرد مجازی شبکه به یک \lr{VNFM}.
+همانطور که در مستند \cite{ETSI-MAN} نیز آمده است، نیاز است که هر یک نمونه‌های کارکردهای مجازی شبکه
+توسط حداقل یک \lr{VNFM} مدیریت شوند.
+در این مساله قصد داریم مساله پذیرش تقاضاهای زنجیره‌های کارکرد سرویس را با نظر گرفتن این نیازمندی در کنار
+نیازمندی‌های پردازشی و پهنای‌باند هر یک از تقاضاها حل کنیم.
+در ادامه به صورت خلاصه شرایط مساله را بررسی می‌کنیم:
+
+\begin{itemize}
+    \item توپولوژی زیرساخت شامل پهنای باند لینک‌ها و ظرفیت \lr{NFVI-PoP}ها موجود است.
+    \item \lr{n} تقاضای زنجیره‌ کارکرد سرویس به صورت کامل و از پیش مشخص شده داریم.
+    \item هر تقاضا شامل نوع و تعداد نمونه‌های مجازی و پنهای باند لینک‌های مجازی می‌باشد.
+    \item \lr{F} نوع کارکرد مجازی شبکه تعریف شده است که هر یک مقدار مشخصی از حافظه و توان پردازشی را مصرف می‌کنند.
+    \item تعداد پردازنده‌هایی که به هر نمونه تخصیص می‌یابد با توجه به ترافیک ورودی نمونه مشخص می‌شود.
+    \item نمونه‌ها بین زنجیره‌ها به اشتراک گذاشته نمی‌شوند.
+    \item محدودیت ظرفیت لینک‌ها
+    \item محدودیت توان پردازش سرورهای فیزیکی با توجه به میزان حافظه و تعداد پردازنده‌ها
+    \item برای مدیریت یکدست و آسان‌تر زنجیره‌ها و در عین حال جمع‌آوری راحت‌تر خطاها، برای هر زنجیره یک \lr{VNFM} تخصیص می‌دهیم.
+    \item \lr{VNFM}ها می‌توانند بین زنجیره به اشتراک گذاشته شوند.
+    \item هر نمونه از \lr{VNFM}ها می‌تواند تعداد مشخصی از نمونه‌های کارکرد مجازی شبکه را سرویس دهد. 
+    \item برای ارتباط میان هر نمونه از \lr{VNFM}ها و \lr{VNF}ها پهنای باند مشخصی رزرو می‌گردد.
+    \item بر روی هر \lr{NFVI-PoP} حداکثر یک نمونه \lr{VNFM} مستقر می‌گردد.
+\end{itemize}
+
+اگر جایگذاری \lr{VNFM}ها به صورت غیر برنامه‌ریزی شده صورت بپذیرد
+ممکن است به تاخیرهای غیرقابل تحمل منجر شده و به این ترتیب تاثیر منفی بر روی کارآیی سیستم
+داشته باشد.
+
+یکی از وظایف \lr{VNFM}ها جمع‌آوری پیام‌های خطا می‌باشد،
+برای این امر نیاز است که پهنای باند کوچک اما اختصاصی به \lr{VNFM}ها
+تخصیص داده شود بنابراین نمی‌توان جایگذاری آن‌ها را با روش‌های سابق و مانند سایر
+کارکردهای مجازی شبکه فرض کرد.
+
+در نظرگرفتن \lr{VNFM} همراه با \lr{VNF}ها مساله‌ی جدیدی است.
+
+\section{فرمول‌بندی}
+
+هدف اصلی مساله پذیرش بیشترین تعداد تقاضا می‌باشد. در اینجا فرض می‌کنیم پذیرش هر تقاضا سودی منحصر به فرد خواهد داشت.
+بنابراین تابع هدف به شکل زیر می‌باشد:
+
+\begin{latin}\begin{align}
+    \sum_{h=1}^{T} c_hx_h
+\end{align}\end{latin}
+
+
+
+\begin{center}\begin{latin}\begin{tabular}{|c|p{10cm}|}
+    \hline
+    $x_h$ & binary variable assuming the value 1 if the $h$th SFC request is accepted; otherwise its value is zero \\
+    \hline
+    $y_{wk}$ & the number of VNF instances of type $k$ that are used in server $w \in V_s^{PN}$ \\
+    \hline
+    $z^k_{vw}$ & binary variable assuming the value 1 if the VNF node $v \in \cup_{i=1}^{T} V_{i, F}^{SFC}$ is served by the VNF instance of type k in the server $w \in V_s^{PN}$ \\
+    \hline
+    $\bar{y}_w$ & binary varibale assuming the value 1 if VNFM on server $w \in V_s^{PN}$ is used; otherwise its value is zero\\
+    \hline
+    $\bar{z}_{hw}$ & binary variable assuming the value 1 if $h$th SFC is assigned to VNFM on server $w \in V_s^{PN}$\\
+    \hline
+\end{tabular}\end{latin}\end{center}
+
+برای هر نود اندازه‌ی مشخصی از حافظه \lr{RAM}
+در نظر گرفته می‌شود که هر نمونه‌ی کارکرد با توجه به نوع آن مقدار مشخصی از این حافظه را مصرف می‌کند.
+\begin{latin}\begin{align}
+    \sum_{k=1}^F y_{wk} memory(k) + \bar{y_w} \bar{memory} \le N_{ram}^{PN}(w)
+    \quad
+    \forall w \in V_s^{PN}
+\end{align}\end{latin}
+
+برای هر نود تعداد مشخصی از پردازنده در نظر گرفته می‌شود که هر نمونه‌ی کارکرد با توجه به نوع آن مقدار مشخصی از این حافظه را مصرف می‌کند.
+\begin{latin}\begin{align}
+    \sum_{k=1}^F y_{wk} core(k) + \bar{y_w} \bar{core} \le N_{core}^{PN}(w)
+    \quad
+    \forall w \in V_s^{PN}
+\end{align}\end{latin}
+
+اگر \lr{VNF}, \lr{v}
+توسط \lr{VNF instance} نوع \lr{k}
+روی سرور \lr{w} سرویس شود می‌بایست
+\lr{VNF instance} نوع \lr{k}
+روی سرور \lr{w} فعال شود.
+اشتراک گذاری \lr{VNF}ها پشتیبانی نمی‌گردد.
+\begin{latin}\begin{align}
+\sum_{v \in \cup_{i=1}^T V_{i, F}^{SFC}} z_{vw}^k \le y_{wk}
+\quad
+\forall w \in V_s^{PN}, \forall k \in [1,\ldots, F]
+\end{align}\end{latin}
+
+اگر تقاضای \lr{h}ام پذیرفته شده باشد
+می‌بایست تمام \lr{VNF node}های آن‌
+سرویس شده باشند.
+یک \lr{VNF} حداکثر یکبار سرویس داده شود.
+\begin{latin}\begin{align}
+    x_h = \sum_{k=1}^{F} \sum_{w \in V_{s}^{PN}} z_{vw}^{k}
+    \quad
+    \forall v \in V_{h,F}^{SFC}, \forall h \in [1,\ldots, T]
+\end{align}\end{latin}
+
+اگر تقاضای \lr{h}ام پذیرفته شده باشد
+می‌بایست توسط یک \lr{VNFM} سرویس شده باشد.
+\begin{latin}\begin{align}
+    x_h = \sum_{w \in V_{s}^{PN}} \bar{z}_{hw}
+    \quad
+    \forall h \in [1,\ldots, T]
+\end{align}\end{latin}
+
+اگر \lr{SFC}، \lr{i}
+توسط \lr{VNFM} روی سرور \lr{w}
+سرویس شود می‌بایست \lr{VNFM} سرور \lr{w}
+فعال شود.
+\begin{latin}\begin{align}
+    \bar{z}_{hw} \le \bar{y}_w
+    \quad
+    \forall w \in V_{s}^{PN}, \forall h \in [1,\ldots, T]
+\end{align}\end{latin}
+
+محدودیت ظرفیت سرویس‌دهی \lr{VNFM}
+\begin{latin}\begin{align}
+    \sum_{i=1}^{T} z_{iw} \le capacity
+    \quad
+    \forall w \in V_{s}^{PN}
+\end{align}\end{latin}
+
+\begin{center}\begin{latin}\begin{tabular}{|c|p{10cm}|}
+    \hline
+    $\tau^{(u,v)}_{ij}$ & binary variable assuming the value 1 if the virual link $(u,v)$ is routed on the physical network link $(i,j)$\\
+    \hline
+    $\bar{\tau}^{v}_{ij}$ & binary variable assuming the value 1 if the managemnt of VNF node $v$ is routed on the physical network link $(i,j)$\\
+    \hline
+\end{tabular}\end{latin}\end{center}
+
+\lr{Flow Conservation}
+\begin{latin}\begin{align}
+    \sum_{(i,j) \in E^{PN}} \tau_{ij}^{(u,v)} - \sum_{(j,i) \in E^{PN}} \tau_{ji}^{(u,v)} = \sum_{k=1}^{F} z_{ui}^{k} - \sum_{k=1}^{F} z_{vi}^{k} \nonumber \\
+    \forall i \in V_{S}^{PN}, (u,v) \in E_{h}^{SFC}, h \in [1,\ldots, T]
+\end{align}\end{latin}
+\begin{latin}\begin{align}
+    \sum_{(i,j) \in E^{PN}} \bar{\tau}_{ij}^{v} - \sum_{(j,i) \in E^{PN}} \bar{\tau}_{ji}^{v} = \sum_{k=1}^{F} z_{vi}^{k} - \bar{z}_{hi} \nonumber \\
+    \forall i \in V_{S}^{PN}, v \in V_{h, F}^{SFC}, h \in [1,\ldots, T]
+\end{align}\end{latin}
+
+محدودیت ظرفیت لینک‌ها
+\begin{latin}\begin{align}
+    \sum_{v \in \cup_{i=1}^{T} V_{i,F}^{SFC}} \bar{\tau}_{ij}^{v} * \bar{bandwidth} + \sum_{(u,v) \in \cup_{i=1}^{T} E_{i}^{SFC}} \tau_{ij}^{(u,v)} * bandwidth(u,v) \le C_{ij}
+\end{align}\end{latin}
