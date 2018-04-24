@@ -15,6 +15,8 @@
 \usepackage{multirow}
 \usepackage{tabularx}
 \usepackage{booktabs}
+\usepackage[sorting=none]{biblatex}
+\addbibresource{references.bib}
 \usepackage{xepersian}
 \settextfont[Path=fonts/]{Parastoo}
 
@@ -191,7 +193,23 @@
             \lr{---} &
             \checkmark\\
             \midrule
-
+            \cite{AbuLebdeh2017} &
+            \lr{VNFM capacity} &
+            \lr{---} &
+            \lr{---} &
+            \lr{---} &
+            \lr{---} &
+            \checkmark&
+            \checkmark&
+            \lr{---} &
+            \lr{---} &
+            \checkmark &
+            \lr{---} &
+            \lr{---} &
+            \lr{---} &
+            \lr{---} &
+            \checkmark&
+            \lr{---} \\
             \midrule
             پژوهش حاضر &
             \lr{---} &
@@ -216,9 +234,9 @@
 \end{frame}
 \begin{frame}{سابقه‌ی کارها}
     \par
-    \cite{AbuLebdeh2017}
     هدف کاهش هزینه‌ی عملیاتی در حالی که تاخیرهای ارتباطی و محدودیت‌های ظرفیت رعایت می‌شوند.
     در این مقاله فرض می‌شود جایگذاری کارکردهای مجازی شبکه صورت پذیرفته است.
+    \footcite{AbuLebdeh2017}
 \end{frame}
 \begin{frame}{تعریف مساله}
     \par
@@ -263,8 +281,9 @@
 \end{frame}
 \begin{frame}[shrink=25]{مراجع}
     \begin{latin}
-    \bibliographystyle{IEEEtran}
-    \bibliography{references}
+    %\bibliographystyle{IEEEtran}
+    %\bibliography{references}
+    \printbibliography[heading=none]
     \end{latin}
 \end{frame}
 \begin{frame}
