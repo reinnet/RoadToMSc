@@ -15,7 +15,7 @@
 \usepackage{multirow}
 \usepackage{tabularx}
 \usepackage{booktabs}
-\usepackage[sorting=none]{biblatex}
+\usepackage[sorting=none,style=ieee]{biblatex}
 \addbibresource{references.bib}
 \usepackage{xepersian}
 \settextfont[Path=fonts/]{Parastoo}
@@ -233,10 +233,14 @@
     \end{table}
 \end{frame}
 \begin{frame}{سابقه‌ی کارها}
-    \par
-    هدف کاهش هزینه‌ی عملیاتی در حالی که تاخیرهای ارتباطی و محدودیت‌های ظرفیت رعایت می‌شوند.
-    در این مقاله فرض می‌شود جایگذاری کارکردهای مجازی شبکه صورت پذیرفته است.
-    \footcite{AbuLebdeh2017}
+    \begin{itemize}\RTList{}
+        \item این مقاله به مانند کار پژوهشی حاضر تاخیر را در لینک‌های مدیریتی در نظر می‌گیرد.
+        \item این مقاله فرض می‌کند زنجیره‌ها از پیش پذیرفته شده‌اند.
+        \item هدف این مقاله جایگذاری \lr{VNFM}ها به صورت مستقل با هدف کاهش هزینه‌های عملیاتی می‌باشد.
+    \end{itemize}
+    \begin{latin}
+    \fullcite{AbuLebdeh2017}
+    \end{latin}
 \end{frame}
 \begin{frame}{تعریف مساله}
     \par
@@ -281,8 +285,6 @@
 \end{frame}
 \begin{frame}[shrink=25]{مراجع}
     \begin{latin}
-    %\bibliographystyle{IEEEtran}
-    %\bibliography{references}
     \printbibliography[heading=none]
     \end{latin}
 \end{frame}
