@@ -12,6 +12,6 @@ all: main
 
 main: main.tex fonts
 	xelatex main.tex
-	bibtex main
+	biber main
 	xelatex main.tex
 	xelatex main.tex
