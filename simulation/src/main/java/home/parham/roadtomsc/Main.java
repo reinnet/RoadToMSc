@@ -334,18 +334,18 @@ public class Main {
 
                         int linkCounter = 0;
                         int nodeCounter = 0;
-                        for (int h = 0; h < T; h++) {
+                        for (Chain chain : chains) {
                             // VNFs
-                            for (int k = 0; k < chains[h].links(); k++) {
-                                constraint.addTerm(chains[h].getLink(k).getBandwidth(), tau[i][j][k + linkCounter]);
+                            for (int k = 0; k < chain.links(); k++) {
+                                constraint.addTerm(chain.getLink(k).getBandwidth(), tau[i][j][k + linkCounter]);
                             }
 
                             // VNFM
-                            for (int k = 0; k < chains[h].nodes(); k++) {
+                            for (int k = 0; k < chain.nodes(); k++) {
                                 constraint.addTerm(vnfmBandwidth, tauHat[i][j][k + nodeCounter]);
                             }
-                            nodeCounter += chains[h].nodes();
-                            linkCounter += chains[h].links();
+                            nodeCounter += chain.nodes();
+                            linkCounter += chain.links();
                         }
 
                         cplex.addLe(constraint, E[i][j]);
