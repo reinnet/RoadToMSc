@@ -1,6 +1,7 @@
 package home.parham.roadtomsc;
 
 import home.parham.roadtomsc.domain.Chain;
+import home.parham.roadtomsc.domain.Link;
 import home.parham.roadtomsc.domain.Node;
 import home.parham.roadtomsc.domain.Type;
 import ilog.concert.IloException;
@@ -14,8 +15,23 @@ public class Main {
         // physical nodes
         final Node[] nodes = {
             new Node(2, 2),
+            new Node(2, 2),
         };
         final int W = nodes.length;
+
+        // physical links
+        final Link[] links = {
+                new Link(10, 0, 1),
+        };
+        int E[][] = new int[W][W];
+        for (int i = 0; i < W; i++) {
+            for (int j = 0; j < W; j++) {
+                E[i][j] = 0;
+            }
+        }
+        for (Link link : links) {
+            E[link.getSource()][link.getDestination()] = link.getDestination();
+        }
 
         // number of VNF types
         Type.add(1, 1); // Type 0
@@ -28,8 +44,10 @@ public class Main {
         };
         final int T = chains.length;
         int V = 0; // Total number of VNF
+        int U = 0; // Total number of virtual links
         for (Chain chain : chains) {
             V += chain.nodes();
+            U += chain.links();
         }
 
         // VNFM
@@ -109,6 +127,29 @@ public class Main {
                 }
             }
 
+            // binary variable assuming the value 1 if the virtual link _(u, v)_ is routed on
+            // the physical network link from _i_ to _j_
+            String[][][] tauNames = new String[W][W][U];
+            for (int i = 0; i < W; i++) {
+                for (int j = 0; j < W; j++) {
+                    int u = 0;
+                    for (int h = 0; h < T; h++) {
+                        for (int k = 0; k < chains[h].links(); k++) {
+                            tauNames[i][j][u + k] = String.format("tau_%d_%d_%d-%d", i, j, h, k);
+                        }
+                        u += chains[h].links();
+                    }
+                }
+            }
+            IloIntVar[][][] tau = new IloIntVar[W][W][U];
+            for (int i = 0; i < W; i++) {
+                for (int j = 0; j < W; j++) {
+                    for (int k = 0; k < U; k++) {
+                        tau[i][j][k] = cplex.boolVar(tauNames[i][j][k]);
+                    }
+                }
+            }
+
             // objective function
             IloLinearNumExpr expr = cplex.linearNumExpr();
             for (int i = 0; i < T; i++) {
@@ -153,7 +194,7 @@ public class Main {
 
                     for (int i = 0; i < W; i++) {
                         for (int j = 0; j < F; j++) {
-                            cplex.addLe(z[i][j][k + v], chains[h].getNode(k).getIndex() == j ? 1 : 0);
+                            cplex.addLe(z[i][j][k + v], chains[h].getNode(k).getIndex() == j ? 1 : 0, "type_constraint");
                             constraint.addTerm(1, z[i][j][k + v]);
                         }
                     }
@@ -195,6 +236,39 @@ public class Main {
                 }
 
                 cplex.addLe(constraint, nfvmCapacity, String.format("manager_capacity_constraint %d", i));
+            }
+
+
+            // Flow conservation
+            // linkConstraint == nodeConstraint
+            v = 0;
+            for (Chain chain : chains) {
+                for (int i = 0; i < W; i++) {  // Source of Physical link
+                    for (int l = 0; l < chain.links(); l++) { // Virtual link
+                        int virtualSource = chain.getLink(l).getSource() + v;
+                        int virtualDestination = chain.getLink(l).getDestination() + v;
+
+                        IloLinearIntExpr linkConstraint = cplex.linearIntExpr();
+                        IloLinearIntExpr nodeConstraint = cplex.linearIntExpr();
+
+                        for (int j = 0; j < W; j++) { // Destination of Physical link
+                            if (E[i][j] > 0) {
+                                linkConstraint.addTerm(1, tau[i][j][l]);
+                            }
+                            if (E[j][i] > 0) {
+                                linkConstraint.addTerm(-1, tau[j][i][l]);
+                            }
+                        }
+
+                        for (int k = 0; k < F; k++) {
+                            nodeConstraint.addTerm(1, z[k][i][virtualSource]);
+                            nodeConstraint.addTerm(-1, z[k][i][virtualDestination]);
+                        }
+
+                        cplex.addEq(linkConstraint, nodeConstraint, "flow_conservation");
+                    }
+                }
+                v += chain.nodes();
             }
 
 
