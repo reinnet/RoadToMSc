@@ -11,13 +11,17 @@ public class Chain {
         this.cost = cost;
     }
 
-    public Chain addVNF(int id) {
+    public Chain addNode(int id) {
         this.chain.add(Type.get(id));
         return this;
     }
 
-    public Type getVNF(int index) {
+    public Type getNode(int index) {
         return this.chain.get(index);
+    }
+
+    public int nodes() {
+        return this.chain.size();
     }
 
     public int getCost() {
