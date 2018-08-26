@@ -16,12 +16,19 @@ public class Main {
         final Node[] nodes = {
             new Node(1, 1),
             new Node(1, 1),
+            new Node(2, 4),
+            new Node(1, 1),
+            new Node(1, 1),
         };
         final int W = nodes.length;
 
         // physical links
         final Link[] links = {
                 new Link(10, 0, 1),
+                new Link(10, 0, 2),
+                new Link(10, 2, 0),
+                new Link(10, 1, 2),
+                new Link(10, 3, 4),
         };
         int E[][] = new int[W][W];
         for (int i = 0; i < W; i++) {
@@ -40,7 +47,9 @@ public class Main {
         // number of SFC requests
         // consider to create requests after creating VNF types
         final Chain[] chains = {
-                new Chain(10).addNode(0)
+                new Chain(10).addNode(0),
+                new Chain(10).addNode(0).addNode(0).addNode(0).addLink(1, 0, 1)
+                .addLink(1, 0, 2),
         };
         final int T = chains.length;
         int V = 0; // Total number of VNF
@@ -159,7 +168,7 @@ public class Main {
                 for (int j = 0; j < W; j++) {
                     int v = 0;
                     for (int h = 0; h < T; h++) {
-                        for (int k = 0; k < V; k++) {
+                        for (int k = 0; k <chains[h].nodes(); k++) {
                             tauHatNames[i][j][v + k] = String.format("tau^_%d_%d_%d-%d", i, j, h, k);
                         }
                         v += chains[h].nodes();
@@ -431,7 +440,7 @@ public class Main {
                                 for (int k = 0; k < chains[h].links(); k++) {
                                     if (cplex.getValue(tauHat[i][j][u + k]) == 1) {
                                         Link l = chains[h].getLink(k);
-                                        System.out.printf("Chain %d link %d (%d - %d) manager is on %d-%d\n", h, k, l.getSource(), l.getDestination(), i, j);
+                                        System.out.printf("Chain %d link %d (%d - %d) is on %d-%d\n", h, k, l.getSource(), l.getDestination(), i, j);
                                     }
                                 }
                             }
