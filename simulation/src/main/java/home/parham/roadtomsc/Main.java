@@ -37,7 +37,7 @@ public class Main {
             }
         }
         for (Link link : links) {
-            E[link.getSource()][link.getDestination()] = link.getDestination();
+            E[link.getSource()][link.getDestination()] = link.getBandwidth();
         }
 
         // number of VNF types
@@ -228,7 +228,7 @@ public class Main {
 
                     for (int i = 0; i < F; i++) {
                         for (int j = 0; j < W; j++) {
-                            cplex.addLe(z[i][j][k + v], chains[h].getNode(k).getIndex() == j ? 1 : 0, "type_constraint");
+                            cplex.addLe(z[i][j][k + v], chains[h].getNode(k).getIndex() == i ? 1 : 0, "type_constraint");
                             constraint.addTerm(1, z[i][j][k + v]);
                         }
                     }
@@ -410,7 +410,7 @@ public class Main {
                         for (int i = 0; i < F; i++) {
                             for (int j = 0; j < W; j++) {
                                 if (cplex.getValue(z[i][j][k + v]) == 1) {
-                                    System.out.printf("Node %d with type %d is mapped on %d\n", k, j, i);
+                                    System.out.printf("Node %d with type %d is mapped on %d\n", k, i, j);
                                 }
                             }
                         }
