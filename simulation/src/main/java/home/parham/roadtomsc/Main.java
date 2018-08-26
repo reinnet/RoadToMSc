@@ -51,9 +51,11 @@ public class Main {
         }
 
         // VNFM
-        int nfvmRam = 1;
-        int nfvmCores = 1;
-        int nfvmCapacity = 5;
+        int vnfmRam = 1;
+        int vnfmCores = 1;
+        int vnfmCapacity = 5;
+        int vnfmRadius = 5;
+        int vnfmBandwidth = 1;
 
 
         try {
@@ -128,7 +130,7 @@ public class Main {
             }
 
             // binary variable assuming the value 1 if the virtual link _(u, v)_ is routed on
-            // the physical network link from _i_ to _j_
+            // the physical network link from _i_ to _j_.
             String[][][] tauNames = new String[W][W][U];
             for (int i = 0; i < W; i++) {
                 for (int j = 0; j < W; j++) {
@@ -150,6 +152,29 @@ public class Main {
                 }
             }
 
+            // binary variable assuming the value 1 if the management of VNF node _v_
+            // is routed on the physical network link from _i_ to _j_.
+            String[][][] tauHatNames = new String[W][W][V];
+            for (int i = 0; i < W; i++) {
+                for (int j = 0; j < W; j++) {
+                    int v = 0;
+                    for (int h = 0; h < T; h++) {
+                        for (int k = 0; k < V; k++) {
+                            tauHatNames[i][j][v + k] = String.format("tau^_%d_%d_%d-%d", i, j, h, k);
+                        }
+                        v += chains[h].nodes();
+                    }
+                }
+            }
+            IloIntVar[][][] tauHat = new IloIntVar[W][W][V];
+            for (int i = 0; i < W; i++) {
+                for (int j = 0; j < W; j++) {
+                    for (int k = 0; k < V; k++) {
+                        tauHat[i][j][k] = cplex.boolVar(tauHatNames[i][j][k]);
+                    }
+                }
+            }
+
             // objective function
             IloLinearNumExpr expr = cplex.linearNumExpr();
             for (int i = 0; i < T; i++) {
@@ -161,8 +186,8 @@ public class Main {
             for (int i = 0; i < W; i++) {
                 IloLinearNumExpr ramConstraint = cplex.linearNumExpr();
                 IloLinearNumExpr cpuConstraint = cplex.linearNumExpr();
-                ramConstraint.addTerm(nfvmRam, yHat[i]); // VNFM
-                cpuConstraint.addTerm(nfvmCores, yHat[i]); // VNFM
+                ramConstraint.addTerm(vnfmRam, yHat[i]); // VNFM
+                cpuConstraint.addTerm( vnfmCores, yHat[i]); // VNFM
 
                 for (int j = 0; j < F; j++) {
                     ramConstraint.addTerm(Type.get(j).getRam(), y[i][j]); // instance
@@ -235,7 +260,7 @@ public class Main {
                     constraint.addTerm(1, zHat[j][i]);
                 }
 
-                cplex.addLe(constraint, nfvmCapacity, String.format("manager_capacity_constraint %d", i));
+                cplex.addLe(constraint, vnfmCapacity, String.format("manager_capacity_constraint %d", i));
             }
 
 
@@ -269,6 +294,79 @@ public class Main {
                     }
                 }
                 v += chain.nodes();
+            }
+
+            // Management Flow conservation
+            // linkConstraint == nodeConstraint
+            v = 0;
+            for (int h = 0; h < T; h++) {
+                for (int i = 0; i < W; i++) {  // Source of Physical link
+                    for (int n = 0; n < chains[h].nodes(); n++) { // Virtual link
+                        IloLinearIntExpr linkConstraint = cplex.linearIntExpr();
+                        IloLinearIntExpr nodeConstraint = cplex.linearIntExpr();
+
+                        for (int j = 0; j < W; j++) { // Destination of Physical link
+                            if (E[i][j] > 0) {
+                                linkConstraint.addTerm(1, tauHat[i][j][v + n]);
+                            }
+                            if (E[j][i] > 0) {
+                                linkConstraint.addTerm(-1, tauHat[j][i][v + n]);
+                            }
+                        }
+
+                        for (int k = 0; k < F; k++) {
+                            nodeConstraint.addTerm(1, z[k][i][v + n]);
+                        }
+                        nodeConstraint.addTerm(-1, zHat[h][i]);
+
+                        cplex.addEq(linkConstraint, nodeConstraint, "management flow_conservation");
+                    }
+                }
+                v += chains[h].nodes();
+            }
+
+
+            // Link Bandwidth Constraint
+            for (int i = 0; i < W; i++) {
+                for (int j = 0; j < W; j++) {
+                    if (E[i][j] > 0) {
+                        IloLinearIntExpr constraint = cplex.linearIntExpr();
+
+                        int linkCounter = 0;
+                        int nodeCounter = 0;
+                        for (int h = 0; h < T; h++) {
+                            // VNFs
+                            for (int k = 0; k < chains[h].links(); k++) {
+                                constraint.addTerm(chains[h].getLink(k).getBandwidth(), tau[i][j][k + linkCounter]);
+                            }
+
+                            // VNFM
+                            for (int k = 0; k < chains[h].nodes(); k++) {
+                                constraint.addTerm(vnfmBandwidth, tauHat[i][j][k + nodeCounter]);
+                            }
+                            nodeCounter += chains[h].nodes();
+                            linkCounter += chains[h].links();
+                        }
+
+                        cplex.addLe(constraint, E[i][j]);
+                    }
+                }
+            }
+
+
+            // Radius Constraint
+            for (int i = 0; i < V; i++) {
+                IloLinearIntExpr constraint = cplex.linearIntExpr();
+
+                for (int j = 0; j < W; j++) {
+                    for (int k = 0; k < W; k++) {
+                        if (E[j][k] > 0) {
+                            constraint.addTerm(1, tauHat[j][k][i]);
+                        }
+                    }
+                }
+
+                cplex.addLe(constraint, vnfmRadius);
             }
 
 
