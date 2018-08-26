@@ -68,6 +68,7 @@
         \item چالش‌ها و نوآوری‌های مساله
         \item معیار و نحوه‌ی ارزیابی
         \item مراجع
+        \item فرمول‌بندی
     \end{itemize}
 \end{frame}
 \begin{frame}{مقدمه}
@@ -289,18 +290,10 @@
     \end{latin}
 \end{frame}
 \begin{frame}
-    \begin{multicols}{3}
-        \begin{center}	
-            فرمول‌بندی
-        \end{center}
-    \end{multicols}
     \begin{center}	
-        پذیرش زنجیره‌های کارکرد سرویس
-        \\
-        و مدیریت آن‌ها با استفاده از \lr{VNFM}
+        فرمول‌بندی
     \end{center}
 \end{frame}
-
 \begin{frame}{فرمول‌بندی}
     \par
     متغیرهای تصمیم‌گیری
@@ -319,6 +312,10 @@
     \end{tabular}\end{latin}
 \end{frame}
 \begin{frame}{فرمول‌بندی}
+    \par
+    هدف اصلی مساله پذیریش بیشترین تعداد تقاضا می‌باشد.
+    در اینجا فرض می‌کنیم پذیرش هر تقاضا سودی منحصر به فرد خواهد داشت.
+    بنابراین تابع هدف به شکل زیر می‌باشد:
     \begin{latin}\begin{align}
     \max \sum_{h=1}^T x_h
     \end{align}\end{latin}
@@ -346,7 +343,7 @@
     روی سرور \lr{w} سرویس شود می‌بایست
     \lr{VNF instance} نوع \lr{k}
     روی سرور \lr{w} فعال شود.
-    \par
+    توجه شود که
     اشتراک گذاری \lr{VNF}ها پشتیبانی نمی‌گردد.
     \begin{latin}\begin{align}
     \sum_{v \in \cup_{i=1}^T V_{i, F}^{SFC}} z_{vw}^k \le y_{wk}
@@ -390,11 +387,26 @@
     \par
     محدودیت ظرفیت سرویس‌دهی \lr{VNFM}
     \begin{latin}\begin{align}
-        \sum_{i=1}^{T} z_{iw} \le capacity
+        \sum_{i=1}^{T} \bar{z}_{iw} \le capacity
         \quad
         \forall w \in V_{s}^{PN}
     \end{align}\end{latin}
 \end{frame}
+\begin{frame}{فرمول‌بندی}
+    \par
+    اگر \lr{VNF}، \lr{v}
+    توسط نمونه‌ای نوع \lr{k}
+    روی سرور \lr{w} سرویس می‌شود می‌بایست
+    این \lr{VNF} از نوع \lr{k}ام باشد.
+    \begin{latin}\begin{align}
+        z_{vw}^{k} \le type(v, k)
+        \quad
+        \forall w \in V_{s}^{PN},
+        \forall k \in [1,\ldots, F],
+        \forall v \in \cup_{i=1}^T V_{i, F}^{SFC}
+    \end{align}\end{latin}
+\end{frame}
+
 \begin{frame}{فرمول‌بندی}
     \par
     متغیرهای تصمیم‌گیری
@@ -423,7 +435,20 @@
     \par
     محدودیت ظرفیت لینک‌ها
     \begin{latin}\begin{align}
-        \sum_{v \in \cup_{i=1}^{T} V_{i,F}^{SFC}} \bar{\tau}_{ij}^{v} * \bar{bandwidth} + \sum_{(u,v) \in \cup_{i=1}^{T} E_{i}^{SFC}} \tau_{ij}^{(u,v)} * bandwidth(u,v) \le C_{ij}
+        \sum_{v \in \cup_{i=1}^{T} V_{i,F}^{SFC}} \bar{\tau}_{ij}^{v} * \bar{bandwidth} + \sum_{(u,v) \in \cup_{i=1}^{T} E_{i}^{SFC}} \tau_{ij}^{(u,v)} * bandwidth(u,v) \le C_{ij} \nonumber \\
+        \forall (i, j) \in E^{PN}
+    \end{align}\end{latin}
+\end{frame}
+\begin{frame}{فرمول‌بندی}
+    \par
+    شعاع همسایگی تضمین می‌کند که زمان سرویس‌دهی توسط
+    \lr{VNFM}ها
+    در یک بازه مشخص (از نظر تعداد هاب)
+    خواهد بود.
+    \begin{latin}\begin{align}
+        \sum_{(i, j) \in E^{PN}} \bar{\tau}_{ij}^{v} \le radius
+        \quad
+        \forall v \in \cup_{i=1}^T V_{i, F}^{SFC}
     \end{align}\end{latin}
 \end{frame}
 \end{persian}
