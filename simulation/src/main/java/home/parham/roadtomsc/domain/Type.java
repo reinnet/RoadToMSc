@@ -9,9 +9,8 @@ public class Type {
 
     private static ArrayList<Type> types;
 
-    public static int add(int cores, int ram) {
-        types.add(new Type(cores, ram));
-        return types.size() - 1;
+    public static void add(int cores, int ram) {
+        types.add(new Type(types.size(), cores, ram));
     }
 
     public static Type get(int id) {
@@ -33,9 +32,16 @@ public class Type {
      */
     private int ram;
 
-    private Type(int cores, int ram) {
+
+    /**
+     * index indicate type identifier
+     */
+    private int index;
+
+    private Type(int index, int cores, int ram) {
         this.cores = cores;
         this.ram = ram;
+        this.index = index;
     }
 
     public int getCores() {
@@ -44,5 +50,9 @@ public class Type {
 
     public int getRam() {
         return ram;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }
