@@ -204,6 +204,47 @@ public class Main {
                 System.out.println(" Solution Status = " + cplex.getStatus());
                 System.out.println();
                 System.out.println(" cost = " + cplex.getObjValue());
+
+
+                System.out.println();
+                System.out.println(" >> Chains");
+                for (int i = 0; i < T; i++) {
+                    if (cplex.getValue(x[i]) == 1) {
+                        System.out.printf("Chain %s is accepted.\n", i);
+                    } else {
+                        System.out.printf("Chain %s is not accepted.\n", i);
+                    }
+                }
+                System.out.println();
+
+                System.out.println();
+                System.out.println(" >> Instance mapping");
+                v = 0;
+                for (int h = 0; h < T; h++) {
+                    System.out.printf("Chain %d:\n", h);
+                    for (int k = 0; k < chains[h].nodes(); k++) {
+                        for (int i = 0; i < W; i++) {
+                            for (int j = 0; j < F; j++) {
+                                if (cplex.getValue(z[i][j][k + v]) == 1) {
+                                    System.out.printf("Node %d with type %d is mapped on %d\n", k, j, i);
+                                }
+                            }
+                        }
+                    }
+                    v += chains[h].nodes();
+                }
+                System.out.println();
+
+                System.out.println();
+                System.out.println(" >> Manager mapping");
+                for (int h = 0; h < T; h++) {
+                    for (int i = 0; i < W; i++) {
+                        if (cplex.getValue(zHat[h][i]) == 1) {
+                            System.out.printf("Chain %d manager is %d\n", h, i);
+                        }
+                    }
+                }
+                System.out.println();
             } else {
                 System.out.printf("Solve failed: %s\n", cplex.getStatus());
             }
