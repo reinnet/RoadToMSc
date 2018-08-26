@@ -128,7 +128,7 @@ public class Main {
                     cpuConstraint.addTerm(Type.get(j).getCores(), y[i][j]); // instance
                 }
 
-                cplex.addLe(cpuConstraint, nodes[i].getRam(), String.format("node_cpu_constraint %d", i));
+                cplex.addLe(cpuConstraint, nodes[i].getCores(), String.format("node_cpu_constraint %d", i));
                 cplex.addLe(ramConstraint, nodes[i].getRam(), String.format("node_memory_constraint %d", i));
             }
 
@@ -145,7 +145,7 @@ public class Main {
                 }
             }
 
-            // Service Constraint
+            // Service Constraint + Type constraint
             int v = 0;
             for (int h = 0; h < T; h++) {
                 for (int k = 0; k < chains[h].nodes(); k++) {
@@ -153,6 +153,7 @@ public class Main {
 
                     for (int i = 0; i < W; i++) {
                         for (int j = 0; j < F; j++) {
+                            cplex.addLe(z[i][j][k + v], chains[h].getNode(k).getIndex() == j ? 1 : 0);
                             constraint.addTerm(1, z[i][j][k + v]);
                         }
                     }
