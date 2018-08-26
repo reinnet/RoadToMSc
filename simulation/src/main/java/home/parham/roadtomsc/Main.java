@@ -350,7 +350,7 @@ public class Main {
                             u += chain.links();
                         }
 
-                        cplex.addLe(constraint, E[i][j]);
+                        cplex.addLe(constraint, E[i][j], "link_bandwidth_constraint");
                     }
                 }
             }
@@ -368,7 +368,7 @@ public class Main {
                     }
                 }
 
-                cplex.addLe(constraint, vnfmRadius);
+                cplex.addLe(constraint, vnfmRadius, "management_radius_constraint");
             }
 
 
