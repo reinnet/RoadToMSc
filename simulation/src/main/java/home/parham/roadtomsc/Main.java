@@ -197,6 +197,17 @@ public class Main {
             }
 
 
+            cplex.exportModel("simulation.lp");
+
+            if (cplex.solve()) {
+                System.out.println();
+                System.out.println(" Solution Status = " + cplex.getStatus());
+                System.out.println();
+                System.out.println(" cost = " + cplex.getObjValue());
+            } else {
+                System.out.printf("Solve failed: %s\n", cplex.getStatus());
+            }
+
 
         } catch (IloException e) {
             e.printStackTrace();
