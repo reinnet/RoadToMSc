@@ -14,18 +14,18 @@ run the simulation with following java option:
 ```
 ## Results
 
-Node 0: CPU: 1 RAM: 1
-Node 1: CPU: 1 RAM: 1
-Link 0 - 1: BW: 10
-
-VNFM Required CPU: 1
-VNFM Required RAM: 1
-VNFM Required BW: 1
-
-Type 0: CPU: 1 RAM: 1
-
-Chain 0:
-- Node 0: Type 0
+- Node 0: CPU: 1 RAM: 1
+- Node 1: CPU: 1 RAM: 1
+- Link 0 - 1: BW: 10
+***
+- VNFM Required CPU: 1
+- VNFM Required RAM: 1
+- VNFM Required BW: 1
+***
+- Type 0: CPU: 1 RAM: 1
+***
+* Chain 0:
+  - Node 0: Type 0
 
 ```
 Found incumbent of value 0.000000 after 0.00 sec. (0.00 ticks)
