@@ -78,6 +78,7 @@ Chain 0 node 0 manager is on 0-1
 - Link 0 - 2: BW: 10
 - Link 2 - 0: BW: 10
 - Link 1 - 2: BW: 10
+- Link 3 - 4: BW: 10
 ***
 - VNFM Required CPU: 1
 - VNFM Required RAM: 1
