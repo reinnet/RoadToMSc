@@ -91,7 +91,7 @@ Chain 0 node 0 manager is on 0-1
 * Chain 1:
   - Node 0: Type 0
   - Node 1: Type 0
-  - Node 2: TYpe 0
+  - Node 2: Type 0
   - Link 0 - 1: BW: 1
   - Link 0 - 2: BW: 1
 
