@@ -35,6 +35,7 @@ public class Main {
         // VNFM
         int nfvmRam = 1;
         int nfvmCores = 1;
+        int nfvmCapacity = 5;
 
 
         try {
@@ -93,6 +94,21 @@ public class Main {
                 }
             }
 
+            // binary variable assuming the value 1 if the _h_th SFC is assigned to VNFM
+            // on server w
+            String[][] zHatNames = new String[T][W];
+            for (int i = 0; i < T; i++) {
+                for (int j = 0; j < W; j++) {
+                    zHatNames[i][j] = String.format("z^_%d_%d", i, j);
+                }
+            }
+            IloIntVar[][] zHat = new IloIntVar[T][W];
+            for (int i = 0; i < T; i++) {
+                for (int j = 0; j < W; j++) {
+                    zHat[i][j] = cplex.boolVar(zHatNames[i][j]);
+                }
+            }
+
             // objective function
             IloLinearNumExpr expr = cplex.linearNumExpr();
             for (int i = 0; i < T; i++) {
@@ -144,6 +160,40 @@ public class Main {
                     cplex.addEq(constraint, x[h], String.format("service_constraint %d", h));
                 }
                 v += chains[h].nodes();
+            }
+
+
+            // Manage Constraint
+            for (int i = 0; i < T; i++) {
+                IloLinearIntExpr constraint = cplex.linearIntExpr();
+
+                for (int j = 0; j < W; j++) {
+                    constraint.addTerm(1, zHat[i][j]);
+                }
+
+                cplex.addEq(constraint, x[i], String.format("manage_constraint %d", i));
+            }
+
+            // Manage Place Constraint
+            for (int i = 0; i < T; i++) {
+                for (int j = 0; j < W; j++) {
+                    IloLinearIntExpr constraint = cplex.linearIntExpr();
+
+                    constraint.addTerm(1, zHat[i][j]);
+
+                    cplex.addLe(constraint, yHat[j], String.format("manage place constraint %d", j));
+                }
+            }
+
+            // Manager Capacity Constraint
+            for (int i = 0; i < W; i++) {
+                IloLinearIntExpr constraint = cplex.linearIntExpr();
+
+                for (int j = 0; j < T; j++) {
+                    constraint.addTerm(1, zHat[j][i]);
+                }
+
+                cplex.addLe(constraint, nfvmCapacity, String.format("manager_capacity_constraint %d", i));
             }
 
 
