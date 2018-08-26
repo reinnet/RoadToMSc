@@ -14,8 +14,8 @@ public class Main {
     public static void main(String[] args) {
         // physical nodes
         final Node[] nodes = {
-            new Node(2, 2),
-            new Node(2, 2),
+            new Node(1, 1),
+            new Node(1, 1),
         };
         final int W = nodes.length;
 
@@ -199,15 +199,15 @@ public class Main {
             }
 
             // Service Place Constraint
-            for (int i = 0; i < W; i++) {
-                for (int j = 0; j < F; j++) {
+            for (int i = 0; i < F; i++) {
+                for (int j = 0; j < W; j++) {
                     IloLinearIntExpr constraint = cplex.linearIntExpr();
 
                     for (int k = 0; k < V; k++) {
                         constraint.addTerm(1, z[i][j][k]);
                     }
 
-                    cplex.addLe(constraint, y[i][j], String.format("service_place_constraint %d %d", i, j));
+                    cplex.addLe(constraint, y[j][i], String.format("service_place_constraint %d %d", i, j));
                 }
             }
 
@@ -217,8 +217,8 @@ public class Main {
                 for (int k = 0; k < chains[h].nodes(); k++) {
                     IloLinearIntExpr constraint = cplex.linearIntExpr();
 
-                    for (int i = 0; i < W; i++) {
-                        for (int j = 0; j < F; j++) {
+                    for (int i = 0; i < F; i++) {
+                        for (int j = 0; j < W; j++) {
                             cplex.addLe(z[i][j][k + v], chains[h].getNode(k).getIndex() == j ? 1 : 0, "type_constraint");
                             constraint.addTerm(1, z[i][j][k + v]);
                         }
@@ -267,6 +267,7 @@ public class Main {
             // Flow conservation
             // linkConstraint == nodeConstraint
             v = 0;
+            int u = 0;
             for (Chain chain : chains) {
                 for (int i = 0; i < W; i++) {  // Source of Physical link
                     for (int l = 0; l < chain.links(); l++) { // Virtual link
@@ -278,10 +279,10 @@ public class Main {
 
                         for (int j = 0; j < W; j++) { // Destination of Physical link
                             if (E[i][j] > 0) {
-                                linkConstraint.addTerm(1, tau[i][j][l]);
+                                linkConstraint.addTerm(1, tau[i][j][u + l]);
                             }
                             if (E[j][i] > 0) {
-                                linkConstraint.addTerm(-1, tau[j][i][l]);
+                                linkConstraint.addTerm(-1, tau[j][i][u + l]);
                             }
                         }
 
@@ -294,6 +295,7 @@ public class Main {
                     }
                 }
                 v += chain.nodes();
+                u += chain.links();
             }
 
             // Management Flow conservation
@@ -332,20 +334,20 @@ public class Main {
                     if (E[i][j] > 0) {
                         IloLinearIntExpr constraint = cplex.linearIntExpr();
 
-                        int linkCounter = 0;
-                        int nodeCounter = 0;
+                        u = 0;
+                        v = 0;
                         for (Chain chain : chains) {
                             // VNFs
                             for (int k = 0; k < chain.links(); k++) {
-                                constraint.addTerm(chain.getLink(k).getBandwidth(), tau[i][j][k + linkCounter]);
+                                constraint.addTerm(chain.getLink(k).getBandwidth(), tau[i][j][k + u]);
                             }
 
                             // VNFM
                             for (int k = 0; k < chain.nodes(); k++) {
-                                constraint.addTerm(vnfmBandwidth, tauHat[i][j][k + nodeCounter]);
+                                constraint.addTerm(vnfmBandwidth, tauHat[i][j][k + v]);
                             }
-                            nodeCounter += chain.nodes();
-                            linkCounter += chain.links();
+                            v += chain.nodes();
+                            u += chain.links();
                         }
 
                         cplex.addLe(constraint, E[i][j]);
@@ -396,8 +398,8 @@ public class Main {
                 for (int h = 0; h < T; h++) {
                     System.out.printf("Chain %d:\n", h);
                     for (int k = 0; k < chains[h].nodes(); k++) {
-                        for (int i = 0; i < W; i++) {
-                            for (int j = 0; j < F; j++) {
+                        for (int i = 0; i < F; i++) {
+                            for (int j = 0; j < W; j++) {
                                 if (cplex.getValue(z[i][j][k + v]) == 1) {
                                     System.out.printf("Node %d with type %d is mapped on %d\n", k, j, i);
                                 }
@@ -416,6 +418,45 @@ public class Main {
                             System.out.printf("Chain %d manager is %d\n", h, i);
                         }
                     }
+                }
+                System.out.println();
+
+                System.out.println();
+                System.out.println(" >> Instance links");
+                u = 0;
+                for (int h = 0; h < T; h++) {
+                    for (int i = 0; i < W; i++) {
+                        for (int j = 0; j < W; j++) {
+                            if (E[i][j] > 0) {
+                                for (int k = 0; k < chains[h].links(); k++) {
+                                    if (cplex.getValue(tauHat[i][j][u + k]) == 1) {
+                                        Link l = chains[h].getLink(k);
+                                        System.out.printf("Chain %d link %d (%d - %d) manager is on %d-%d\n", h, k, l.getSource(), l.getDestination(), i, j);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    u += chains[h].links();
+                }
+                System.out.println();
+
+                System.out.println();
+                System.out.println(" >> Management links");
+                v = 0;
+                for (int h = 0; h < T; h++) {
+                    for (int i = 0; i < W; i++) {
+                        for (int j = 0; j < W; j++) {
+                            if (E[i][j] > 0) {
+                                for (int k = 0; k < chains[h].nodes(); k++) {
+                                    if (cplex.getValue(tauHat[i][j][v + k]) == 1) {
+                                        System.out.printf("Chain %d node %d manager is on %d-%d\n", h, k, i, j);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    v += chains[h].nodes();
                 }
                 System.out.println();
             } else {
