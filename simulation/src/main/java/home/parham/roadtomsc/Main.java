@@ -74,7 +74,7 @@ public class Main {
             // otherwise its value is zero
             String[] xNames = new String[T];
             for (int i = 0; i < T; i++) {
-                xNames[i] = String.format("x_%d", i);
+                xNames[i] = String.format("x(%d)", i);
             }
             IloIntVar[] x = cplex.boolVarArray(T, xNames);
 
@@ -82,7 +82,7 @@ public class Main {
             String[][] yNames = new String[W][F];
             for (int i = 0; i < W; i++) {
                 for (int j = 0; j < F; j++) {
-                    yNames[i][j] = String.format("y_%d_%d", i, j);
+                    yNames[i][j] = String.format("y(%d,%d)", i, j);
                 }
             }
             IloIntVar[][] y = new IloIntVar[W][F];
@@ -96,7 +96,7 @@ public class Main {
             // otherwise its value is zero
             String[] yHatNames = new String[W];
             for (int i = 0; i < W; i++) {
-                yHatNames[i] = String.format("y^_%d", i);
+                yHatNames[i] = String.format("yh(%d)", i);
             }
             IloIntVar[] yHat = cplex.boolVarArray(W, yHatNames);
 
@@ -108,7 +108,7 @@ public class Main {
                     int v = 0;
                     for (int h = 0; h < T; h++) {
                         for (int k = 0; k < chains[h].nodes(); k++) {
-                            zNames[i][j][k + v] = String.format("z_%d_%d_%d-%d", i, j, h, k);
+                            zNames[i][j][k + v] = String.format("z(%d,%d,%d_%d)", i, j, h, k);
                         }
                         v += chains[h].nodes();
                     }
@@ -128,7 +128,7 @@ public class Main {
             String[][] zHatNames = new String[T][W];
             for (int i = 0; i < T; i++) {
                 for (int j = 0; j < W; j++) {
-                    zHatNames[i][j] = String.format("z^_%d_%d", i, j);
+                    zHatNames[i][j] = String.format("zh(%d,%d)", i, j);
                 }
             }
             IloIntVar[][] zHat = new IloIntVar[T][W];
@@ -146,7 +146,7 @@ public class Main {
                     int u = 0;
                     for (int h = 0; h < T; h++) {
                         for (int k = 0; k < chains[h].links(); k++) {
-                            tauNames[i][j][u + k] = String.format("tau_%d_%d_%d-%d", i, j, h, k);
+                            tauNames[i][j][u + k] = String.format("tau(%d,%d,%d_%d)", i, j, h, k);
                         }
                         u += chains[h].links();
                     }
@@ -169,7 +169,7 @@ public class Main {
                     int v = 0;
                     for (int h = 0; h < T; h++) {
                         for (int k = 0; k <chains[h].nodes(); k++) {
-                            tauHatNames[i][j][v + k] = String.format("tau^_%d_%d_%d-%d", i, j, h, k);
+                            tauHatNames[i][j][v + k] = String.format("tauh(%d,%d,%d_%d)", i, j, h, k);
                         }
                         v += chains[h].nodes();
                     }
@@ -203,8 +203,8 @@ public class Main {
                     cpuConstraint.addTerm(Type.get(j).getCores(), y[i][j]); // instance
                 }
 
-                cplex.addLe(cpuConstraint, nodes[i].getCores(), String.format("node_cpu_constraint %d", i));
-                cplex.addLe(ramConstraint, nodes[i].getRam(), String.format("node_memory_constraint %d", i));
+                cplex.addLe(cpuConstraint, nodes[i].getCores(), String.format("node_cpu_constraint_%d", i));
+                cplex.addLe(ramConstraint, nodes[i].getRam(), String.format("node_memory_constraint_%d", i));
             }
 
             // Service Place Constraint
@@ -216,7 +216,7 @@ public class Main {
                         constraint.addTerm(1, z[i][j][k]);
                     }
 
-                    cplex.addLe(constraint, y[j][i], String.format("service_place_constraint %d %d", i, j));
+                    cplex.addLe(constraint, y[j][i], String.format("service_place_constraint_%d_%d", i, j));
                 }
             }
 
@@ -233,7 +233,7 @@ public class Main {
                         }
                     }
 
-                    cplex.addEq(constraint, x[h], String.format("service_constraint %d", h));
+                    cplex.addEq(constraint, x[h], String.format("service_constraint_%d", h));
                 }
                 v += chains[h].nodes();
             }
@@ -247,7 +247,7 @@ public class Main {
                     constraint.addTerm(1, zHat[i][j]);
                 }
 
-                cplex.addEq(constraint, x[i], String.format("manage_constraint %d", i));
+                cplex.addEq(constraint, x[i], String.format("manage_constraint_%d", i));
             }
 
             // Manage Place Constraint
@@ -257,7 +257,7 @@ public class Main {
 
                     constraint.addTerm(1, zHat[i][j]);
 
-                    cplex.addLe(constraint, yHat[j], String.format("manage place constraint %d", j));
+                    cplex.addLe(constraint, yHat[j], String.format("manage_place_constraint_%d", j));
                 }
             }
 
@@ -269,7 +269,7 @@ public class Main {
                     constraint.addTerm(1, zHat[j][i]);
                 }
 
-                cplex.addLe(constraint, vnfmCapacity, String.format("manager_capacity_constraint %d", i));
+                cplex.addLe(constraint, vnfmCapacity, String.format("manager_capacity_constraint_%d", i));
             }
 
 
@@ -330,7 +330,7 @@ public class Main {
                         }
                         nodeConstraint.addTerm(-1, zHat[h][i]);
 
-                        cplex.addEq(linkConstraint, nodeConstraint, "management flow_conservation");
+                        cplex.addEq(linkConstraint, nodeConstraint, "management_flow_conservation");
                     }
                 }
                 v += chains[h].nodes();
