@@ -12,6 +12,15 @@ run the simulation with following java option:
 ```
 "-Djava.library.path=$USER_HOME$/Application/CPLEX_Studio-Community128/cplex/bin/x86-64_linux"
 ```
+## Step by Step from Proposal
+When you enter MSc of the Amirkabir University of Technology you must first write a proposal
+for your problem and ideas that you have to solve it and present it in professors community.
+for this steps see [presentation](presentation/main.pdf) and [proposal](proposal/AUTthesis.pdf).
+After the proposal, you are free to do whatever you want with your project until next semester. In the next
+semester you must present your idea again for new students and after that, you pass the seminar
+course :tada:. At the end, you must complete your thesis and solution to your proposed problem.
+I wish you a nice thesis :muscle:.
+
 ## Results
 ### 1
 - Node 0: CPU: 1 RAM: 1
