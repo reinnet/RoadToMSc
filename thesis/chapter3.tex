@@ -41,106 +41,205 @@
 بنابراین تابع هدف به شکل زیر می‌باشد:
 
 \begin{latin}\begin{align}
-    \sum_{h=1}^{T} c_hx_h
+    max \sum_{h=1}^{T} c_hx_h
 \end{align}\end{latin}
 
+\begin{center}\begin{latin}\begin{tabular}{|c|p{10cm}|}
+    \hline
+    \(memory(k)\) & required RAM of VNF instance with type \(k\) in GB \\
+    \hline
+    \(core(k)\) & required CPU cores of VNF instance with type \(k\) \\
+    \hline
+    \(\hat{memory}\) & required RAM of VNFM in GB \\
+    \hline
+    \(\hat{core}\) & required CPU cores of VNFM \\
+    \hline
+    \(capacity\) & maximum number of VNF instances that VNFM can handle \\
+    \hline
+    \(len(h)\) & number of VNF instances in \(h\)th SFC request \\
+    \hline
+    \(type(v, k)\) & assuming the value 1 if the VNF instance \(v\) has type \(k\)  \\
+    \hline
+    \(bandwidth(u, v)\) & required bandwidth in link from VNF instance \(u\) to \(v\) \\
+    \hline
+    \(\hat{bandwidth}\) & required bandwidth in managmeent link \\
+    \hline
+    \(radius\) & maximum neighborhood distance for instance management \\
+    \hline
+\end{tabular}\end{latin}\end{center}
 
 
 \begin{center}\begin{latin}\begin{tabular}{|c|p{10cm}|}
     \hline
-    $x_h$ & binary variable assuming the value 1 if the $h$th SFC request is accepted; otherwise its value is zero \\
+    \(x_h\) & binary variable assuming the value 1 if the \(h\)th SFC request is accepted; otherwise its value is zero \\
     \hline
-    $y_{wk}$ & the number of VNF instances of type $k$ that are used in server $w \in V_s^{PN}$ \\
+    \(y_{wk}\) & the number of VNF instances of type \(k\) that are used in server \(w \in V_s^{PN}\) \\
     \hline
-    $z^k_{vw}$ & binary variable assuming the value 1 if the VNF node $v \in \cup_{i=1}^{T} V_{i, F}^{SFC}$ is served by the VNF instance of type k in the server $w \in V_s^{PN}$ \\
+    \(z^k_{vw}\) & binary variable assuming the value 1 if the VNF node \(v \in \cup_{i=1}^{T} V_{i, F}^{SFC}\) is served by the VNF instance of type k in the server \(w \in V_s^{PN}\) \\
     \hline
-    $\bar{y}_w$ & binary varibale assuming the value 1 if VNFM on server $w \in V_s^{PN}$ is used; otherwise its value is zero\\
+    \(\bar{y}_w\) & binary varibale assuming the value 1 if VNFM on server \(w \in V_s^{PN}\) is used; otherwise its value is zero \\
     \hline
-    $\bar{z}_{hw}$ & binary variable assuming the value 1 if $h$th SFC is assigned to VNFM on server $w \in V_s^{PN}$\\
+    \(\bar{z}_{hw}\) & binary variable assuming the value 1 if \(h\)th SFC is assigned to VNFM on server \(w \in V_s^{PN}\) \\
     \hline
 \end{tabular}\end{latin}\end{center}
 
 برای هر نود اندازه‌ی مشخصی از حافظه \lr{RAM}
 در نظر گرفته می‌شود که هر نمونه‌ی کارکرد با توجه به نوع آن مقدار مشخصی از این حافظه را مصرف می‌کند.
-\begin{latin}\begin{align}
-    \sum_{k=1}^F y_{wk} memory(k) + \bar{y_w} \bar{memory} \le N_{ram}^{PN}(w)
-    \quad
-    \forall w \in V_s^{PN}
-\end{align}\end{latin}
+\lr{VNFM} نیز مقدار مشخصی از حافظه را مصرف می‌کند.
 
-برای هر نود تعداد مشخصی از پردازنده در نظر گرفته می‌شود که هر نمونه‌ی کارکرد با توجه به نوع آن مقدار مشخصی از این حافظه را مصرف می‌کند.
-\begin{latin}\begin{align}
-    \sum_{k=1}^F y_{wk} core(k) + \bar{y_w} \bar{core} \le N_{core}^{PN}(w)
-    \quad
-    \forall w \in V_s^{PN}
-\end{align}\end{latin}
+\begin{latin}
+    \textit{Node Memory Constraint:}
+    \begin{align}
+        \sum_{k=1}^F y_{wk} memory(k) + \bar{y_w} \bar{memory} \le N_{ram}^{PN}(w)
+        \quad
+        \forall w \in V_s^{PN}
+    \end{align}
+\end{latin}
+
+برای هر نود تعداد مشخصی از هسته‌های پردازنده در نظر گرفته می‌شود که هر نمونه‌ی کارکرد با توجه به نوع آن مقدار مشخصی از این تعداد را مصرف می‌کند.
+\lr{VNFM} نیز مقدار مشخصی از تعداد هسته‌های پردازنده را مصرف می‌کند.
+
+\begin{latin}
+    \textit{Node CPU Constraint:}
+    \begin{align}
+        \sum_{k=1}^F y_{wk} core(k) + \bar{y_w} \bar{core} \le N_{core}^{PN}(w)
+        \quad
+        \forall w \in V_s^{PN}
+    \end{align}
+\end{latin}
 
 اگر \lr{VNF}, \lr{v}
 توسط \lr{VNF instance} نوع \lr{k}
 روی سرور \lr{w} سرویس شود می‌بایست
 \lr{VNF instance} نوع \lr{k}
 روی سرور \lr{w} فعال شود.
+توجه شود که
 اشتراک گذاری \lr{VNF}ها پشتیبانی نمی‌گردد.
-\begin{latin}\begin{align}
-\sum_{v \in \cup_{i=1}^T V_{i, F}^{SFC}} z_{vw}^k \le y_{wk}
-\quad
-\forall w \in V_s^{PN}, \forall k \in [1,\ldots, F]
-\end{align}\end{latin}
+
+\begin{latin}
+    \textit{Service Place Constraint:}
+    \begin{align}
+        \sum_{v \in \cup_{i=1}^T V_{i, F}^{SFC}} z_{vw}^k \le y_{wk}
+        \quad
+        \forall w \in V_s^{PN}, \forall k \in [1,\ldots, F]
+    \end{align}
+\end{latin}
 
 اگر تقاضای \lr{h}ام پذیرفته شده باشد
 می‌بایست تمام \lr{VNF node}های آن‌
 سرویس شده باشند.
 یک \lr{VNF} حداکثر یکبار سرویس داده شود.
-\begin{latin}\begin{align}
-    x_h = \sum_{k=1}^{F} \sum_{w \in V_{s}^{PN}} z_{vw}^{k}
-    \quad
-    \forall v \in V_{h,F}^{SFC}, \forall h \in [1,\ldots, T]
-\end{align}\end{latin}
+
+\begin{latin}
+    \textit{Service Constraint:}
+    \begin{align}
+        x_h = \sum_{k=1}^{F} \sum_{w \in V_{s}^{PN}} z_{vw}^{k}
+        \quad
+        \forall v \in V_{h,F}^{SFC}, \forall h \in [1,\ldots, T]
+    \end{align}
+\end{latin}
 
 اگر تقاضای \lr{h}ام پذیرفته شده باشد
 می‌بایست توسط یک \lr{VNFM} سرویس شده باشد.
-\begin{latin}\begin{align}
-    x_h = \sum_{w \in V_{s}^{PN}} \bar{z}_{hw}
-    \quad
-    \forall h \in [1,\ldots, T]
-\end{align}\end{latin}
+
+\begin{latin}
+    \textit{Manage Constraint:}
+    \begin{align}
+        x_h = \sum_{w \in V_{s}^{PN}} \bar{z}_{hw}
+        \quad
+        \forall h \in [1,\ldots, T]
+    \end{align}
+\end{latin}
 
 اگر \lr{SFC}، \lr{i}
 توسط \lr{VNFM} روی سرور \lr{w}
 سرویس شود می‌بایست \lr{VNFM} سرور \lr{w}
 فعال شود.
-\begin{latin}\begin{align}
-    \bar{z}_{hw} \le \bar{y}_w
-    \quad
-    \forall w \in V_{s}^{PN}, \forall h \in [1,\ldots, T]
-\end{align}\end{latin}
+
+\begin{latin}
+    \textit{Manager Place Constraint:}
+    \begin{align}
+        \bar{z}_{hw} \le \bar{y}_w
+        \quad
+        \forall w \in V_{s}^{PN}, \forall h \in [1,\ldots, T]
+    \end{align}
+\end{latin}
 
 محدودیت ظرفیت سرویس‌دهی \lr{VNFM}
-\begin{latin}\begin{align}
-    \sum_{i=1}^{T} z_{iw} \le capacity
-    \quad
-    \forall w \in V_{s}^{PN}
-\end{align}\end{latin}
+این محدودیت براساس تعداد ماشین‌های محازی که هر
+\lr{VNFM}
+سرویس می‌دهد تعیین شده است.
+
+\begin{latin}
+    \textit{Manager Capacity Constraint:}
+    \begin{align}
+        \sum_{i=1}^{T} \hat{z}_{iw} * len(i) \le capacity
+        \quad
+        \forall w \in V_{s}^{PN}
+    \end{align}
+\end{latin}
+
+اگر \lr{VNF}، \lr{v} توسط
+\lr{instance}
+نوع \lr{k} روی سرور \lr{w}
+سرویس شود می‌بایست خود از نوع \lr{k} باشد.
+
+\begin{latin}
+    \textit{Type Constraint:}
+    \begin{align}
+        z_{vw}^{k} \le type(v, k)
+        \quad
+        \forall w \in V_{s}^{PN},
+        \forall k \in [1,\ldots, F],
+        \forall v \in \cup_{i=1}^T V_{i, F}^{SFC}
+    \end{align}
+\end{latin}
+
 
 \begin{center}\begin{latin}\begin{tabular}{|c|p{10cm}|}
     \hline
-    $\tau^{(u,v)}_{ij}$ & binary variable assuming the value 1 if the virual link $(u,v)$ is routed on the physical network link $(i,j)$\\
+    \(\tau^{(u,v)}_{ij}\) & binary variable assuming the value 1 if the virual link \((u,v)\) is routed on the physical network link \((i,j)\) \\
     \hline
-    $\bar{\tau}^{v}_{ij}$ & binary variable assuming the value 1 if the managemnt of VNF node $v$ is routed on the physical network link $(i,j)$\\
+    \(\bar{\tau}^{v}_{ij}\) & binary variable assuming the value 1 if the managemnt of VNF node $v$ is routed on the physical network link \((i,j)\) \\
     \hline
 \end{tabular}\end{latin}\end{center}
 
-\lr{Flow Conservation}
-\begin{latin}\begin{align}
-    \sum_{(i,j) \in E^{PN}} \tau_{ij}^{(u,v)} - \sum_{(j,i) \in E^{PN}} \tau_{ji}^{(u,v)} = \sum_{k=1}^{F} z_{ui}^{k} - \sum_{k=1}^{F} z_{vi}^{k} \nonumber \\
-    \forall i \in V_{S}^{PN}, (u,v) \in E_{h}^{SFC}, h \in [1,\ldots, T]
-\end{align}\end{latin}
-\begin{latin}\begin{align}
-    \sum_{(i,j) \in E^{PN}} \bar{\tau}_{ij}^{v} - \sum_{(j,i) \in E^{PN}} \bar{\tau}_{ji}^{v} = \sum_{k=1}^{F} z_{vi}^{k} - \bar{z}_{hi} \nonumber \\
-    \forall i \in V_{S}^{PN}, v \in V_{h, F}^{SFC}, h \in [1,\ldots, T]
-\end{align}\end{latin}
+محدودیت زیر بقای جریان در لینک‌های مورد تقاضای کاربر را تضمین می‌کند.
+\begin{latin}
+    \textit{Flow Conservation:}
+    \begin{align}
+        \sum_{(i,j) \in E^{PN}} \tau_{ij}^{(u,v)} - \sum_{(j,i) \in E^{PN}} \tau_{ji}^{(u,v)} = \sum_{k=1}^{F} z_{ui}^{k} - \sum_{k=1}^{F} z_{vi}^{k} \nonumber \\
+        \forall i \in V_{S}^{PN}, (u,v) \in E_{h}^{SFC}, h \in [1,\ldots, T]
+    \end{align}
+\end{latin}
+
+محدودیت زیر بقای جریان در لینک‌های مدیریتی را تضمین می‌کند.
+\begin{latin}
+    \textit{Management flow Conservation:}
+    \begin{align}
+        \sum_{(i,j) \in E^{PN}} \bar{\tau}_{ij}^{v} - \sum_{(j,i) \in E^{PN}} \bar{\tau}_{ji}^{v} = \sum_{k=1}^{F} z_{vi}^{k} - \bar{z}_{hi} \nonumber \\
+        \forall i \in V_{S}^{PN}, v \in V_{h, F}^{SFC}, h \in [1,\ldots, T]
+    \end{align}
+\end{latin}
 
 محدودیت ظرفیت لینک‌ها
-\begin{latin}\begin{align}
-    \sum_{v \in \cup_{i=1}^{T} V_{i,F}^{SFC}} \bar{\tau}_{ij}^{v} * \bar{bandwidth} + \sum_{(u,v) \in \cup_{i=1}^{T} E_{i}^{SFC}} \tau_{ij}^{(u,v)} * bandwidth(u,v) \le C_{ij}
-\end{align}\end{latin}
+\begin{latin}
+    \textit{Link Bandwidth Constraint:}
+    \begin{align}
+        \sum_{v \in \cup_{i=1}^{T} V_{i,F}^{SFC}} \bar{\tau}_{ij}^{v} * \bar{bandwidth} + \sum_{(u,v) \in \cup_{i=1}^{T} E_{i}^{SFC}} \tau_{ij}^{(u,v)} * bandwidth(u,v) \le C_{ij} \nonumber \\
+        \forall (i, j) \in E^{PN}
+    \end{align}
+\end{latin}
+
+شعاع همسایگی تضمین می‌کند که زمان سرویس‌دهی توسط
+\lr{VNFM}ها
+در یک بازه مشخص (از نظر تعداد هاب)
+خواهد بود.
+\begin{latin}
+    \textit{Radius Constraint}
+    \begin{align}
+        \sum_{(i, j) \in E^{PN}} \bar{\tau}_{ij}^{v} \le radius
+        \quad
+        \forall v \in \cup_{i=1}^T V_{i, F}^{SFC}
+    \end{align}
+\end{latin}
