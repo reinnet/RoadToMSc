@@ -266,7 +266,7 @@ public class Main {
                 IloLinearIntExpr constraint = cplex.linearIntExpr();
 
                 for (int j = 0; j < T; j++) {
-                    constraint.addTerm(1, zHat[j][i]);
+                    constraint.addTerm(chains[j].nodes(), zHat[j][i]);
                 }
 
                 cplex.addLe(constraint, vnfmCapacity, String.format("manager_capacity_constraint_%d", i));
