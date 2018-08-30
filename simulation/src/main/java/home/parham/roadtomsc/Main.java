@@ -42,13 +42,14 @@ public class Main {
 
         // number of VNF types
         Type.add(1, 1); // Type 0
+        Type.add(1, 2); // Type 1
         final int F = Type.len();
 
         // number of SFC requests
         // consider to create requests after creating VNF types
         final Chain[] chains = {
                 new Chain(10).addNode(0),
-                new Chain(10).addNode(0).addNode(0).addNode(0).addLink(1, 0, 1)
+                new Chain(10).addNode(0).addNode(1).addNode(0).addLink(1, 0, 1)
                 .addLink(1, 0, 2),
         };
         final int T = chains.length;
