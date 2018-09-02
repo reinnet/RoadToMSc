@@ -110,7 +110,7 @@ public class Main {
                             if (cfg.getE()[i][j] > 0) {
 
                                 for (int k = 0; k < cfg.getChains().get(h).links(); k++) {
-                                    if (cplex.getValue(model.getTauHat()[i][j][u + k]) == 1) {
+                                    if (cplex.getValue(model.getTau()[i][j][u + k]) == 1) {
                                         Link l = cfg.getChains().get(h).getLink(k);
                                         System.out.printf("Chain %d link %d (%d - %d) is on %d-%d\n", h, k,
                                                 l.getSource(), l.getDestination(), i, j);
