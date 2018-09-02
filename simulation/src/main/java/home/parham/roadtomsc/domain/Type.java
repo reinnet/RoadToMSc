@@ -7,21 +7,6 @@ public class Type {
         types = new ArrayList<>();
     }
 
-    private static ArrayList<Type> types;
-
-    public static void add(int cores, int ram) {
-        types.add(new Type(types.size(), cores, ram));
-    }
-
-    public static Type get(int id) {
-        return types.get(id);
-    }
-
-    public static int len() {
-        return types.size();
-    }
-
-
     /**
      * cores indicate number of CPU cores
      */
@@ -37,6 +22,20 @@ public class Type {
      * index indicate type identifier
      */
     private int index;
+
+    private static ArrayList<Type> types;
+
+    public static void add(int cores, int ram) {
+        types.add(new Type(types.size(), cores, ram));
+    }
+
+    public static Type get(int id) {
+        return types.get(id);
+    }
+
+    public static int len() {
+        return types.size();
+    }
 
     private Type(int index, int cores, int ram) {
         this.cores = cores;
