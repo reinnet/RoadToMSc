@@ -7,6 +7,11 @@ import home.parham.roadtomsc.domain.Type;
 
 import java.util.ArrayList;
 
+/**
+ * Config represents problem configuration
+ * by configuration we mean parameters that are given
+ * by user.
+ */
 public class Config {
 
     /**
