@@ -1,55 +1,17 @@
 package home.parham.roadtomsc.model;
 
 import home.parham.roadtomsc.domain.Chain;
-import home.parham.roadtomsc.domain.Link;
-import home.parham.roadtomsc.domain.Node;
 import home.parham.roadtomsc.domain.Type;
 import ilog.concert.*;
 
+/**
+ * Model creates variables, objective and constraints of mathematical
+ * model of our problem.
+ */
 public class Model {
     private IloModeler modeler;
 
-    /**
-     * physical nodes
-     */
-    private Node[] nodes;
-    private int W;
-
-    /**
-     * physical links
-     */
-    private Link[] links;
-    /**
-     * connectivity matrix
-     */
-    private int[][] E;
-
-    // number of VNF types
-    private int F;
-
-    /**
-     * SFC requests chains
-     */
-    private Chain[] chains;
-    /**
-     * number of SFC requests
-     */
-    private int T;
-
-    /**
-     * total number of VNFs
-     */
-    private int V;
-    /**
-     * total number of virtual links
-     */
-    private int U;
-
-    /**
-     * VNFMs parameters
-     */
-    private int vnfmRam, vnfmCores, vnfmCapacity, vnfmRadius, vnfmBandwidth;
-
+    private Config cfg;
 
     /**
      * binary variable assuming the value 1 if the _h_th SFC request is accepted;
@@ -107,64 +69,12 @@ public class Model {
      */
     private IloIntVar[][][] tauHat;
 
-    public Model(IloModeler modeler) throws IloException {
+    public Model(IloModeler modeler, Config cfg) {
         this.modeler = modeler;
-
-        // physical nodes
-        this.nodes = new Node[]{
-                new Node(1, 1),
-                new Node(1, 1),
-                new Node(2, 4),
-                new Node(1, 1),
-                new Node(1, 1),
-        };
-        this.W = nodes.length;
-
-        // physical links
-        this.links = new Link[]{
-                new Link(10, 0, 1),
-                new Link(10, 0, 2),
-                new Link(10, 2, 0),
-                new Link(10, 1, 2),
-                new Link(10, 3, 4),
-        };
-        // connectivity matrix
-        this.E = new int[W][W];
-        for (int i = 0; i < W; i++) {
-            for (int j = 0; j < W; j++) {
-                E[i][j] = 0;
-            }
+        if (!cfg.isBuild()) {
+            throw new IllegalArgumentException("Configuration must build before use");
         }
-        for (Link link : links) {
-            E[link.getSource()][link.getDestination()] = link.getBandwidth();
-        }
-
-        // VNF types
-        Type.add(1, 1); // Type 0
-        Type.add(1, 2); // Type 1
-        this.F = Type.len();
-
-        // SFC requests
-        // consider to create requests after creating VNF types
-        this.chains = new Chain[]{
-                new Chain(10).addNode(0),
-                new Chain(10).addNode(0).addNode(1).addNode(0).addLink(1, 0, 1)
-                        .addLink(1, 0, 2),
-        };
-        this.T = chains.length;
-
-        // Total number of VNFs and virtual links
-        for (Chain chain : chains) {
-            this.V += chain.nodes();
-            this.U += chain.links();
-        }
-
-        // VNFMs parameters
-        this.vnfmRam = 1;
-        this.vnfmCores = 1;
-        this.vnfmCapacity = 5;
-        this.vnfmRadius = 5;
-        this.vnfmBandwidth = 1;
+        this.cfg = cfg;
     }
 
     /**
@@ -174,97 +84,99 @@ public class Model {
      */
     public Model variables() throws IloException {
         // x
-        String[] xNames = new String[this.T];
-        for (int i = 0; i < this.T; i++) {
+        String[] xNames = new String[this.cfg.getT()];
+        for (int i = 0; i < this.cfg.getT(); i++) {
             xNames[i] = String.format("x(%d)", i);
         }
-        this.x = this.modeler.boolVarArray(this.T, xNames);
+        this.x = this.modeler.boolVarArray(this.cfg.getT(), xNames);
 
         // y
-        String[][] yNames = new String[this.W][this.F];
-        for (int i = 0; i < this.W; i++) {
-            for (int j = 0; j < this.F; j++) {
+        String[][] yNames = new String[this.cfg.getW()][this.cfg.getF()];
+        for (int i = 0; i < this.cfg.getW(); i++) {
+            for (int j = 0; j < this.cfg.getF(); j++) {
                 yNames[i][j] = String.format("y(%d,%d)", i, j);
             }
         }
-        this.y = new IloIntVar[this.W][this.F];
-        for (int i = 0; i < this.W; i++) {
-            for (int j = 0; j < this.F; j++) {
+        this.y = new IloIntVar[this.cfg.getW()][this.cfg.getF()];
+        for (int i = 0; i < this.cfg.getW(); i++) {
+            for (int j = 0; j < this.cfg.getF(); j++) {
                 this.y[i][j] = this.modeler.intVar(0, Integer.MAX_VALUE, yNames[i][j]);
             }
         }
 
         // yHat
-        String[] yHatNames = new String[this.W];
-        for (int i = 0; i < this.W; i++) {
+        String[] yHatNames = new String[this.cfg.getW()];
+        for (int i = 0; i < this.cfg.getW(); i++) {
             yHatNames[i] = String.format("yh(%d)", i);
         }
-        this.yHat = this.modeler.intVarArray(0, Integer.MAX_VALUE, W, yHatNames);
+        this.yHat = this.modeler.intVarArray(0, Integer.MAX_VALUE, this.cfg.getW(), yHatNames);
 
         // z
-        String[][][] zNames = new String[this.F][this.W][this.V];
-        for (int i = 0; i < this.F; i++) {
-            for (int j = 0; j < this.W; j++) {
+        String[][][] zNames = new String[this.cfg.getF()][this.cfg.getW()][this.cfg.getV()];
+        for (int i = 0; i < this.cfg.getF(); i++) {
+            for (int j = 0; j < this.cfg.getW(); j++) {
                 int v = 0;
-                for (int h = 0; h < this.T; h++) {
-                    for (int k = 0; k < this.chains[h].nodes(); k++) {
+                for (int h = 0; h < this.cfg.getT(); h++) {
+                    for (int k = 0; k < this.cfg.getChains().get(h).nodes(); k++) {
                         zNames[i][j][k + v] = String.format("z(%d,%d,%d_%d)", i, j, h, k);
                     }
-                    v += chains[h].nodes();
+                    v += this.cfg.getChains().get(h).nodes();
                 }
             }
         }
-        this.z = new IloIntVar[this.F][this.W][this.V];
-        for (int i = 0; i < this.F; i++) {
-            for (int j = 0; j < this.W; j++) {
-                for (int k = 0; k < this.V; k++) {
+        this.z = new IloIntVar[this.cfg.getF()][this.cfg.getW()][this.cfg.getV()];
+        for (int i = 0; i < this.cfg.getF(); i++) {
+            for (int j = 0; j < this.cfg.getW(); j++) {
+                for (int k = 0; k < this.cfg.getV(); k++) {
                     this.z[i][j][k] = modeler.boolVar(zNames[i][j][k]);
                 }
             }
         }
 
         // zHat
-        String[][] zHatNames = new String[this.T][this.W];
-        for (int i = 0; i < this.T; i++) {
-            for (int j = 0; j < this.W; j++) {
+        String[][] zHatNames = new String[this.cfg.getT()][this.cfg.getW()];
+        for (int i = 0; i < this.cfg.getT(); i++) {
+            for (int j = 0; j < this.cfg.getW(); j++) {
                 zHatNames[i][j] = String.format("zh(%d,%d)", i, j);
             }
         }
-        this.zHat = new IloIntVar[this.T][this.W];
-        for (int i = 0; i < this.T; i++) {
-            for (int j = 0; j < this.W; j++) {
+        this.zHat = new IloIntVar[this.cfg.getT()][this.cfg.getW()];
+        for (int i = 0; i < this.cfg.getT(); i++) {
+            for (int j = 0; j < this.cfg.getW(); j++) {
                 this.zHat[i][j] = this.modeler.boolVar(zHatNames[i][j]);
             }
         }
 
         // tau, tauHat
-        String[][][] tauNames = new String[this.W][this.W][this.U];
-        String[][][] tauHatNames = new String[this.W][this.W][this.V];
-        for (int i = 0; i < this.W; i++) {
-            for (int j = 0; j < this.W; j++) {
+        String[][][] tauNames = new String[this.cfg.getW()][this.cfg.getW()][this.cfg.getU()];
+        String[][][] tauHatNames = new String[this.cfg.getW()][this.cfg.getW()][this.cfg.getV()];
+        for (int i = 0; i < this.cfg.getW(); i++) {
+            for (int j = 0; j < this.cfg.getW(); j++) {
                 int u = 0;
                 int v = 0;
-                for (int h = 0; h < this.T; h++) {
-                    for (int k = 0; k < this.chains[h].links(); k++) {
+                for (int h = 0; h < this.cfg.getT(); h++) {
+                    for (int k = 0; k < this.cfg.getChains().get(h).links(); k++) {
                         tauNames[i][j][u + k] = String.format("tau(%d,%d,%d_%d)", i, j, h, k);
                     }
-                    for (int k = 0; k < this.chains[h].nodes(); k++) {
+                    u += this.cfg.getChains().get(h).links();
+
+                    for (int k = 0; k < this.cfg.getChains().get(h).nodes(); k++) {
                         tauHatNames[i][j][v + k] = String.format("tauh(%d,%d,%d_%d)", i, j, h, k);
                     }
-                    v += chains[h].nodes();
-                    u += chains[h].links();
-
+                    v += this.cfg.getChains().get(h).nodes();
                 }
             }
         }
-        this.tauHat = new IloIntVar[this.W][this.W][this.V];
-        this.tau = new IloIntVar[this.W][this.W][this.U];
-        for (int i = 0; i < this.W; i++) {
-            for (int j = 0; j < this.W; j++) {
-                for (int k = 0; k < this.U; k++) {
+        this.tauHat = new IloIntVar[this.cfg.getW()][this.cfg.getW()][this.cfg.getV()];
+        this.tau = new IloIntVar[this.cfg.getW()][this.cfg.getW()][this.cfg.getU()];
+        for (int i = 0; i < this.cfg.getW(); i++) {
+            for (int j = 0; j < this.cfg.getW(); j++) {
+
+                for (int k = 0; k < this.cfg.getU(); k++) {
                     this.tau[i][j][k] = modeler.boolVar(tauNames[i][j][k]);
                 }
-                for (int k = 0; k < this.V; k++) {
+
+                for (int k = 0; k < this.cfg.getV(); k++) {
                     this.tauHat[i][j][k] = modeler.boolVar(tauHatNames[i][j][k]);
                 }
             }
@@ -280,8 +192,8 @@ public class Model {
      */
     public Model objective() throws IloException {
         IloLinearNumExpr expr = this.modeler.linearNumExpr();
-        for (int i = 0; i < T; i++) {
-            expr.addTerm(chains[i].getCost(), x[i]);
+        for (int i = 0; i < this.cfg.getT(); i++) {
+            expr.addTerm(this.cfg.getChains().get(i).getCost(), this.x[i]);
         }
         this.modeler.addMaximize(expr);
 
@@ -315,20 +227,22 @@ public class Model {
      * @throws IloException
      */
     private void nodeMemoryCPUConstraint() throws IloException {
-        for (int i = 0; i < W; i++) {
+        for (int i = 0; i < this.cfg.getW(); i++) {
             IloLinearNumExpr ramConstraint = this.modeler.linearNumExpr();
             IloLinearNumExpr cpuConstraint = this.modeler.linearNumExpr();
 
-            ramConstraint.addTerm(this.vnfmRam, this.yHat[i]); // VNFMs ram
-            cpuConstraint.addTerm(this.vnfmCores, this.yHat[i]); // VNFMs cpu
+            ramConstraint.addTerm(this.cfg.getVnfmRam(), this.yHat[i]); // VNFMs ram
+            cpuConstraint.addTerm(this.cfg.getVnfmCores(), this.yHat[i]); // VNFMs cpu
 
-            for (int j = 0; j < this.F; j++) {
+            for (int j = 0; j < this.cfg.getF(); j++) {
                 ramConstraint.addTerm(Type.get(j).getRam(), this.y[i][j]); // instance ram
                 cpuConstraint.addTerm(Type.get(j).getCores(), this.y[i][j]); // instance cpu
             }
 
-            this.modeler.addLe(cpuConstraint, this.nodes[i].getCores(), String.format("node_cpu_constraint_%d", i));
-            this.modeler.addLe(ramConstraint, this.nodes[i].getRam(), String.format("node_memory_constraint_%d", i));
+            this.modeler.addLe(cpuConstraint, this.cfg.getNodes().get(i).getCores(),
+                    String.format("node_cpu_constraint_%d", i));
+            this.modeler.addLe(ramConstraint, this.cfg.getNodes().get(i).getRam(),
+                    String.format("node_memory_constraint_%d", i));
         }
     }
 
@@ -337,11 +251,11 @@ public class Model {
      * @throws IloException
      */
     private void servicePlaceConstraint() throws IloException {
-        for (int i = 0; i < this.F; i++) {
-            for (int j = 0; j < this.W; j++) {
+        for (int i = 0; i < this.cfg.getF(); i++) {
+            for (int j = 0; j < this.cfg.getW(); j++) {
                 IloLinearIntExpr constraint = this.modeler.linearIntExpr();
 
-                for (int k = 0; k < this.V; k++) {
+                for (int k = 0; k < this.cfg.getV(); k++) {
                     constraint.addTerm(1, this.z[i][j][k]);
                 }
 
@@ -356,21 +270,21 @@ public class Model {
      */
     private void serviceTypeConstraint() throws IloException {
         int v = 0;
-        for (int h = 0; h < this.T; h++) {
-            for (int k = 0; k < this.chains[h].nodes(); k++) {
+        for (int h = 0; h < this.cfg.getT(); h++) {
+            for (int k = 0; k < this.cfg.getChains().get(h).nodes(); k++) {
                 IloLinearIntExpr constraint = this.modeler.linearIntExpr();
 
-                for (int i = 0; i < F; i++) {
-                    for (int j = 0; j < W; j++) {
+                for (int i = 0; i < this.cfg.getF(); i++) {
+                    for (int j = 0; j < this.cfg.getW(); j++) {
                         this.modeler.addLe(this.z[i][j][k + v],
-                                this.chains[h].getNode(k).getIndex() == i ? 1 : 0, "type_constraint");
+                                this.cfg.getChains().get(h).getNode(k).getIndex() == i ? 1 : 0, "type_constraint");
                         constraint.addTerm(1, this.z[i][j][k + v]);
                     }
                 }
 
                 this.modeler.addEq(constraint, this.x[h], String.format("service_constraint_%d", h));
             }
-            v += this.chains[h].nodes();
+            v += this.cfg.getChains().get(h).nodes();
         }
     }
 
@@ -379,10 +293,10 @@ public class Model {
      * @throws IloException
      */
     private void manageConstraint() throws IloException {
-            for (int i = 0; i < this.T; i++) {
+            for (int i = 0; i < this.cfg.getT(); i++) {
                 IloLinearIntExpr constraint = this.modeler.linearIntExpr();
 
-                for (int j = 0; j < this.W; j++) {
+                for (int j = 0; j < this.cfg.getW(); j++) {
                     constraint.addTerm(1, this.zHat[i][j]);
                 }
 
@@ -396,9 +310,10 @@ public class Model {
      * @throws IloException
      */
     private void managePlaceConstraint() throws IloException {
-        for (int j = 0; j < this.W; j++) {
+        for (int j = 0; j < this.cfg.getW(); j++) {
             IloLinearIntExpr constraint = this.modeler.linearIntExpr();
-            for (int i = 0; i < this.T; i++) {
+
+            for (int i = 0; i < this.cfg.getT(); i++) {
                 constraint.addTerm(1, this.zHat[i][j]);
             }
 
@@ -411,14 +326,15 @@ public class Model {
      * @throws IloException
      */
     private void managerCapacityConstraint() throws IloException {
-        for (int i = 0; i < this.W; i++) {
+        for (int i = 0; i < this.cfg.getW(); i++) {
             IloLinearIntExpr constraint = this.modeler.linearIntExpr();
 
-            for (int j = 0; j < this.T; j++) {
-                constraint.addTerm(this.chains[j].nodes(), this.zHat[j][i]);
+            for (int j = 0; j < this.cfg.getT(); j++) {
+                constraint.addTerm(this.cfg.getChains().get(j).nodes(), this.zHat[j][i]);
             }
 
-            this.modeler.addLe(constraint, vnfmCapacity, String.format("manager_capacity_constraint_%d", i));
+            this.modeler.addLe(constraint, this.cfg.getVnfmCapacity(),
+                    String.format("manager_capacity_constraint_%d", i));
         }
     }
 
@@ -431,8 +347,8 @@ public class Model {
         // linkConstraint == nodeConstraint
         int v = 0;
         int u = 0;
-        for (Chain chain : chains) {
-            for (int i = 0; i < W; i++) {  // Source of Physical link
+        for (Chain chain : this.cfg.getChains()) {
+            for (int i = 0; i < this.cfg.getW(); i++) {  // Source of Physical link
                 for (int l = 0; l < chain.links(); l++) { // Virtual link
                     int virtualSource = chain.getLink(l).getSource() + v;
                     int virtualDestination = chain.getLink(l).getDestination() + v;
@@ -440,16 +356,18 @@ public class Model {
                     IloLinearIntExpr linkConstraint = this.modeler.linearIntExpr();
                     IloLinearIntExpr nodeConstraint = this.modeler.linearIntExpr();
 
-                    for (int j = 0; j < W; j++) { // Destination of Physical link
-                        if (E[i][j] > 0) {
+                    // link constraint
+                    for (int j = 0; j < this.cfg.getW(); j++) { // Destination of Physical link
+                        if (this.cfg.getE()[i][j] > 0) {
                             linkConstraint.addTerm(1, this.tau[i][j][u + l]);
                         }
-                        if (E[j][i] > 0) {
+                        if (this.cfg.getE()[j][i] > 0) {
                             linkConstraint.addTerm(-1, this.tau[j][i][u + l]);
                         }
                     }
 
-                    for (int k = 0; k < F; k++) {
+                    // node constraint
+                    for (int k = 0; k < this.cfg.getF(); k++) {
                         nodeConstraint.addTerm(1, this.z[k][i][virtualSource]);
                         nodeConstraint.addTerm(-1, this.z[k][i][virtualDestination]);
                     }
@@ -469,22 +387,25 @@ public class Model {
     private void managementFlowConservation() throws IloException {
         // linkConstraint == nodeConstraint
         int v = 0;
-        for (int h = 0; h < this.T; h++) {
-            for (int i = 0; i < this.W; i++) {  // Source of Physical link
-                for (int n = 0; n < this.chains[h].nodes(); n++) { // Virtual link
+        for (int h = 0; h < this.cfg.getT(); h++) {
+            for (int i = 0; i < this.cfg.getW(); i++) {  // Source of Physical link
+                for (int n = 0; n < this.cfg.getChains().get(h).nodes(); n++) { // Virtual link
+
                     IloLinearIntExpr linkConstraint = this.modeler.linearIntExpr();
                     IloLinearIntExpr nodeConstraint = this.modeler.linearIntExpr();
 
-                    for (int j = 0; j < this.W; j++) { // Destination of Physical link
-                        if (this.E[i][j] > 0) {
+                    // link constraint
+                    for (int j = 0; j < this.cfg.getW(); j++) { // Destination of Physical link
+                        if (this.cfg.getE()[i][j] > 0) {
                             linkConstraint.addTerm(1, this.tauHat[i][j][v + n]);
                         }
-                        if (this.E[j][i] > 0) {
+                        if (this.cfg.getE()[j][i] > 0) {
                             linkConstraint.addTerm(-1, this.tauHat[j][i][v + n]);
                         }
                     }
 
-                    for (int k = 0; k < F; k++) {
+                    // node constraint
+                    for (int k = 0; k < this.cfg.getF(); k++) {
                         nodeConstraint.addTerm(1, this.z[k][i][v + n]);
                     }
                     nodeConstraint.addTerm(-1, this.zHat[h][i]);
@@ -492,7 +413,7 @@ public class Model {
                     this.modeler.addEq(linkConstraint, nodeConstraint, "management_flow_conservation");
                 }
             }
-            v += chains[h].nodes();
+            v += this.cfg.getChains().get(h).nodes();
         }
     }
 
@@ -501,14 +422,14 @@ public class Model {
      * @throws IloException
      */
     private void linkBandwidthConstraint() throws IloException {
-        for (int i = 0; i < this.W; i++) {
-            for (int j = 0; j < this.W; j++) {
-                if (this.E[i][j] > 0) {
+        for (int i = 0; i < this.cfg.getW(); i++) {
+            for (int j = 0; j < this.cfg.getW(); j++) {
+                if (this.cfg.getE()[i][j] > 0) {
                     IloLinearIntExpr constraint = this.modeler.linearIntExpr();
 
                     int u = 0;
                     int v = 0;
-                    for (Chain chain : this.chains) {
+                    for (Chain chain : this.cfg.getChains()) {
                         // VNFs
                         for (int k = 0; k < chain.links(); k++) {
                             constraint.addTerm(chain.getLink(k).getBandwidth(), this.tau[i][j][k + u]);
@@ -516,13 +437,13 @@ public class Model {
 
                         // VNFM
                         for (int k = 0; k < chain.nodes(); k++) {
-                            constraint.addTerm(this.vnfmBandwidth, this.tauHat[i][j][k + v]);
+                            constraint.addTerm(this.cfg.getVnfmBandwidth(), this.tauHat[i][j][k + v]);
                         }
                         v += chain.nodes();
                         u += chain.links();
                     }
 
-                    this.modeler.addLe(constraint, this.E[i][j], "link_bandwidth_constraint");
+                    this.modeler.addLe(constraint, this.cfg.getE()[i][j], "link_bandwidth_constraint");
                 }
             }
         }
@@ -533,18 +454,46 @@ public class Model {
      * @throws IloException
      */
     private void radiusConstraint() throws IloException {
-        for (int i = 0; i < this.V; i++) {
+        for (int i = 0; i < this.cfg.getV(); i++) {
             IloLinearIntExpr constraint = this.modeler.linearIntExpr();
 
-            for (int j = 0; j < this.W; j++) {
-                for (int k = 0; k < this.W; k++) {
-                    if (this.E[j][k] > 0) {
+            for (int j = 0; j < this.cfg.getW(); j++) {
+                for (int k = 0; k < this.cfg.getW(); k++) {
+                    if (this.cfg.getE()[j][k] > 0) {
                         constraint.addTerm(1, this.tauHat[j][k][i]);
                     }
                 }
             }
 
-            this.modeler.addLe(constraint, this.vnfmRadius, "management_radius_constraint");
+            this.modeler.addLe(constraint, this.cfg.getVnfmRadius(), "management_radius_constraint");
         }
+    }
+
+    public IloIntVar[] getX() {
+        return x;
+    }
+
+    public IloIntVar[][] getY() {
+        return y;
+    }
+
+    public IloIntVar[] getyHat() {
+        return yHat;
+    }
+
+    public IloIntVar[][][] getZ() {
+        return z;
+    }
+
+    public IloIntVar[][] getzHat() {
+        return zHat;
+    }
+
+    public IloIntVar[][][] getTau() {
+        return tau;
+    }
+
+    public IloIntVar[][][] getTauHat() {
+        return tauHat;
     }
 }
