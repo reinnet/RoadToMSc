@@ -93,13 +93,12 @@ public class Main {
                 }
             }
 
-            // binary variable assuming the value 1 if VNFM on server w is used;
-            // otherwise its value is zero
+            // The number of VNFMs that are used in server _w_
             String[] yHatNames = new String[W];
             for (int i = 0; i < W; i++) {
                 yHatNames[i] = String.format("yh(%d)", i);
             }
-            IloIntVar[] yHat = cplex.boolVarArray(W, yHatNames);
+            IloIntVar[] yHat = cplex.intVarArray(0, Integer.MAX_VALUE, W, yHatNames);
 
             // binary variable assuming the value 1 if the VNF node _v_ is served by the VNF instance of type
             // _k_ in the server _w_
@@ -185,7 +184,7 @@ public class Main {
                 }
             }
 
-            // objective function
+            // Objective function
             IloLinearNumExpr expr = cplex.linearNumExpr();
             for (int i = 0; i < T; i++) {
                 expr.addTerm(chains[i].getCost(), x[i]);
@@ -252,14 +251,13 @@ public class Main {
             }
 
             // Manage Place Constraint
-            for (int i = 0; i < T; i++) {
-                for (int j = 0; j < W; j++) {
-                    IloLinearIntExpr constraint = cplex.linearIntExpr();
-
+            for (int j = 0; j < W; j++) {
+                IloLinearIntExpr constraint = cplex.linearIntExpr();
+                for (int i = 0; i < T; i++) {
                     constraint.addTerm(1, zHat[i][j]);
-
-                    cplex.addLe(constraint, yHat[j], String.format("manage_place_constraint_%d", j));
                 }
+
+                cplex.addLe(constraint, yHat[j], String.format("manage_place_constraint_%d", j));
             }
 
             // Manager Capacity Constraint
