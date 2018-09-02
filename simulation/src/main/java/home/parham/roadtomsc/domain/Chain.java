@@ -18,8 +18,8 @@ public class Chain {
         return this;
     }
 
-    public Chain addLink(int bandwith, int source, int desitnation) {
-        this.links.add(new Link(bandwith, source, desitnation));
+    public Chain addLink(int bandwidth, int source, int destination) {
+        this.links.add(new Link(bandwidth, source, destination));
         return this;
     }
 
