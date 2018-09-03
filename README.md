@@ -24,7 +24,7 @@ course :tada:. At the end, you must complete your thesis and solution to your pr
 I wish you a nice thesis :muscle:.
 
 ## Special Thanks
-I am want to thank Behrooz Farkiani who help me so much in this dark way.
+I want to thank Behrooz Farkiani who help me so much in this dark way.
 
 ## Results
 ### 1
