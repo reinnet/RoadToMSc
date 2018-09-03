@@ -83,13 +83,27 @@ public class Model {
      * @throws IloException
      */
     public Model variables() throws IloException {
+        xVariable();
+        yVariable();
+        yHatVariable();
+        zVariable();
+        zHatVariable();
+
+        tauTauHatVariable();
+
+        return this;
+    }
+
+    private void xVariable() throws IloException {
         // x
         String[] xNames = new String[this.cfg.getT()];
         for (int i = 0; i < this.cfg.getT(); i++) {
             xNames[i] = String.format("x(%d)", i);
         }
         this.x = this.modeler.boolVarArray(this.cfg.getT(), xNames);
+    }
 
+    private void yVariable() throws IloException {
         // y
         String[][] yNames = new String[this.cfg.getW()][this.cfg.getF()];
         for (int i = 0; i < this.cfg.getW(); i++) {
@@ -103,14 +117,18 @@ public class Model {
                 this.y[i][j] = this.modeler.intVar(0, Integer.MAX_VALUE, yNames[i][j]);
             }
         }
+    }
 
+    private void yHatVariable() throws IloException {
         // yHat
         String[] yHatNames = new String[this.cfg.getW()];
         for (int i = 0; i < this.cfg.getW(); i++) {
             yHatNames[i] = String.format("yh(%d)", i);
         }
         this.yHat = this.modeler.intVarArray(0, Integer.MAX_VALUE, this.cfg.getW(), yHatNames);
+    }
 
+    private void zVariable() throws IloException {
         // z
         String[][][] zNames = new String[this.cfg.getF()][this.cfg.getW()][this.cfg.getV()];
         for (int i = 0; i < this.cfg.getF(); i++) {
@@ -132,7 +150,9 @@ public class Model {
                 }
             }
         }
+    }
 
+    private void zHatVariable() throws IloException {
         // zHat
         String[][] zHatNames = new String[this.cfg.getT()][this.cfg.getW()];
         for (int i = 0; i < this.cfg.getT(); i++) {
@@ -146,7 +166,9 @@ public class Model {
                 this.zHat[i][j] = this.modeler.boolVar(zHatNames[i][j]);
             }
         }
+    }
 
+    private void tauTauHatVariable() throws IloException {
         // tau, tauHat
         String[][][] tauNames = new String[this.cfg.getW()][this.cfg.getW()][this.cfg.getU()];
         String[][][] tauHatNames = new String[this.cfg.getW()][this.cfg.getW()][this.cfg.getV()];
@@ -181,8 +203,6 @@ public class Model {
                 }
             }
         }
-
-        return this;
     }
 
     /**
