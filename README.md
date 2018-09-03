@@ -1,6 +1,8 @@
 # RoadToMSc
 **The Road So Far**
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d0f55fe2f7dd43cebff8b96737ce56e1)](https://www.codacy.com/app/1995parham/RoadToMSc?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=1995parham/RoadToMSc&amp;utm_campaign=Badge_Grade)
+
 ## Intorduction
 I am MSc student of the Amirkabir University of Technology.
 My research interest is NFV and my thesis about placing and routing SFC requests with management constraints.
