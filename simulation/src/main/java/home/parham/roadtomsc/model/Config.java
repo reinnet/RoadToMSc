@@ -20,11 +20,6 @@ public class Config {
      */
     private boolean build;
 
-    public boolean isBuild() {
-        return build;
-    }
-
-
     /**
      * physical nodes
      */
@@ -140,6 +135,9 @@ public class Config {
         }
 
         build = true;
+    }
+    public boolean isBuild() {
+        return build;
     }
 
     public ArrayList<Node> getNodes() {
