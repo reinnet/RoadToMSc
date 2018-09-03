@@ -125,7 +125,7 @@ public class Model {
         for (int i = 0; i < this.cfg.getW(); i++) {
             yHatNames[i] = String.format("yh(%d)", i);
         }
-        this.yHat = this.modeler.intVarArray(0, Integer.MAX_VALUE, this.cfg.getW(), yHatNames);
+        this.yHat = this.modeler.intVarArray(this.cfg.getW() , 0, Integer.MAX_VALUE, yHatNames);
     }
 
     private void zVariable() throws IloException {
