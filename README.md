@@ -23,6 +23,9 @@ semester you must present your idea again for new students and after that, you p
 course :tada:. At the end, you must complete your thesis and solution to your proposed problem.
 I wish you a nice thesis :muscle:.
 
+## Special Thanks
+I am want to thank Behrooz Farkiani who help me so much in this dark way.
+
 ## Results
 ### 1
 - Node 0: CPU: 1 RAM: 1
