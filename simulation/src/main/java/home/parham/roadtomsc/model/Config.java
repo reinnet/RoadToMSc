@@ -26,6 +26,11 @@ public class Config {
     private ArrayList<Node> nodes;
 
     /**
+     * boolean array indicates that a physical node w can support VNFM
+     */
+    private ArrayList<Boolean> isSupportVNFM;
+
+    /**
      * number of physical nodes
      */
     private int W;
@@ -39,7 +44,9 @@ public class Config {
      */
     private int[][] E;
 
-    // number of VNF types
+    /**
+     * number of VNF types
+     */
     private int F;
 
     /**
@@ -103,10 +110,19 @@ public class Config {
      * Adds physical node to network topology
      * @param node: physical node
      */
-    public void addNode(Node node) {
+    public void addNode(Node node, boolean isSupportVNFM) {
         if (!this.isBuild()) {
             this.nodes.add(node);
+            this.isSupportVNFM.add(isSupportVNFM);
         }
+    }
+
+    /**
+     * Adds physical node to network topology
+     * @param node: physical node
+     */
+    public void addNode(Node node) {
+        this.addNode(node, true);
     }
 
     public void build() {
@@ -142,6 +158,10 @@ public class Config {
 
     public ArrayList<Node> getNodes() {
         return nodes;
+    }
+
+    public ArrayList<Boolean> getIsSupportVNFM() {
+        return isSupportVNFM;
     }
 
     public int getW() {
