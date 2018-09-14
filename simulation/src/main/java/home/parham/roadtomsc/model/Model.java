@@ -231,6 +231,7 @@ public class Model {
         this.serviceTypeConstraint();
         this.manageConstraint();
         this.managePlaceConstraint();
+        this.managerSupportConstraint();
         this.managerCapacityConstraint();
 
         this.flowConservation();
@@ -338,6 +339,18 @@ public class Model {
             }
 
             this.modeler.addLe(constraint, this.yHat[j], String.format("manage_place_constraint_%d", j));
+        }
+    }
+
+    /**
+     * Manager support constraint
+     * @throws IloException
+     */
+    private void managerSupportConstraint() throws IloException {
+        for (int i = 0; i < this.cfg.getW(); i++) {
+            if (!this.cfg.getIsSupportVNFM().get(i)) {
+                this.modeler.addEq(this.yHat[i], 0, String.format("manager_place_constraint_%d", i));
+            }
         }
     }
 
