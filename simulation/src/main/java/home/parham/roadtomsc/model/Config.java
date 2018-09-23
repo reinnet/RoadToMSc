@@ -82,6 +82,7 @@ public class Config {
         this.links = new ArrayList<>();
         this.chains = new ArrayList<>();
         this.nodes = new ArrayList<>();
+        this.isSupportVNFM = new ArrayList<>();
 
         this.build = false;
     }
