@@ -349,7 +349,7 @@ public class Model {
     private void managerSupportConstraint() throws IloException {
         for (int i = 0; i < this.cfg.getW(); i++) {
             if (!this.cfg.getIsSupportVNFM().get(i)) {
-                this.modeler.addEq(this.yHat[i], 0, String.format("manager_place_constraint_%d", i));
+                this.modeler.addEq(this.yHat[i], 0, String.format("manager_support_constraint_%d", i));
             }
         }
     }
