@@ -45,21 +45,22 @@
 \subtitle{مهندسی فناوری اطلاعات - شبکه‌های کامپیوتری}
 \author{پرهام الوانی}
 \institute{دانشکده مهندسی کامپیوتر و فناوری اطلاعات\\دکتر بهادر بخشی}
-\date{بهار ۱۳۹۷}
+\date{پاییز ۱۳۹۷}
 
 \begin{document}
 \begin{persian}
+
 %------------------------------------------
-% Title page
+% Title frame (0)
 %------------------------------------------
 \begin{frame}
-\maketitle
+    \titlepage{}
 \end{frame}
 
 % To adjust the paragraphs in RTL
 \everypar{\rightskip\rightmargin}
 %-------------------------------------------------------------------------------
-\begin{frame}{فهرست}
+\begin{frame}{فهرست} % 1
     \begin{itemize}\RTList{}
         \item مقدمه
         \item چالش‌ها
@@ -67,30 +68,50 @@
         \item تعریف مساله
         \item چالش‌ها و نوآوری‌های مساله
         \item معیار و نحوه‌ی ارزیابی
-        \item مراجع
         \item فرمول‌بندی
+        \item مراجع
     \end{itemize}
 \end{frame}
-\begin{frame}{مقدمه}
+%-------------------------------------------------------------------------------
+\begin{frame}{مقدمه} % 2
     \begin{itemize}\RTList{}
         \item عدم انعطاف‌پذیری معماری فعلی شبکه
-        \item در مجازی‌سازی کارکرد شبکه با استفاده از مجازی‌سازی منابع، می‌توان کارکردها را بر روی سرورهای استاندارد اجرا کرد و بهره‌وری منابع و هزینه‌های انرژی را کاهش داد.
+        \item در مجازی‌سازی کارکرد شبکه با استفاده از مجازی‌سازی منابع، می‌توان کارکردها را بر روی سرورهای استاندارد اجرا کرد
+        و بهره‌وری منابع را فزایش داده و هزینه‌های انرژی را کاهش داد.
         \item زنجیره سازی کارکرد سرویس نیز امکان ایجاد زنجیره‌ای از کارکردها را به صورت پویا فراهم می‌کند.
     \end{itemize}
 \end{frame}
-\begin{frame}{مقدمه}
+%-------------------------------------------------------------------------------
+\begin{frame}{مقدمه} % 2.5
+    \begin{itemize}\RTList{}
+        \item با توجه به جداسازی زیرساخت از نرم‌افزار کارکردهای شبکه نیاز به هماهنگی میان آن‌ها ایجاد شده است.
+        \item به صورت کلی تفاوت‌هایی که با توجه به فرآیند مجازی‌سازی کارکردهای شبکه ایجاد شده‌اند را  می‌توان
+        به ترتیب زیر دسته‌بندی نمود:
+        \begin{itemize}\RTList{}
+            \item زیرساخت مجازی‌سازی شده
+            \item کارکردهای شبکه‌ای مجازی‌سازی شده
+            \item سرویس‌های شبکه‌ای
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{مقدمه} % 3
     \begin{center}\begin{figure}
         \includegraphics[scale=0.4]{images/nfv-arch.png}
         \caption{معماری سطح بالای مجازی‌سازی کارکردهای شبکه}
     \end{figure}\end{center}
 \end{frame}
-\begin{frame}{مقدمه}
+%-------------------------------------------------------------------------------
+\begin{frame}{مقدمه} % 4
     \begin{itemize}\RTList{}
         \item \lr{NFVO} وظیفه‌ی استقرار زنجیره‌های کارکرد سرویس را برعهده دارد.
+        \item \lr{VNFM} مسئول چرخه‌ی زندگی کارکردهای مجازی شبکه می‌باشد.
+        \item چرخه‌ی زندگی هر کارکرد مجازی شامل عملیات‌هایی همچون نمونه‌سازی، مقیاس‌کردن، به‌روزرسانی و پایان دادن می‌باشد.
         \item هر نمونه از کارکردهای مجازی شبکه نیاز دارد تحت مدیریت یکی از \lr{VNFM}های موحود در شبکه باشد.
     \end{itemize}
 \end{frame}
-\begin{frame}{چالش‌ها}
+%-------------------------------------------------------------------------------
+\begin{frame}{چالش‌ها} % 5
     \begin{columns}
         \begin{column}{0.6\textwidth}
             \includegraphics[scale=0.35]{images/embedding.png}
@@ -99,14 +120,16 @@
             \begin{itemize}\RTList{}
                 \item مدیریت و هماهنگی
                 \item مصرف بهینه‌ی انرژی
-                \item تخصیص منابع
-                \item مسیریابی
+                \item تخصیص منابع به کارکردهای مجازی
+                \item مسیریابی زنجیره‌های کارکرد سرویس
                 \item پذیرش زنجیره‌های کارکرد سرویس
+                \item به روزرسانی و مقیاس کردن کارکردهای مجازی سرویس
             \end{itemize}
         \end{column}
     \end{columns}
 \end{frame}
-\begin{frame}{سابقه‌ی کارها}
+%-------------------------------------------------------------------------------
+\begin{frame}{سابقه‌ی کارها} % 6
     \fontsize{6pt}{7.2}\selectfont
     \begin{table}[h]
         \caption{مقایسه مقالات پذیرش زنجیره‌های کارکرد سرویس}
@@ -233,7 +256,8 @@
         \end{tabularx}
     \end{table}
 \end{frame}
-\begin{frame}{سابقه‌ی کارها}
+%-------------------------------------------------------------------------------
+\begin{frame}{سابقه‌ی کارها} % 7
     \begin{itemize}\RTList{}
         \item این مقاله به مانند کار پژوهشی حاضر تاخیر را در لینک‌های مدیریتی در نظر می‌گیرد.
         \item این مقاله فرض می‌کند زنجیره‌ها از پیش پذیرفته شده‌اند.
@@ -243,30 +267,43 @@
     \fullcite{AbuLebdeh2017}
     \end{latin}
 \end{frame}
-\begin{frame}{تعریف مساله}
+%-------------------------------------------------------------------------------
+\begin{frame}{تعریف مساله} % 8
     \par
     پذیرفتن بیشترین تقاضای زنجیره‌ کارکرد سرویس با در نظر گرفتن نیاز هر نمونه کارکرد مجازی شبکه به یک \lr{VNFM}.
 \end{frame}
-\begin{frame}{تعریف مساله}
+%-------------------------------------------------------------------------------
+\begin{frame}{تعریف مساله} % 9
     \begin{itemize}\RTList{}
         \item توپولوژی زیرساخت شامل پنهای باند لینک‌ها و ظرفیت \lr{NFVI-PoP}ها موجود است.
         \item n تقاضای زنجیره‌ کارکرد سرویس به صورت کامل و از پیش مشخص شده داریم.
-        هر تقاضا شامل نوع و تعداد نمونه‌های مجازی و پنهای باند لینک‌های مجازی می‌باشد.
+        \item هر تقاضا شامل نوع و تعداد نمونه‌های مجازی، پنهای باند لینک‌های مجازی و توپولوژی
+        نمونه‌های مجازی می‌باشد.
         \item تعداد پردازنده‌هایی که به هر نمونه تخصیص می‌یابد با توجه به ترافیک ورودی نمونه مشخص می‌شود.
+        این امر توسط اپراتور در زمان تعریف مساله صورت می‌پذیرد.
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{تعریف مساله} % 10
+    \begin{itemize}\RTList{}
+        \item نمونه‌ها بین زنجیره‌ها به اشتراک گذاشته نمی‌شوند.
         \item محدودیت ظرفیت لینک‌ها
         \item محدودیت توان پردازش سرورهای فیزیکی با توجه به میزان حافظه و تعداد پردازنده‌ها
     \end{itemize}
 \end{frame}
-\begin{frame}{تعریف مساله}
+%-------------------------------------------------------------------------------
+\begin{frame}{تعریف مساله} % 11
     \begin{itemize}\RTList{}
         \item برای مدیریت یکدست و آسان‌تر زنجیره‌ها و در عین حال جمع‌آوری راحتر خطاها، برای هر زنجیره یک \lr{VNFM} تخصیص می‌دهیم.
         \item \lr{VNFM}ها می‌توانند بین زنجیره به اشتراک گذاشته شوند.
         \item هر نمونه از \lr{VNFM}ها می‌تواند تعداد مشخصی از نمونه‌های کارکرد مجازی شبکه را سرویس دهد. 
         \item برای ارتباط میان هر نمونه از \lr{VNFM}ها و \lr{VNF}ها پهنای باند مشخصی رزرو می‌گردد.
-        \item بر روی هر \lr{NFVI-PoP} حداکثر یک نمونه \lr{VNFM} مستقر می‌گردد.
+        \item در صورتی که \lr{NFVI-PoP} بتواند از \lr{VNFM} پشتیبانی نماید،
+        می‌توان به هر تعداد که ظرفیت آن اجازه می‌دهد بر روی آن \lr{VNFM} نصب نمود.
     \end{itemize}
 \end{frame}
-\begin{frame}{چالش‌ها و نوآوری‌های مساله}
+%-------------------------------------------------------------------------------
+\begin{frame}{چالش‌ها و نوآوری‌های مساله} % 12
     \begin{itemize}\RTList{}
         \item در نظر گرفتن نیازمندی هر نمونه کارکرد مجازی به یک \lr{VNFM}
         \item در نظر گرفتن نیازمندی تاخیر برای لینک‌های مدیریتی
@@ -274,27 +311,59 @@
         \item جایگذاری و مسیریابی توامان زنجیره‌های کارکرد سرویس
     \end{itemize}
 \end{frame}
-\begin{frame}{معیار و نحوه‌ی ارزیابی}
+%-------------------------------------------------------------------------------
+\begin{frame}{معیار و نحوه‌ی ارزیابی} % 13
     \begin{itemize}\RTList{}
         \item مدل‌سازی مساله
         \item حل مساله‌ی بهینه در ابعاد کوچک
         \item پیاده‌سازی راه‌حل مکاشفه‌ای
         \item معیار مقایسه این راه حل نرخ پذیرش تقاضاهای زنجیره‌های کارکرد سرویس می‌باشد.
         \item مقایسه‌ی نتایج راه‌حل مکاشفه‌ای با جواب بهینه
-        \item مقایسه با کارهای مرتبط که نیازمندی‌های مدیریتی را مدنظر قرار نداده‌اند
+        \item مقایسه با کارهای مرتبط که نیازمندی‌های مدیریتی را مدنظر قرار نداده‌اند.
     \end{itemize}
 \end{frame}
-\begin{frame}[shrink=25]{مراجع}
-    \begin{latin}
-    \printbibliography[heading=none]
-    \end{latin}
-\end{frame}
-\begin{frame}
-    \begin{center}	
-        فرمول‌بندی
+%-------------------------------------------------------------------------------
+\begin{frame}{} % 14
+    \begin{center}
+        فرمول‌بندی و مدل‌سازی ریاضی مساله
     \end{center}
 \end{frame}
-\begin{frame}{فرمول‌بندی}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی} % 15
+    \par پارامترهای مساله
+    \begin{center}\begin{latin}\begin{tabular}{|c|p{5cm}|}
+        \hline
+        \(memory(k)\) & required RAM of VNF instance with type \(k\) in GB \\
+        \hline
+        \(core(k)\) & required CPU cores of VNF instance with type \(k\) \\
+        \hline
+        \(\hat{memory}\) & required RAM of VNFM in GB \\
+        \hline
+        \(\hat{core}\) & required CPU cores of VNFM \\
+        \hline
+        \(capacity\) & maximum number of VNF instances that VNFM can handle \\
+        \hline
+        \(len(h)\) & number of VNF instances in \(h\)th SFC request \\
+        \hline
+    \end{tabular}\end{latin}\end{center}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی} % 16
+    \par پارامترهای مساله
+    \begin{center}\begin{latin}\begin{tabular}{|c|p{5cm}|}
+        \hline
+        \(type(v, k)\) & assuming the value 1 if the VNF instance \(v\) has type \(k\)  \\
+        \hline
+        \(bandwidth(u, v)\) & required bandwidth in link from VNF instance \(u\) to \(v\) \\
+        \hline
+        \(\hat{bandwidth}\) & required bandwidth in managmeent link \\
+        \hline
+        \(radius\) & maximum neighborhood distance for instance management \\
+        \hline
+    \end{tabular}\end{latin}\end{center}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی} % 17
     \par
     متغیرهای تصمیم‌گیری
     \begin{latin}\begin{tabular}{c p{10cm}}
@@ -303,7 +372,8 @@
         $z^k_{vw}$ & binary variable assuming the value 1 if the VNF node $v \in \cup_{i=1}^{T} V_{i, F}^{SFC}$ is served by the VNF instance of type k in the server $w \in V_s^{PN}$ \\
     \end{tabular}\end{latin}
 \end{frame}
-\begin{frame}{فرمول‌بندی}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی} % 18
     \par
     متغیرهای تصمیم‌گیری
     \begin{latin}\begin{tabular}{c p{10cm}}
@@ -311,7 +381,8 @@
         $\bar{z}_{hw}$ & binary variable assuming the value 1 if $h$th SFC is assigned to VNFM on server $w \in V_s^{PN}$\\
     \end{tabular}\end{latin}
 \end{frame}
-\begin{frame}{فرمول‌بندی}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی} % 19
     \par
     هدف اصلی مساله پذیریش بیشترین تعداد تقاضا می‌باشد.
     در اینجا فرض می‌کنیم پذیرش هر تقاضا سودی منحصر به فرد خواهد داشت.
@@ -320,7 +391,8 @@
     \max \sum_{h=1}^T x_h
     \end{align}\end{latin}
 \end{frame}
-\begin{frame}{فرمول‌بندی}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی} % 20
     \par
     محدودیت حافظه نودها
     \begin{latin}\begin{align}
@@ -336,7 +408,8 @@
     \forall w \in V_s^{PN}
     \end{align}\end{latin}
 \end{frame}
-\begin{frame}{فرمول‌بندی}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی} % 21
     \par
     اگر \lr{VNF}, \lr{v}
     توسط \lr{VNF instance} نوع \lr{k}
@@ -351,7 +424,8 @@
     \forall w \in V_s^{PN}, \forall k \in [1,\ldots, F]
     \end{align}\end{latin}
 \end{frame}
-\begin{frame}{فرمول‌بندی}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی} % 22
     \par
     اگر تقاضای \lr{h}ام پذیرفته شده باشد
     می‌بایست تمام \lr{VNF node}های آن‌
@@ -363,36 +437,42 @@
         \forall v \in V_{h,F}^{SFC}, \forall h \in [1,\ldots, T]
     \end{align}\end{latin}
 \end{frame}
-\begin{frame}{فرمول‌بندی}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی} % 23
     \par
     اگر تقاضای \lr{h}ام پذیرفته شده باشد
     می‌بایست توسط یک \lr{VNFM} سرویس شده باشد.
+    توجه شود که این محدودیت اجازه‌ی تخصیص بیش از یک \lr{VNFM}
+    به زنجیره نمی‌دهد.
     \begin{latin}\begin{align}
         x_h = \sum_{w \in V_{s}^{PN}} \bar{z}_{hw}
         \quad
         \forall h \in [1,\ldots, T]
     \end{align}\end{latin}
 \end{frame}
-\begin{frame}{فرمول‌بندی}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی} % 24
     \par
     اگر \lr{SFC}، \lr{i}
     توسط \lr{VNFM} روی سرور \lr{w}
-    سرویس شود می‌بایست \lr{VNFM} سرور \lr{w}
-    فعال شود.
+    سرویس شود می‌بایست یک \lr{VNFM} سرور \lr{w}
+    برای آن فعال شود.
     \begin{latin}\begin{align}
+        \sum_{h=1}^T
         \bar{z}_{hw} \le \bar{y}_w
         \quad
-        \forall w \in V_{s}^{PN}, \forall h \in [1,\ldots, T]
+        \forall w \in V_{s}^{PN}
     \end{align}\end{latin}
     \par
     محدودیت ظرفیت سرویس‌دهی \lr{VNFM}
     \begin{latin}\begin{align}
-        \sum_{i=1}^{T} \bar{z}_{iw} \le capacity
+        \sum_{i=1}^{T} \bar{z}_{iw} * len(i) \le capacity
         \quad
         \forall w \in V_{s}^{PN}
     \end{align}\end{latin}
 \end{frame}
-\begin{frame}{فرمول‌بندی}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی} % 25
     \par
     اگر \lr{VNF}، \lr{v}
     توسط نمونه‌ای نوع \lr{k}
@@ -406,8 +486,8 @@
         \forall v \in \cup_{i=1}^T V_{i, F}^{SFC}
     \end{align}\end{latin}
 \end{frame}
-
-\begin{frame}{فرمول‌بندی}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی} % 26
     \par
     متغیرهای تصمیم‌گیری
     \begin{latin}\begin{tabular}{c p{10cm}}
@@ -415,7 +495,8 @@
         $\bar{\tau}^{v}_{ij}$ & binary variable assuming the value 1 if the managemnt of VNF node $v$ is routed on the physical network link $(i,j)$\\
     \end{tabular}\end{latin}
 \end{frame}
-\begin{frame}{فرمول‌بندی}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی} % 27
     \par
     \lr{Flow Conservation}
     \begin{latin}\begin{align}
@@ -423,7 +504,8 @@
         \forall i \in V_{S}^{PN}, (u,v) \in E_{h}^{SFC}, h \in [1,\ldots, T]
     \end{align}\end{latin}
 \end{frame}
-\begin{frame}{فرمول‌بندی}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی} % 28
     \par
     \lr{Flow Conservation}
     \begin{latin}\begin{align}
@@ -431,7 +513,8 @@
         \forall i \in V_{S}^{PN}, v \in V_{h, F}^{SFC}, h \in [1,\ldots, T]
     \end{align}\end{latin}
 \end{frame}
-\begin{frame}{فرمول‌بندی}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی} % 29
     \par
     محدودیت ظرفیت لینک‌ها
     \begin{latin}\begin{align}
@@ -439,7 +522,8 @@
         \forall (i, j) \in E^{PN}
     \end{align}\end{latin}
 \end{frame}
-\begin{frame}{فرمول‌بندی}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی} % 30
     \par
     شعاع همسایگی تضمین می‌کند که زمان سرویس‌دهی توسط
     \lr{VNFM}ها
@@ -450,6 +534,18 @@
         \quad
         \forall v \in \cup_{i=1}^T V_{i, F}^{SFC}
     \end{align}\end{latin}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{} % 14
+    \begin{center}
+        ارزیابی
+    \end{center}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}[shrink=25]{مراجع} % 31
+    \begin{latin}
+    \printbibliography[heading=none]
+    \end{latin}
 \end{frame}
 \end{persian}
 \end{document}
