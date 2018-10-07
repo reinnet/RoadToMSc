@@ -573,9 +573,47 @@
         \includegraphics[scale=0.4]{../diagrams/e1-tp.png}
     \end{center}
 \end{frame}
-
 %-------------------------------------------------------------------------------
-\begin{frame}[shrink=25]{مراجع} % 31
+\begin{frame}[fragile]{ارزیابی} % 35
+    \par
+    در نهایت نتیجه زیر از مساله حاصل می‌گردد.
+    \begin{latin}\begin{verbatim}
+cost = 20.0
+
+>> Chains
+Chain 0 is accepted.
+Chain 1 is accepted.
+       
+>> Instance mapping
+Chain 0:
+Node 0 with type 0 is mapped on 3
+Chain 1:
+Node 0 with type 0 is mapped on 2
+Node 1 with type 0 is mapped on 1
+Node 2 with type 0 is mapped on 2
+    \end{verbatim}\end{latin}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}[fragile]{ارزیابی} % 36
+    \begin{latin}\begin{verbatim}
+>> Manager mapping
+Chain 0 manager is 4
+Chain 1 manager is 0
+       
+>> Instance links
+Chain 1 link 1 (0 - 2) is on 2-0
+Chain 1 link 0 (0 - 1) is on 3-4
+       
+>> Management links
+Chain 0 node 0 manager is on 3-4
+Chain 1 node 1 manager is on 1-2
+Chain 1 node 0 manager is on 2-0
+Chain 1 node 1 manager is on 2-0
+Chain 1 node 2 manager is on 2-0
+    \end{verbatim}\end{latin}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}[shrink=25]{مراجع} % 37
     \begin{latin}
     \printbibliography[heading=none]
     \end{latin}
