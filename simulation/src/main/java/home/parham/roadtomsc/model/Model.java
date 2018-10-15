@@ -18,6 +18,7 @@ public class Model {
      * otherwise its value is zero
      *
      * x[h]
+     * .lp format: x (chain number)
      */
     private IloIntVar[] x;
 
@@ -26,6 +27,7 @@ public class Model {
      * the number of VNF instances of type _k_ that are used in server _w_
      *
      * y[w][k]
+     * .lp format: y (physical node, type)
      */
     private IloIntVar[][] y;
 
@@ -34,6 +36,7 @@ public class Model {
      * the number of VNFMs that are used in server _w_
      *
      * yh[w]
+     * .lp format: y (physical node)
      */
     private IloIntVar[] yHat;
 
@@ -42,6 +45,7 @@ public class Model {
      * _k_ in the server _w_
      *
      * z[k][w][v]
+     * .lp format: z (type, physical node, chain number _ node number in the chain)
      */
     private IloIntVar[][][] z;
 
@@ -50,6 +54,7 @@ public class Model {
      * on server w
      *
      * zh[h][w]
+     * .lp format: zh (chain number, physical node)
      */
     private IloIntVar[][] zHat;
 
@@ -58,6 +63,7 @@ public class Model {
      * the physical network link from _i_ to _j_.
      *
      * tau[i][j][uv]
+     * .lp format: tau (physical link source, physical link destination, chain number _ link number in the chain)
      */
     private IloIntVar[][][] tau;
 
@@ -66,6 +72,7 @@ public class Model {
      * is routed on the physical network link from _i_ to _j_.
      *
      * tauHat[i][j][v]
+     * .lp format: tauh (physical link source, physical link destination, chain number _ node number in the chain)
      */
     private IloIntVar[][][] tauHat;
 
@@ -303,6 +310,7 @@ public class Model {
                     }
                 }
 
+                // if chain `h` is serviced then all of its nodes should be serviced
                 this.modeler.addEq(constraint, this.x[h], String.format("service_constraint_%d", h));
             }
             v += this.cfg.getChains().get(h).nodes();
