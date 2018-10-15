@@ -294,6 +294,9 @@ public class Model {
 
     /**
      * Service Constraint + Type constraint
+     * Type constraint was removed in favor of removing redundant _z_s from
+     * service constraint
+     * https://github.com/1995parham/RoadToMSc/issues/14
      * @throws IloException
      */
     private void serviceTypeConstraint() throws IloException {
@@ -410,8 +413,12 @@ public class Model {
 
                     // node constraint
                     for (int k = 0; k < this.cfg.getF(); k++) {
-                        nodeConstraint.addTerm(1, this.z[k][i][virtualSource]);
-                        nodeConstraint.addTerm(-1, this.z[k][i][virtualDestination]);
+                        if (chain.getNode(virtualSource - v).getIndex() == k) {
+                            nodeConstraint.addTerm(1, this.z[k][i][virtualSource]);
+                        }
+                        if (chain.getNode(virtualDestination - v).getIndex() == k) {
+                            nodeConstraint.addTerm(-1, this.z[k][i][virtualDestination]);
+                        }
                     }
 
                     this.modeler.addEq(linkConstraint, nodeConstraint, "flow_conservation");
@@ -431,7 +438,7 @@ public class Model {
         int v = 0;
         for (int h = 0; h < this.cfg.getT(); h++) {
             for (int i = 0; i < this.cfg.getW(); i++) {  // Source of Physical link
-                for (int n = 0; n < this.cfg.getChains().get(h).nodes(); n++) { // Virtual link
+                for (int n = 0; n < this.cfg.getChains().get(h).nodes(); n++) { // Virtual node
 
                     IloLinearIntExpr linkConstraint = this.modeler.linearIntExpr();
                     IloLinearIntExpr nodeConstraint = this.modeler.linearIntExpr();
@@ -448,7 +455,9 @@ public class Model {
 
                     // node constraint
                     for (int k = 0; k < this.cfg.getF(); k++) {
-                        nodeConstraint.addTerm(1, this.z[k][i][v + n]);
+                        if (this.cfg.getChains().get(h).getNode(n).getIndex() == k) {
+                            nodeConstraint.addTerm(1, this.z[k][i][v + n]);
+                        }
                     }
                     nodeConstraint.addTerm(-1, this.zHat[h][i]);
 
