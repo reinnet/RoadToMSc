@@ -304,14 +304,15 @@ public class Model {
 
                 for (int i = 0; i < this.cfg.getF(); i++) {
                     for (int j = 0; j < this.cfg.getW(); j++) {
-                        this.modeler.addLe(this.z[i][j][k + v],
-                                this.cfg.getChains().get(h).getNode(k).getIndex() == i ? 1 : 0, "type_constraint");
-                        constraint.addTerm(1, this.z[i][j][k + v]);
+                        // adds z variable into service constraint if type of z is equal to type of node v
+                        if (this.cfg.getChains().get(h).getNode(k).getIndex() == i) {
+                            constraint.addTerm(1, this.z[i][j][k + v]);
+                        }
                     }
                 }
 
                 // if chain `h` is serviced then all of its nodes should be serviced
-                this.modeler.addEq(constraint, this.x[h], String.format("service_constraint_%d", h));
+                this.modeler.addEq(constraint, this.x[h], String.format("service_constraint_chain{%d}_node{%d}", h, k));
             }
             v += this.cfg.getChains().get(h).nodes();
         }
