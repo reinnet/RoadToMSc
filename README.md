@@ -26,6 +26,17 @@ I wish you a nice thesis :muscle:.
 ## Special Thanks
 I want to thank Behrooz Farkiani who help me so much in this dark way.
 
+
+## Presented in
+
+| Location | Date |
+|:-------- |:----:|
+| Group Meeting | 2017-12-19 |
+| Dr.Bakhshi Meeting | 2018-01-23 |
+| Dr.Bakhshi Meeting | 2018-04-24 |
+| Network Community Meeting | 2018-04-25 |
+| Dr.Bakhshi Meeting | 2018-11-07 |
+
 ## Results
 ### 1
 - Node 0: CPU: 1 RAM: 1
@@ -184,12 +195,3 @@ Chain 1 node 0 manager is on 2-0
 Chain 1 node 1 manager is on 2-0
 Chain 1 node 2 manager is on 2-0
 ```
-
-## Presented in
-
-| Location | Date |
-|:-------- |:----:|
-| Group Meeting | 2017-12-19 |
-| Dr.Bakhshi Meeting | 2018-01-23 |
-| Dr.Bakhshi Meeting | 2018-04-24 |
-| Network Community Meeting | 2018-04-25 |
