@@ -235,7 +235,10 @@ public class Model {
     public Model constraints() throws IloException {
         this.nodeMemoryCPUConstraint();
         this.servicePlaceConstraint();
+        /*
+        check following method for more detail about its removal.
         this.serviceTypeConstraint();
+        */
         this.manageConstraint();
         this.managePlaceConstraint();
         this.managerSupportConstraint();
@@ -297,6 +300,7 @@ public class Model {
      * Type constraint was removed in favor of removing redundant _z_s from
      * service constraint
      * https://github.com/1995parham/RoadToMSc/issues/14
+     * @deprecated
      * @throws IloException
      */
     private void serviceTypeConstraint() throws IloException {
