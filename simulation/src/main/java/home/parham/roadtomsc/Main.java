@@ -23,7 +23,7 @@ public class Main {
         cfg.addNode(new Node(1, 1));
         cfg.addNode(new Node(1, 1));
         cfg.addNode(new Node(2, 4));
-        cfg.addNode(new Node(1, 1));
+        cfg.addNode(new Node(1, 1), false);
         cfg.addNode(new Node(1, 1));
 
         // physical links
