@@ -37,6 +37,9 @@ I want to thank Behrooz Farkiani who help me so much in this dark way.
 | Network Community Meeting | 2018-04-25 |
 | Dr.Bakhshi Meeting | 2018-11-07 |
 
+## Heuristic
+Heuristic implementation can be found at [Marhoom](https://github.com/1995parham/Marhoom) project.
+
 ## Results
 ### 1
 - Node 0: CPU: 1 RAM: 1
