@@ -25,6 +25,12 @@ public class Main {
         cfg.addNode(new Node(2, 4));
         cfg.addNode(new Node(1, 1), false);
         cfg.addNode(new Node(1, 1));
+        cfg.addNode(new Node(1, 1));
+        cfg.addNode(new Node(1, 1));
+        cfg.addNode(new Node(1, 1));
+        cfg.addNode(new Node(1, 1));
+        cfg.addNode(new Node(1, 1));
+        cfg.addNode(new Node(1, 1));
 
         // physical links
         cfg.addLink(new Link(10, 0, 1));
@@ -32,6 +38,14 @@ public class Main {
         cfg.addLink(new Link(10, 2, 0));
         cfg.addLink(new Link(10, 1, 2));
         cfg.addLink(new Link(10, 3, 4));
+        cfg.addLink(new Link(10, 5, 6));
+        cfg.addLink(new Link(10, 6, 7));
+        cfg.addLink(new Link(10, 7, 8));
+        cfg.addLink(new Link(10, 8, 9));
+        cfg.addLink(new Link(10, 9, 10));
+        cfg.addLink(new Link(10, 9, 8));
+        cfg.addLink(new Link(10, 8, 7));
+        cfg.addLink(new Link(10, 7, 5));
 
         // VNF types
         Type.add(1, 1); // Type 0
@@ -42,6 +56,8 @@ public class Main {
         cfg.addChain(new Chain(10).addNode(0));
         cfg.addChain(new Chain(10).addNode(0).addNode(1).addNode(0).addLink(1, 0, 1)
                 .addLink(1, 0, 2));
+        cfg.addChain(new Chain(10).addNode(0).addNode(0).addNode(0).addNode(0).addLink(10, 0, 1)
+                .addLink(10, 1, 2).addLink(10, 2, 3));
 
         // build configuration
         cfg.build();
