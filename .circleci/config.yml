@@ -1,5 +1,15 @@
 version: 2
 jobs:
+  lint:
+    docker:
+      - image: circleci/openjdk:8-jdk
+     steps:
+      - checkout
+      - run:
+          name: checkstyle
+          command: |
+            cd simulation
+            mvn checkstyle:checkstyle
   build:
     docker:
       - image: circleci/openjdk:8-jdk
@@ -13,6 +23,7 @@ jobs:
 
 workflow:
   version: 2
-  build:
+  build-lint:
     jobs:
       - build
+      - lint
