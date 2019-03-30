@@ -14,6 +14,23 @@
             <email>parham.alvani@gmail.com</email>
         </developer>
     </developers>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/cplex/cplex -->
+        <dependency>
+            <groupId>cplex</groupId>
+            <artifactId>cplex</artifactId>
+            <version>12.8</version>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>jena-bio-libs-release-oss</id>
+            <url>https://bio.informatik.uni-jena.de/repository/libs-release-oss/</url>
+        </repository>
+    </repositories>
+
     <build>
         <plugins>
             <plugin>
