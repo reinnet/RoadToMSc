@@ -20,7 +20,7 @@ jobs:
           name: checkstyle
           command: |
             cd simulation
-            mvn checkstyle:checkstyle
+            mvn checkstyle:check
 
 workflows:
   version: 2
