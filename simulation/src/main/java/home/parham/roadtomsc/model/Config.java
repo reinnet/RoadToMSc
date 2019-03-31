@@ -39,6 +39,7 @@ public class Config {
      * physical links
      */
     private ArrayList<Link> links;
+
     /**
      * connectivity matrix
      */
@@ -53,6 +54,7 @@ public class Config {
      * SFC requests chains
      */
     private ArrayList<Chain> chains;
+
     /**
      * number of SFC requests
      */
@@ -62,6 +64,7 @@ public class Config {
      * total number of VNFs
      */
     private int V;
+
     /**
      * total number of virtual links
      */
@@ -72,6 +75,15 @@ public class Config {
      */
     private int vnfmRam, vnfmCores, vnfmCapacity, vnfmRadius, vnfmBandwidth;
 
+    /**
+     * Initializes the configuration module with given parameters. These parameters are required constants for problem.
+     * Some optional parameters are exits that can be set manually.
+     * @param vnfmRam
+     * @param vnfmCores
+     * @param vnfmCapacity
+     * @param vnfmRadius
+     * @param vnfmBandwidth
+     */
     public Config(int vnfmRam, int vnfmCores, int vnfmCapacity, int vnfmRadius, int vnfmBandwidth) {
         this.vnfmRam = vnfmRam;
         this.vnfmCores = vnfmCores;
@@ -153,6 +165,7 @@ public class Config {
 
         build = true;
     }
+
     public boolean isBuild() {
         return build;
     }
