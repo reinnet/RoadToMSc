@@ -4,6 +4,8 @@ import home.parham.roadtomsc.domain.Chain;
 import home.parham.roadtomsc.domain.Type;
 import ilog.concert.*;
 
+import java.io.IOException;
+
 /**
  * Model creates variables, objective and constraints of mathematical
  * model of our problem.
@@ -242,6 +244,7 @@ public class Model {
         this.manageConstraint();
         this.managePlaceConstraint();
         this.managerSupportConstraint();
+        this.managerToNodeSupportConstraint();
         this.managerCapacityConstraint();
 
         this.flowConservation();
@@ -366,6 +369,20 @@ public class Model {
         for (int i = 0; i < this.cfg.getW(); i++) {
             if (!this.cfg.getIsSupportVNFM().get(i)) {
                 this.modeler.addEq(this.yHat[i], 0, String.format("manager_support_constraint_%d", i));
+            }
+        }
+    }
+
+    /**
+     * Manager to node support constraint
+     * @throws IloException
+     */
+    private void managerToNodeSupportConstraint() throws IloException {
+        for (int i = 0; i < this.cfg.getT(); i++) {
+            for (int j = 0; j < this.cfg.getChains().get(i).nodes(); j++) {
+                for (int k : this.cfg.getChains().get(i).getManagementConstraints().get(j)) {
+                    this.modeler.addEq(this.zHat[i][k], 0, String.format("manager_to_node_support_constraint_%d_%d_%d", i, j, k));
+                }
             }
         }
     }
