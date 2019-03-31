@@ -1,5 +1,8 @@
 package home.parham.roadtomsc.domain;
 
+/**
+ * Node represents physical node in the problem space
+ */
 public class Node {
 
     /**
@@ -17,10 +20,16 @@ public class Node {
         this.ram = ram;
     }
 
+    /**
+     * @return amount of node's memory in GB
+     */
     public int getRam() {
         return ram;
     }
 
+    /**
+     * @return number of node's CPU cores
+     */
     public int getCores() {
         return cores;
     }
