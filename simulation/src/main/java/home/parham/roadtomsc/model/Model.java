@@ -2,20 +2,30 @@ package home.parham.roadtomsc.model;
 
 import home.parham.roadtomsc.domain.Chain;
 import home.parham.roadtomsc.domain.Type;
-import ilog.concert.*;
+import ilog.concert.IloException;
+import ilog.concert.IloIntVar;
+import ilog.concert.IloLinearIntExpr;
+import ilog.concert.IloLinearNumExpr;
+import ilog.concert.IloModeler;
 
 /**
  * Model creates variables, objective and constraints of mathematical
  * model of our problem.
  */
 public class Model {
-    private IloModeler modeler;
+    /**
+     * modeler is a cplex model builder.
+     */
+    private final IloModeler modeler;
 
-    private Config cfg;
+    /**
+     * Configuration instance that provides problem parameters.
+     */
+    private final Config cfg;
 
     /**
      * binary variable assuming the value 1 if the _h_th SFC request is accepted;
-     * otherwise its value is zero
+     * otherwise its value is zero.
      *
      * x[h]
      * .lp format: x (chain number)
@@ -24,7 +34,7 @@ public class Model {
 
 
     /**
-     * the number of VNF instances of type _k_ that are used in server _w_
+     * the number of VNF instances of type _k_ that are used in server _w_.
      *
      * y[w][k]
      * .lp format: y (physical node, type)
@@ -33,7 +43,7 @@ public class Model {
 
 
     /**
-     * the number of VNFMs that are used in server _w_
+     * the number of VNFMs that are used in server _w_.
      *
      * yh[w]
      * .lp format: y (physical node)
@@ -42,7 +52,7 @@ public class Model {
 
     /**
      * binary variable assuming the value 1 if the VNF node _v_ is served by the VNF instance of type
-     * _k_ in the server _w_
+     * _k_ in the server _w_.
      *
      * z[k][w][v]
      * .lp format: z (type, physical node, chain number _ node number in the chain)
@@ -51,7 +61,7 @@ public class Model {
 
     /**
      * binary variable assuming the value 1 if the _h_th SFC is assigned to VNFM
-     * on server w
+     * on server w.
      *
      * zh[h][w]
      * .lp format: zh (chain number, physical node)
@@ -76,18 +86,24 @@ public class Model {
      */
     private IloIntVar[][][] tauHat;
 
-    public Model(IloModeler modeler, Config cfg) {
-        this.modeler = modeler;
-        if (!cfg.isBuild()) {
-            throw new IllegalArgumentException("Configuration must build before use");
+    /**
+     *
+     * @param pModeler CPLEX modeler instance
+     * @param pCfg configuration instance
+     */
+    public Model(final IloModeler pModeler, final Config pCfg) {
+        this.modeler = pModeler;
+        if (!pCfg.isBuild()) {
+            throw new IllegalArgumentException("Configuration"
+                    + "must build before use");
         }
-        this.cfg = cfg;
+        this.cfg = pCfg;
     }
 
     /**
-     * Adds model variables
+     * Adds model variables.
+     *
      * @return Model
-     * @throws IloException
      */
     public Model variables() throws IloException {
         xVariable();
@@ -384,12 +400,15 @@ public class Model {
                         IloLinearIntExpr constraint = this.modeler.linearIntExpr();
 
                         for (int n = 0; n < this.cfg.getW(); n++) {
-                            if (!this.cfg.getNodes().get(n).getNotSupportedNodes().contains(j)) {
+                            if (this.cfg.getNodes().get(n).getNotSupportedNodes().contains(j)) {
                                 constraint.addTerm(1, this.zHat[h][n]);
                             }
                         }
 
-                        this.modeler.addEq(constraint, this.z[i][j][k + v], String.format("manager_to_node_support_constraint_chain{%d}_vnf{%d}_type{%d}_node{%d}", h, k + v, i, j));
+                        IloLinearIntExpr rhs = this.modeler.linearIntExpr(1);
+                        rhs.addTerm(-1, z[i][j][k + v]);
+
+                        this.modeler.addLe(constraint,  rhs, String.format("manager_to_node_support_constraint_chain{%d}_vnf{%d}_type{%d}_node{%d}", h, k + v, i, j));
                     }
                 }
             }
