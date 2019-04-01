@@ -1,12 +1,8 @@
 package home.parham.roadtomsc.model;
 
 import home.parham.roadtomsc.domain.Chain;
-import home.parham.roadtomsc.domain.Node;
 import home.parham.roadtomsc.domain.Type;
 import ilog.concert.*;
-
-import java.io.IOException;
-import java.util.stream.IntStream;
 
 /**
  * Model creates variables, objective and constraints of mathematical
