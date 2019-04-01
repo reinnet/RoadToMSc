@@ -1,10 +1,12 @@
 package home.parham.roadtomsc.model;
 
 import home.parham.roadtomsc.domain.Chain;
+import home.parham.roadtomsc.domain.Node;
 import home.parham.roadtomsc.domain.Type;
 import ilog.concert.*;
 
 import java.io.IOException;
+import java.util.stream.IntStream;
 
 /**
  * Model creates variables, objective and constraints of mathematical
@@ -322,7 +324,7 @@ public class Model {
                 }
 
                 // if chain `h` is serviced then all of its nodes should be serviced
-                this.modeler.addEq(constraint, this.x[h], String.format("service_constraint_chain{%d}_node{%d}", h, k));
+                this.modeler.addEq(constraint, this.x[h], String.format("service_constraint_chain{%d}_vnf{%d}", h, k));
             }
             v += this.cfg.getChains().get(h).nodes();
         }
@@ -367,7 +369,7 @@ public class Model {
      */
     private void managerSupportConstraint() throws IloException {
         for (int i = 0; i < this.cfg.getW(); i++) {
-            if (!this.cfg.getIsSupportVNFM().get(i)) {
+            if (!this.cfg.getNodes().get(i).isVnfmSupport()) {
                 this.modeler.addEq(this.yHat[i], 0, String.format("manager_support_constraint_%d", i));
             }
         }
@@ -378,12 +380,24 @@ public class Model {
      * @throws IloException
      */
     private void managerToNodeSupportConstraint() throws IloException {
-        for (int i = 0; i < this.cfg.getT(); i++) {
-            for (int j = 0; j < this.cfg.getChains().get(i).nodes(); j++) {
-                for (int k : this.cfg.getChains().get(i).getManagementConstraints().get(j)) {
-                    this.modeler.addEq(this.zHat[i][k], 0, String.format("manager_to_node_support_constraint_%d_%d_%d", i, j, k));
+        int v = 0;
+        for (int h = 0; h < this.cfg.getT(); h++) {
+            for (int k = 0; k < this.cfg.getChains().get(h).nodes(); k++) {
+                for (int i = 0; i < this.cfg.getF(); i++) {
+                    for (int j = 0; j < this.cfg.getW(); j++) {
+                        IloLinearIntExpr constraint = this.modeler.linearIntExpr();
+
+                        for (int n = 0; n < this.cfg.getW(); n++) {
+                            if (!this.cfg.getNodes().get(n).getNotSupportedNodes().contains(j)) {
+                                constraint.addTerm(1, this.zHat[h][n]);
+                            }
+                        }
+
+                        this.modeler.addEq(constraint, this.z[i][j][k + v], String.format("manager_to_node_support_constraint_chain{%d}_vnf{%d}_type{%d}_node{%d}", h, k + v, i, j));
+                    }
                 }
             }
+            v += this.cfg.getChains().get(h).nodes();
         }
     }
 

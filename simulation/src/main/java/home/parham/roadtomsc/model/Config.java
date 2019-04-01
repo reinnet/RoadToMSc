@@ -6,6 +6,7 @@ import home.parham.roadtomsc.domain.Node;
 import home.parham.roadtomsc.domain.Type;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Config represents problem configuration
@@ -24,11 +25,6 @@ public class Config {
      * physical nodes
      */
     private ArrayList<Node> nodes;
-
-    /**
-     * boolean array indicates that a physical node w can support VNFM
-     */
-    private ArrayList<Boolean> isSupportVNFM;
 
     /**
      * number of physical nodes
@@ -94,7 +90,6 @@ public class Config {
         this.links = new ArrayList<>();
         this.chains = new ArrayList<>();
         this.nodes = new ArrayList<>();
-        this.isSupportVNFM = new ArrayList<>();
 
         this.build = false;
     }
@@ -123,19 +118,10 @@ public class Config {
      * Adds physical node to network topology
      * @param node: physical node
      */
-    public void addNode(Node node, boolean isSupportVNFM) {
+    public void addNode(Node node) {
         if (!this.isBuild()) {
             this.nodes.add(node);
-            this.isSupportVNFM.add(isSupportVNFM);
         }
-    }
-
-    /**
-     * Adds physical node to network topology
-     * @param node: physical node
-     */
-    public void addNode(Node node) {
-        this.addNode(node, true);
     }
 
     public void build() {
@@ -172,10 +158,6 @@ public class Config {
 
     public ArrayList<Node> getNodes() {
         return nodes;
-    }
-
-    public ArrayList<Boolean> getIsSupportVNFM() {
-        return isSupportVNFM;
     }
 
     public int getW() {
