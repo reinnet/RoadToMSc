@@ -9,6 +9,9 @@ import home.parham.roadtomsc.model.Model;
 import ilog.concert.IloException;
 import ilog.cplex.IloCplex;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 public class Main {
     public static void main(String[] args) {
         Config cfg = new Config(
@@ -20,14 +23,14 @@ public class Main {
         );
 
         // physical nodes
-        cfg.addNode(new Node(144, 1408)); // server 1
-        cfg.addNode(new Node(144, 1408)); // server 2
-        cfg.addNode(new Node(72, 288)); // server 3
-        cfg.addNode(new Node(72, 288)); // server 4
-        cfg.addNode(new Node(72, 288)); // server 5
-        cfg.addNode(new Node(72, 288)); // server 6
-        cfg.addNode(new Node(144, 1408)); // server 7
-        cfg.addNode(new Node(144, 1408)); // server 8
+        cfg.addNode(new Node(144, 1408, true, new HashSet<>(Arrays.asList(0, 2, 4, 5, 6, 7)))); // server 1
+        cfg.addNode(new Node(144, 1408, false)); // server 2
+        cfg.addNode(new Node(72, 288, true, new HashSet<>(Arrays.asList(0, 2, 4, 5, 6, 7)))); // server 3
+        cfg.addNode(new Node(72, 288, false)); // server 4
+        cfg.addNode(new Node(72, 288, true, new HashSet<>(Arrays.asList(0, 1, 2, 4, 6, 7)))); // server 5
+        cfg.addNode(new Node(72, 288, false)); // server 6
+        cfg.addNode(new Node(144, 1408, true, new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 6)))); // server 7
+        cfg.addNode(new Node(144, 1408, false)); // server 8
         cfg.addNode(new Node(0, 0)); // switch 9
         cfg.addNode(new Node(0, 0)); // switch 10
         cfg.addNode(new Node(0, 0)); // switch 11
