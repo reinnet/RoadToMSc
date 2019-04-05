@@ -2,7 +2,7 @@ package home.parham.roadtomsc.domain;
 
 public class Link {
     /**
-     * link bandwidth
+     * link bandwidth in Mbps
      */
     private int bandwidth;
     private int source;
