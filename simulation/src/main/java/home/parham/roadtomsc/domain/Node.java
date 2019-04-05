@@ -19,28 +19,28 @@ public class Node {
     private int ram;
 
     /**
-     * vnfmSupport indicates that the physical node can supports VNFM placement
+     * vnfSupport indicates that the physical node can supports VNF placement
      */
-    private boolean vnfmSupport;
+    private boolean vnfSupport;
 
     /**
      * notManagerNodes is a set of physical nodes that can not manage this physical nodes
      */
     private Set<Integer> notManagerNodes;
 
-    public Node(int cores, int ram, boolean vnfmSupport, Set<Integer> notManagerNodes) {
+    public Node(int cores, int ram, boolean vnfSupport, Set<Integer> notManagerNodes) {
         this.cores = cores;
         this.ram = ram;
-        this.vnfmSupport = vnfmSupport;
+        this.vnfSupport = vnfSupport;
         this.notManagerNodes = notManagerNodes;
     }
 
-    public Node(int cores, int ram, boolean vnfmSupport) {
-        this(cores, ram, vnfmSupport, new HashSet<Integer>());
+    public Node(int cores, int ram, boolean vnfSupport) {
+        this(cores, ram, vnfSupport, new HashSet<>());
     }
 
     public Node(int cores, int ram) {
-        this(cores, ram, true, new HashSet<Integer>());
+        this(cores, ram, true, new HashSet<>());
     }
 
     /**
@@ -57,8 +57,8 @@ public class Node {
         return cores;
     }
 
-    public boolean isVnfmSupport() {
-        return vnfmSupport;
+    public boolean isVnfSupport() {
+        return vnfSupport;
     }
 
     public Set<Integer> getNotManagerNodes() {

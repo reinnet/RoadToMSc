@@ -257,7 +257,7 @@ public class Model {
         */
         this.manageConstraint();
         this.managePlaceConstraint();
-        this.managerSupportConstraint();
+        this.vnfSupportConstraint();
         this.managerToNodeSupportConstraint();
         this.managerCapacityConstraint();
 
@@ -376,13 +376,15 @@ public class Model {
     }
 
     /**
-     * Manager support constraint
+     * VNF support constraint
      * @throws IloException
      */
-    private void managerSupportConstraint() throws IloException {
+    private void vnfSupportConstraint() throws IloException {
         for (int i = 0; i < this.cfg.getW(); i++) {
-            if (!this.cfg.getNodes().get(i).isVnfmSupport()) {
-                this.modeler.addEq(this.yHat[i], 0, String.format("manager_support_constraint_%d", i));
+            if (!this.cfg.getNodes().get(i).isVnfSupport()) {
+                for (int j = 0; j < this.cfg.getF(); j++) {
+                    this.modeler.addEq(this.y[i][j], 0, String.format("vnf_support_constraint_%d", i));
+                }
             }
         }
     }
