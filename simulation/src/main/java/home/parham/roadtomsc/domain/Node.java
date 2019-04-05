@@ -24,15 +24,15 @@ public class Node {
     private boolean vnfmSupport;
 
     /**
-     * notSupportedNodes is a set of physical nodes that are not manageable with this physical node
+     * notManagerNodes is a set of physical nodes that can not manage this physical nodes
      */
-    private Set<Integer> notSupportedNodes;
+    private Set<Integer> notManagerNodes;
 
-    public Node(int cores, int ram, boolean vnfmSupport, Set<Integer> notSupportedNodes) {
+    public Node(int cores, int ram, boolean vnfmSupport, Set<Integer> notManagerNodes) {
         this.cores = cores;
         this.ram = ram;
         this.vnfmSupport = vnfmSupport;
-        this.notSupportedNodes = notSupportedNodes;
+        this.notManagerNodes = notManagerNodes;
     }
 
     public Node(int cores, int ram, boolean vnfmSupport) {
@@ -61,7 +61,7 @@ public class Node {
         return vnfmSupport;
     }
 
-    public Set<Integer> getNotSupportedNodes() {
-        return notSupportedNodes;
+    public Set<Integer> getNotManagerNodes() {
+        return notManagerNodes;
     }
 }

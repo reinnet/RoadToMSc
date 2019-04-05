@@ -400,7 +400,7 @@ public class Model {
                         IloLinearIntExpr constraint = this.modeler.linearIntExpr();
 
                         for (int n = 0; n < this.cfg.getW(); n++) {
-                            if (this.cfg.getNodes().get(n).getNotSupportedNodes().contains(j)) {
+                            if (this.cfg.getNodes().get(n).getNotManagerNodes().contains(j)) {
                                 constraint.addTerm(1, this.zHat[h][n]);
                             }
                         }
