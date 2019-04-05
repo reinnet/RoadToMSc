@@ -20,44 +20,86 @@ public class Main {
         );
 
         // physical nodes
-        cfg.addNode(new Node(1, 1));
-        cfg.addNode(new Node(1, 1));
-        cfg.addNode(new Node(2, 4));
-        cfg.addNode(new Node(1, 1, false));
-        cfg.addNode(new Node(1, 1));
-        cfg.addNode(new Node(1, 1));
-        cfg.addNode(new Node(1, 1));
-        cfg.addNode(new Node(1, 1));
-        cfg.addNode(new Node(1, 1));
-        cfg.addNode(new Node(1, 1));
-        cfg.addNode(new Node(1, 1));
+        cfg.addNode(new Node(144, 1408)); // server 1
+        cfg.addNode(new Node(144, 1408)); // server 2
+        cfg.addNode(new Node(72, 288)); // server 3
+        cfg.addNode(new Node(72, 288)); // server 4
+        cfg.addNode(new Node(72, 288)); // server 5
+        cfg.addNode(new Node(72, 288)); // server 6
+        cfg.addNode(new Node(144, 1408)); // server 7
+        cfg.addNode(new Node(144, 1408)); // server 8
+        cfg.addNode(new Node(0, 0)); // switch 9
+        cfg.addNode(new Node(0, 0)); // switch 10
+        cfg.addNode(new Node(0, 0)); // switch 11
+        cfg.addNode(new Node(0, 0)); // switch 12
+        cfg.addNode(new Node(0, 0)); // switch 13
+        cfg.addNode(new Node(0, 0)); // switch 14
+        cfg.addNode(new Node(0, 0)); // switch 15
 
         // physical links
-        cfg.addLink(new Link(10, 0, 1));
-        cfg.addLink(new Link(10, 0, 2));
-        cfg.addLink(new Link(10, 2, 0));
-        cfg.addLink(new Link(10, 1, 2));
-        cfg.addLink(new Link(10, 3, 4));
-        cfg.addLink(new Link(10, 5, 6));
-        cfg.addLink(new Link(10, 6, 7));
-        cfg.addLink(new Link(10, 7, 8));
-        cfg.addLink(new Link(10, 8, 9));
-        cfg.addLink(new Link(10, 9, 10));
-        cfg.addLink(new Link(10, 9, 8));
-        cfg.addLink(new Link(10, 8, 7));
-        cfg.addLink(new Link(10, 7, 5));
+        cfg.addLink(new Link(40 * 1000, 0, 11)); // server 1 - switch 12
+        cfg.addLink(new Link(40 * 1000, 11, 0));
+
+        cfg.addLink(new Link(40 * 1000, 1, 11)); // server 2 - switch 12
+        cfg.addLink(new Link(40 * 1000, 11, 1));
+
+        cfg.addLink(new Link(40 * 1000, 2, 12)); // server 3 - switch 13
+        cfg.addLink(new Link(40 * 1000, 12, 2));
+
+        cfg.addLink(new Link(40 * 1000, 3, 12)); // server 4 - switch 13
+        cfg.addLink(new Link(40 * 1000, 12, 3));
+
+        cfg.addLink(new Link(40 * 1000, 4, 13)); // server 5 - switch 14
+        cfg.addLink(new Link(40 * 1000, 13, 4));
+
+        cfg.addLink(new Link(40 * 1000, 5, 13)); // server 6 - switch 14
+        cfg.addLink(new Link(40 * 1000, 13, 5));
+
+        cfg.addLink(new Link(40 * 1000, 6, 14)); // server 7 - switch 15
+        cfg.addLink(new Link(40 * 1000, 14, 6));
+
+        cfg.addLink(new Link(40 * 1000, 7, 14)); // server 8 - switch 15
+        cfg.addLink(new Link(40 * 1000, 14, 7));
+
+        cfg.addLink(new Link(40 * 1000, 11, 9)); // switch 12 - switch 10
+        cfg.addLink(new Link(40 * 1000, 9, 11));
+
+        cfg.addLink(new Link(40 * 1000, 11, 10)); // switch 12 - switch 11
+        cfg.addLink(new Link(40 * 1000, 10, 11));
+
+        cfg.addLink(new Link(40 * 1000, 12, 9)); // switch 13 - switch 10
+        cfg.addLink(new Link(40 * 1000, 9, 12));
+
+        cfg.addLink(new Link(40 * 1000, 12, 10)); // switch 13 - switch 11
+        cfg.addLink(new Link(40 * 1000, 10, 12));
+
+        cfg.addLink(new Link(40 * 1000, 13, 9)); // switch 14 - switch 10
+        cfg.addLink(new Link(40 * 1000, 9, 13));
+
+        cfg.addLink(new Link(40 * 1000, 13, 10)); // switch 14 - switch 11
+        cfg.addLink(new Link(40 * 1000, 10, 13));
+
+        cfg.addLink(new Link(40 * 1000, 14, 9)); // switch 15 - switch 10
+        cfg.addLink(new Link(40 * 1000, 9, 14));
+
+        cfg.addLink(new Link(40 * 1000, 14, 10)); // switch 15 - switch 11
+        cfg.addLink(new Link(40 * 1000, 10, 14));
+
+        cfg.addLink(new Link(40 * 1000, 8, 9)); // switch 9 - switch 10
+        cfg.addLink(new Link(40 * 1000, 9, 8));
+
+        cfg.addLink(new Link(40 * 1000, 8, 10)); // switch 9 - switch 11
+        cfg.addLink(new Link(40 * 1000, 10, 8));
 
         // VNF types
-        Type.add(1, 1); // Type 0
-        Type.add(1, 2); // Type 1
+        Type.add(2, 2); // Type 0 vFW
+        Type.add(2, 4); // Type 1 vNAT
+        Type.add(2, 2); // Type 2 vIDS
 
         // SFC requests
         // consider to create requests after creating VNF types
-        cfg.addChain(new Chain(10).addNode(0));
-        cfg.addChain(new Chain(10).addNode(0).addNode(1).addNode(0).addLink(1, 0, 1)
-                .addLink(1, 0, 2));
-        cfg.addChain(new Chain(10).addNode(0).addNode(0).addNode(0).addNode(0).addLink(10, 0, 1)
-                .addLink(10, 1, 2).addLink(10, 2, 3));
+        cfg.addChain(new Chain(10).addNode(0).addNode(1).addLink(1000, 0, 1));
+        cfg.addChain(new Chain(10).addNode(0).addNode(2).addLink(1500, 0, 1));
 
         // build configuration
         cfg.build();
