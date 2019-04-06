@@ -288,9 +288,9 @@ public class Model {
             }
 
             this.modeler.addLe(cpuConstraint, this.cfg.getNodes().get(i).getCores(),
-                    String.format("node_cpu_constraint_%d", i));
+                    String.format("node_cpu_constraint_node{%d}", i));
             this.modeler.addLe(ramConstraint, this.cfg.getNodes().get(i).getRam(),
-                    String.format("node_memory_constraint_%d", i));
+                    String.format("node_memory_constraint_node{%d}", i));
         }
     }
 
@@ -307,7 +307,7 @@ public class Model {
                     constraint.addTerm(1, this.z[i][j][k]);
                 }
 
-                this.modeler.addLe(constraint, this.y[j][i], String.format("service_place_constraint_%d_%d", i, j));
+                this.modeler.addLe(constraint, this.y[j][i], String.format("service_place_constraint_type{%d}_node{%d}", i, j));
             }
         }
     }
@@ -354,7 +354,7 @@ public class Model {
                     constraint.addTerm(1, this.zHat[i][j]);
                 }
 
-                this.modeler.addEq(constraint, this.x[i], String.format("manage_constraint_%d", i));
+                this.modeler.addEq(constraint, this.x[i], String.format("manage_constraint_chain{%d}", i));
             }
     }
 
@@ -371,7 +371,7 @@ public class Model {
                 constraint.addTerm(1, this.zHat[i][j]);
             }
 
-            this.modeler.addLe(constraint, this.yHat[j], String.format("manage_place_constraint_%d", j));
+            this.modeler.addLe(constraint, this.yHat[j], String.format("manage_place_constraint_node{%d}", j));
         }
     }
 
@@ -382,9 +382,13 @@ public class Model {
     private void vnfSupportConstraint() throws IloException {
         for (int i = 0; i < this.cfg.getW(); i++) {
             if (!this.cfg.getNodes().get(i).isVnfSupport()) {
+            	IloLinearIntExpr constraint = this.modeler.linearIntExpr();
+
                 for (int j = 0; j < this.cfg.getF(); j++) {
-                    this.modeler.addEq(this.y[i][j], 0, String.format("vnf_support_constraint_%d", i));
+                    constraint.addTerm(1, this.y[i][j]);
                 }
+
+                this.modeler.addEq(constraint, 0, String.format("vnf_support_constraint_node{%d}", i));
             }
         }
     }
@@ -398,6 +402,12 @@ public class Model {
         for (int h = 0; h < this.cfg.getT(); h++) {
             for (int k = 0; k < this.cfg.getChains().get(h).nodes(); k++) {
                 for (int i = 0; i < this.cfg.getF(); i++) {
+
+                    // skip if k-th vnf does not have type i
+                    if (this.cfg.getChains().get(h).getNode(k).getIndex() != i) {
+                        continue;
+                    }
+
                     for (int j = 0; j < this.cfg.getW(); j++) {
                         IloLinearIntExpr constraint = this.modeler.linearIntExpr();
 
@@ -405,6 +415,10 @@ public class Model {
                             if (this.cfg.getNodes().get(n).getNotManagerNodes().contains(j)) {
                                 constraint.addTerm(1, this.zHat[h][n]);
                             }
+                        }
+                        // if constraint is empty skip it!
+                        if (!constraint.linearIterator().hasNext()) {
+                            continue;
                         }
 
                         IloLinearIntExpr rhs = this.modeler.linearIntExpr(1);
