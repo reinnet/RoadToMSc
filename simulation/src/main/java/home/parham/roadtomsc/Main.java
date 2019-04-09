@@ -101,8 +101,8 @@ public class Main {
 
         // SFC requests
         // consider to create requests after creating VNF types
-        cfg.addChain(new Chain(10).addNode(0).addNode(1).addLink(1000, 0, 1));
-        cfg.addChain(new Chain(10).addNode(0).addNode(2).addLink(1500, 0, 1));
+        cfg.addChain(new Chain(10).addNode(0).addNode(0).addNode(0).addNode(1).addNode(1).addNode(1).addLink(500, 0, 3).addLink(500, 1, 4).addLink(500, 2, 5));
+        cfg.addChain(new Chain(10).addNode(0).addNode(0).addNode(2).addNode(2).addLink(500, 0, 2).addLink(500, 1, 3));
 
         // build configuration
         cfg.build();
