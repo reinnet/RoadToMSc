@@ -17,7 +17,7 @@ public class Main {
         Config cfg = new Config(
                 4,
                 2,
-                5,
+                10,
                 5,
                 1
         );
