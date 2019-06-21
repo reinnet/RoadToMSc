@@ -1,5 +1,6 @@
 package home.parham.roadtomsc;
 
+import com.yacl4j.core.ConfigurationBuilder;
 import home.parham.roadtomsc.domain.Chain;
 import home.parham.roadtomsc.domain.Link;
 import home.parham.roadtomsc.domain.Node;
@@ -9,100 +10,122 @@ import home.parham.roadtomsc.model.Model;
 import ilog.concert.IloException;
 import ilog.cplex.IloCplex;
 
-import java.util.Arrays;
+import java.io.File;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class Main {
+
+    private final static Logger logger = Logger.getLogger(Main.class.getName());
+
+    private static void usage() {
+        System.out.println("roadtomsc /path/to/configuration.yaml");
+    }
+
     public static void main(String[] args) {
+        if (args.length != 1) {
+            usage();
+            return;
+        }
+
+        // load configuration from file
+        SimulationConfig config = ConfigurationBuilder.newBuilder()
+                .source().fromFile(new File(args[0]))
+                .build(SimulationConfig.class);
+
+        // build the model configuration from the loaded configuration
+
         Config cfg = new Config(
-                4,
-                2,
-                10,
-                5,
-                1
+                config.getVNFM().getRam(),
+                config.getVNFM().getCores(),
+                config.getVNFM().getCapacity(),
+                config.getVNFM().getRadius(),
+                config.getVNFM().getBandwidth()
         );
 
-        // physical nodes
-        cfg.addNode(new Node(20, 100, true, new HashSet<>(Arrays.asList(0, 2, 4, 5, 6, 7)))); // server 1
-        cfg.addNode(new Node(144, 1408, false)); // server 2
-        cfg.addNode(new Node(10, 20, true, new HashSet<>(Arrays.asList(0, 2, 4, 5, 6, 7)))); // server 3
-        cfg.addNode(new Node(72, 288, false)); // server 4
-        cfg.addNode(new Node(20, 60, true, new HashSet<>(Arrays.asList(0, 1, 2, 4, 6, 7)))); // server 5
-        cfg.addNode(new Node(72, 288, false)); // server 6
-        cfg.addNode(new Node(10, 100, true, new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 6)))); // server 7
-        cfg.addNode(new Node(144, 1408, false)); // server 8
-        cfg.addNode(new Node(0, 0)); // switch 9
-        cfg.addNode(new Node(0, 0)); // switch 10
-        cfg.addNode(new Node(0, 0)); // switch 11
-        cfg.addNode(new Node(0, 0)); // switch 12
-        cfg.addNode(new Node(0, 0)); // switch 13
-        cfg.addNode(new Node(0, 0)); // switch 14
-        cfg.addNode(new Node(0, 0)); // switch 15
+        // current mapping between node identification and their index in model
+        Map<String, Integer> nodes = new HashMap<>();
 
-        // physical links
-        cfg.addLink(new Link(40 * 1000, 0, 11)); // server 1 - switch 12
-        cfg.addLink(new Link(40 * 1000, 11, 0));
+        // physical nodes {{{
+        for (int i = 0; i < config.getNodes().size(); i++) {
+            nodes.put(config.getNodes().get(i).getID(), i);
+        }
 
-        cfg.addLink(new Link(40 * 1000, 1, 11)); // server 2 - switch 12
-        cfg.addLink(new Link(40 * 1000, 11, 1));
+        for (int i = 0; i < config.getNodes().size(); i++) {
+            SimulationConfig.NodeConfig nodeConfig = config.getNodes().get(i);
+            Node node = new Node(
+                    nodeConfig.getCores(),
+                    nodeConfig.getRam(),
+                    nodeConfig.getVnfSupport(),
+                    new HashSet<>(nodeConfig.getNotManagerNodes().stream().map(nodes::get).collect(Collectors.toList()))
+            );
+            cfg.addNode(node);
+            logger.info(String.format("create physical node (%s) in index %d [%s]", nodeConfig.getID(), i, node));
+        }
+        // }}}
 
-        cfg.addLink(new Link(40 * 1000, 2, 12)); // server 3 - switch 13
-        cfg.addLink(new Link(40 * 1000, 12, 2));
+        // physical links {{{
+        config.getLinks().forEach(linkConfig -> {
+            Link l1 = new Link(
+                    linkConfig.getBandwidth() * 1000,
+                    nodes.get(linkConfig.getSource()),
+                    nodes.get(linkConfig.getDestination())
+            );
+            cfg.addLink(l1);
+            logger.info(String.format("create physical link from %s to %s [%s]",
+                    linkConfig.getSource(), linkConfig.getDestination(), l1));
+            Link l2 = new Link(
+                    linkConfig.getBandwidth() * 1000,
+                    nodes.get(linkConfig.getDestination()),
+                    nodes.get(linkConfig.getSource())
+            );
+            cfg.addLink(l2);
+            logger.info(String.format("create physical link from %s to %s [%s]",
+                    linkConfig.getDestination(), linkConfig.getSource(), l2));
+        });
+        /// }}}
 
-        cfg.addLink(new Link(40 * 1000, 3, 12)); // server 4 - switch 13
-        cfg.addLink(new Link(40 * 1000, 12, 3));
+        // current mapping between vnf type identification and their index in model
+        Map<String, Integer> types = new HashMap<>();
 
-        cfg.addLink(new Link(40 * 1000, 4, 13)); // server 5 - switch 14
-        cfg.addLink(new Link(40 * 1000, 13, 4));
 
-        cfg.addLink(new Link(40 * 1000, 5, 13)); // server 6 - switch 14
-        cfg.addLink(new Link(40 * 1000, 13, 5));
+        // VNF types {{{
+        config.getTypes().forEach(typeConfig -> {
+            Type.add(typeConfig.getCores(), typeConfig.getRam());
+            types.put(typeConfig.getName(), Type.len() - 1);
+            logger.info(String.format("create virtual type %s [cores: %d, ram: %d]",
+                    typeConfig.getName(),
+                    typeConfig.getCores(),
+                    typeConfig.getRam()
+            ));
+        });
+        // }}}
 
-        cfg.addLink(new Link(40 * 1000, 6, 14)); // server 7 - switch 15
-        cfg.addLink(new Link(40 * 1000, 14, 6));
-
-        cfg.addLink(new Link(40 * 1000, 7, 14)); // server 8 - switch 15
-        cfg.addLink(new Link(40 * 1000, 14, 7));
-
-        cfg.addLink(new Link(40 * 1000, 11, 9)); // switch 12 - switch 10
-        cfg.addLink(new Link(40 * 1000, 9, 11));
-
-        cfg.addLink(new Link(40 * 1000, 11, 10)); // switch 12 - switch 11
-        cfg.addLink(new Link(40 * 1000, 10, 11));
-
-        cfg.addLink(new Link(40 * 1000, 12, 9)); // switch 13 - switch 10
-        cfg.addLink(new Link(40 * 1000, 9, 12));
-
-        cfg.addLink(new Link(40 * 1000, 12, 10)); // switch 13 - switch 11
-        cfg.addLink(new Link(40 * 1000, 10, 12));
-
-        cfg.addLink(new Link(40 * 1000, 13, 9)); // switch 14 - switch 10
-        cfg.addLink(new Link(40 * 1000, 9, 13));
-
-        cfg.addLink(new Link(40 * 1000, 13, 10)); // switch 14 - switch 11
-        cfg.addLink(new Link(40 * 1000, 10, 13));
-
-        cfg.addLink(new Link(40 * 1000, 14, 9)); // switch 15 - switch 10
-        cfg.addLink(new Link(40 * 1000, 9, 14));
-
-        cfg.addLink(new Link(40 * 1000, 14, 10)); // switch 15 - switch 11
-        cfg.addLink(new Link(40 * 1000, 10, 14));
-
-        cfg.addLink(new Link(40 * 1000, 8, 9)); // switch 9 - switch 10
-        cfg.addLink(new Link(40 * 1000, 9, 8));
-
-        cfg.addLink(new Link(40 * 1000, 8, 10)); // switch 9 - switch 11
-        cfg.addLink(new Link(40 * 1000, 10, 8));
-
-        // VNF types
-        Type.add(2, 2); // Type 0 vFW
-        Type.add(2, 4); // Type 1 vNAT
-        Type.add(2, 2); // Type 2 vIDS
-
-        // SFC requests
+        // SFC requests {{{
         // consider to create requests after creating VNF types
-        cfg.addChain(new Chain(10).addNode(0).addNode(0).addNode(0).addNode(1).addNode(1).addNode(1).addLink(500, 0, 3).addLink(500, 1, 4).addLink(500, 2, 5));
-        cfg.addChain(new Chain(10).addNode(0).addNode(0).addNode(2).addNode(2).addLink(500, 0, 2).addLink(500, 1, 3));
+        config.getChains().forEach(chainConfig -> {
+            Chain chain = new Chain(chainConfig.getCost());
+
+            Map<String, Integer> vNodes = new HashMap<>();
+
+            for (int i = 0; i < chainConfig.getNodes().size(); i++) {
+                SimulationConfig.ChainConfig.NodeConfig n = chainConfig.getNodes().get(i);
+                chain.addNode(types.get(n.getType()));
+                vNodes.put(n.getID(), i);
+            }
+
+            chainConfig.getLinks().forEach(linkConfig -> chain.addLink(
+                    linkConfig.getBandwidth(),
+                    vNodes.get(linkConfig.getSource()),
+                    vNodes.get(linkConfig.getDestination())
+            ));
+
+            cfg.addChain(chain);
+        });
+        // }}}
 
         // build configuration
         cfg.build();
