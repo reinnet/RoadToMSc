@@ -21,6 +21,7 @@ nodes: # Physical nodes configuration
       cores: 144
       ram: 1408
       vnfSupport: false
+      notManagerNodes: []
     - id: server-3
       cores: 10
       ram: 20
@@ -36,6 +37,7 @@ nodes: # Physical nodes configuration
       cores: 72
       ram: 288
       vnfSupport: false
+      notManagerNodes: []
     - id: server-5
       cores: 20
       ram: 60
@@ -51,6 +53,7 @@ nodes: # Physical nodes configuration
       cores: 72
       ram: 288
       vnfSupport: false
+      notManagerNodes: []
     - id: server-7
       cores: 10
       ram: 100
@@ -66,29 +69,149 @@ nodes: # Physical nodes configuration
       cores: 144
       ram: 1408
       vnfSupport: false
+      notManagerNodes: []
     - id: switch-9
       cores: 0
       ram: 0
+      vnfSupport: false
+      notManagerNodes: []
     - id: switch-10
       cores: 0
       ram: 0
+      vnfSupport: false
+      notManagerNodes: []
     - id: switch-11
       cores: 0
       ram: 0
+      vnfSupport: false
+      notManagerNodes: []
     - id: switch-12
       cores: 0
       ram: 0
+      vnfSupport: false
+      notManagerNodes: []
     - id: switch-13
       cores: 0
       ram: 0
+      vnfSupport: false
+      notManagerNodes: []
     - id: switch-14
       cores: 0
       ram: 0
+      vnfSupport: false
+      notManagerNodes: []
     - id: switch-15
       cores: 0
       ram: 0
+      vnfSupport: false
+      notManagerNodes: []
+
 links: # Physical links configuration
   - source: server-1
     destination: switch-12
     bandwidth: 40
+  - source: server-2
+    destination: switch-12
+    bandwidth: 40
+  - source: server-3
+    destination: switch-13
+    bandwidth: 40
+  - source: server-4
+    destination: switch-13
+    bandwidth: 40
+  - source: server-5
+    destination: switch-14
+    bandwidth: 40
+  - source: server-6
+    destination: switch-14
+    bandwidth: 40
+  - source: server-7
+    destination: switch-15
+    bandwidth: 40
+  - source: server-8
+    destination: switch-15
+    bandwidth: 40
+  - source: switch-12
+    destination: switch-10
+    bandwidth: 40
+  - source: switch-12
+    destination: switch-11
+    bandwidth: 40
+  - source: switch-13
+    destination: switch-10
+    bandwidth: 40
+  - source: switch-13
+    destination: switch-11
+    bandwidth: 40
+  - source: switch-14
+    destination: switch-10
+    bandwidth: 40
+  - source: switch-14
+    destination: switch-11
+    bandwidth: 40
+  - source: switch-15
+    destination: switch-10
+    bandwidth: 40
+  - source: switch-15
+    destination: switch-11
+    bandwidth: 40
+  - source: switch-10
+    destination: switch-9
+    bandwidth: 40
+  - source: switch-11
+    destination: switch-9
+    bandwidth: 40
 
+types:
+  - name: vFW
+    cores: 2
+    ram: 2
+  - name: vNAT
+    cores: 2
+    ram: 4
+  - name: vIDS
+    cores: 2
+    ram: 2
+
+chains:
+  - cost: 10
+    nodes:
+      - type: vFW
+        id: 0
+      - type: vFW
+        id: 1
+      - type: vIDS
+        id: 2
+      - type: vIDS
+        id: 3
+    links:
+      - source: 0
+        destination: 2
+        bandwidth: 500
+      - source: 1
+        destination: 3
+        bandwidth: 500
+  - cost: 10
+    nodes:
+      - type: vFW
+        id: 0
+      - type: vFW
+        id: 1
+      - type: vFW
+        id: 2
+      - type: vNAT
+        id: 3
+      - type: vNAT
+        id: 4
+      - type: vNAT
+        id: 5
+    links:
+      - source: 0
+        destination: 3
+        bandwidth: 500
+      - source: 1
+        destination: 4
+        bandwidth: 500
+      - source: 2
+        destination: 5
+        bandwidth: 500
