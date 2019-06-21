@@ -15,21 +15,35 @@
         </developer>
     </developers>
 
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
     <dependencies>
         <!-- https://mvnrepository.com/artifact/cplex/cplex -->
         <dependency>
             <groupId>cplex</groupId>
             <artifactId>cplex</artifactId>
             <version>12.8</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/cplex.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.github.fabriziocucci</groupId>
+            <artifactId>yacl4j-core</artifactId>
+            <version>0.9.2</version>
         </dependency>
     </dependencies>
 
+    <!--
     <repositories>
         <repository>
             <id>jena-bio-libs-release-oss</id>
             <url>https://bio.informatik.uni-jena.de/repository/libs-release-oss/</url>
         </repository>
     </repositories>
+    -->
 
     <build>
         <pluginManagement>
