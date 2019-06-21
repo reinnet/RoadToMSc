@@ -64,4 +64,14 @@ public class Node {
     public Set<Integer> getNotManagerNodes() {
         return notManagerNodes;
     }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "cores=" + cores +
+                ", ram=" + ram +
+                ", vnfSupport=" + vnfSupport +
+                ", notManagerNodes=" + notManagerNodes +
+                '}';
+    }
 }

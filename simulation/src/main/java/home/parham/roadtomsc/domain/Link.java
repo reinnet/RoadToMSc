@@ -25,4 +25,13 @@ public class Link {
     public int getDestination() {
         return destination;
     }
+
+    @Override
+    public String toString() {
+        return "Link{" +
+                "bandwidth=" + bandwidth +
+                ", source=" + source +
+                ", destination=" + destination +
+                '}';
+    }
 }
