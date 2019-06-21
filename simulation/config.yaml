@@ -1,0 +1,94 @@
+---
+vnfm: # VNF Manager configuration
+    ram: 4
+    cores: 2
+    capacity: 10
+    radius: 5
+    bandwidth: 1
+nodes: # Physical nodes configuration
+    - id: server-1
+      cores: 20
+      ram: 100
+      vnfSupport: true
+      notManagerNodes:
+          - server-1
+          - server-3
+          - server-5
+          - server-6
+          - server-7
+          - server-8
+    - id: server-2
+      cores: 144
+      ram: 1408
+      vnfSupport: false
+    - id: server-3
+      cores: 10
+      ram: 20
+      vnfSupport: true
+      notManagerNodes:
+        - server-1
+        - server-3
+        - server-5
+        - server-6
+        - server-7
+        - server-8
+    - id: server-4
+      cores: 72
+      ram: 288
+      vnfSupport: false
+    - id: server-5
+      cores: 20
+      ram: 60
+      vnfSupport: true
+      notManagerNodes:
+        - server-1
+        - server-2
+        - server-3
+        - server-5
+        - server-7
+        - server-8
+    - id: server-6
+      cores: 72
+      ram: 288
+      vnfSupport: false
+    - id: server-7
+      cores: 10
+      ram: 100
+      vnfSupport: true
+      notManagerNodes:
+        - server-1
+        - server-2
+        - server-3
+        - server-4
+        - server-5
+        - server-7
+    - id: server-8
+      cores: 144
+      ram: 1408
+      vnfSupport: false
+    - id: switch-9
+      cores: 0
+      ram: 0
+    - id: switch-10
+      cores: 0
+      ram: 0
+    - id: switch-11
+      cores: 0
+      ram: 0
+    - id: switch-12
+      cores: 0
+      ram: 0
+    - id: switch-13
+      cores: 0
+      ram: 0
+    - id: switch-14
+      cores: 0
+      ram: 0
+    - id: switch-15
+      cores: 0
+      ram: 0
+links: # Physical links configuration
+  - source: server-1
+    destination: switch-12
+    bandwidth: 40
+
