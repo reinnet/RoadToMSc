@@ -201,14 +201,16 @@ public class Main {
                                 for (int k = 0; k < cfg.getChains().get(h).links(); k++) {
                                     if (cplex.getValue(model.getTau()[i][j][u + k]) == 1) {
                                         Link l = cfg.getChains().get(h).getLink(k);
-                                        System.out.printf("Chain %d link %d (%d - %d) is on %d-%d\n", h, k,
-                                                l.getSource(), l.getDestination(), i, j);
+                                        System.out.printf("Chain %d link %d (%d - %d) is on %s - %s\n", h, k,
+                                                l.getSource(), l.getDestination(),
+                                                cfg.getNodes().get(i).getName(), cfg.getNodes().get(j).getName());
                                     }
                                 }
 
                                 for (int k = 0; k < cfg.getChains().get(h).nodes(); k++) {
                                     if (cplex.getValue(model.getTauHat()[i][j][v + k]) == 1) {
-                                        System.out.printf("Chain %d node %d manager is on %d-%d\n", h, k, i, j);
+                                        System.out.printf("Chain %d node %d manager is on %s - %s\n", h, k,
+                                                cfg.getNodes().get(i).getName(), cfg.getNodes().get(j).getName());
                                     }
                                 }
 
