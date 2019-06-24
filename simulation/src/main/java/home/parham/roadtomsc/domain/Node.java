@@ -1,12 +1,16 @@
 package home.parham.roadtomsc.domain;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Node represents physical node in the problem space
  */
 public class Node {
+
+    /**
+     * node human identification
+     */
+    private String name;
 
     /**
      * cores indicate number of CPU cores
@@ -24,23 +28,28 @@ public class Node {
     private boolean vnfSupport;
 
     /**
-     * notManagerNodes is a set of physical nodes that can not manage this physical nodes
+     * notManagerNodes is a set of physical nodes that can not manage this physical node
      */
     private Set<Integer> notManagerNodes;
 
-    public Node(int cores, int ram, boolean vnfSupport, Set<Integer> notManagerNodes) {
+    /**
+     * egress node can support VNFs with egress types
+     */
+    private boolean egress;
+
+    /**
+     * ingress node can support VNFs with ingress types
+     */
+    private boolean ingress;
+
+    public Node(String name, int cores, int ram, boolean vnfSupport, Set<Integer> notManagerNodes, boolean egress, boolean ingress) {
+        this.name = name;
         this.cores = cores;
         this.ram = ram;
         this.vnfSupport = vnfSupport;
         this.notManagerNodes = notManagerNodes;
-    }
-
-    public Node(int cores, int ram, boolean vnfSupport) {
-        this(cores, ram, vnfSupport, new HashSet<>());
-    }
-
-    public Node(int cores, int ram) {
-        this(cores, ram, true, new HashSet<>());
+        this.ingress = ingress;
+        this.egress = egress;
     }
 
     /**
@@ -57,12 +66,32 @@ public class Node {
         return cores;
     }
 
+    /**
+     * @return that this physical node can run VNFs
+     */
     public boolean isVnfSupport() {
         return vnfSupport;
     }
 
+    /**
+     * @return the nodes that can't manage this node
+     */
     public Set<Integer> getNotManagerNodes() {
         return notManagerNodes;
+    }
+
+    /**
+     * @return that this node can support egress VNF types
+     */
+    public boolean isEgress() {
+        return egress;
+    }
+
+    /**
+     * @return that this node can support ingress VNF types
+     */
+    public boolean isIngress() {
+        return ingress;
     }
 
     @Override
@@ -72,6 +101,15 @@ public class Node {
                 ", ram=" + ram +
                 ", vnfSupport=" + vnfSupport +
                 ", notManagerNodes=" + notManagerNodes +
+                ", egress=" + egress +
+                ", ingress=" + ingress +
                 '}';
+    }
+
+    /**
+     * @return name of the node
+     */
+    public String getName() {
+        return name;
     }
 }
