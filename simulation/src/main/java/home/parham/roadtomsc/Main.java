@@ -57,10 +57,13 @@ public class Main {
         for (int i = 0; i < config.getNodes().size(); i++) {
             SimulationConfig.NodeConfig nodeConfig = config.getNodes().get(i);
             Node node = new Node(
+                    nodeConfig.getID(),
                     nodeConfig.getCores(),
                     nodeConfig.getRam(),
                     nodeConfig.getVnfSupport(),
-                    new HashSet<>(nodeConfig.getNotManagerNodes().stream().map(nodes::get).collect(Collectors.toList()))
+                    new HashSet<>(nodeConfig.getNotManagerNodes().stream().map(nodes::get).collect(Collectors.toList())),
+                    nodeConfig.getEgress(),
+                    nodeConfig.getIngress()
             );
             cfg.addNode(node);
             logger.info(String.format("create physical node (%s) in index %d [%s]", nodeConfig.getID(), i, node));
@@ -94,12 +97,14 @@ public class Main {
 
         // VNF types {{{
         config.getTypes().forEach(typeConfig -> {
-            Type.add(typeConfig.getCores(), typeConfig.getRam());
+            Type.add(typeConfig.getCores(), typeConfig.getRam(),typeConfig.getEgress(), typeConfig.getIngress());
             types.put(typeConfig.getName(), Type.len() - 1);
-            logger.info(String.format("create virtual type %s [cores: %d, ram: %d]",
+            logger.info(String.format("create virtual type %s [cores: %d, ram: %d, egress: %b, ingress: %b]",
                     typeConfig.getName(),
                     typeConfig.getCores(),
-                    typeConfig.getRam()
+                    typeConfig.getRam(),
+                    typeConfig.getEgress(),
+                    typeConfig.getIngress()
             ));
         });
         // }}}
@@ -164,7 +169,7 @@ public class Main {
                         for (int i = 0; i < cfg.getF(); i++) {
                             for (int j = 0; j < cfg.getW(); j++) {
                                 if (cplex.getValue(model.getZ()[i][j][k + v]) == 1) {
-                                    System.out.printf("Node %d with type %d is mapped on %d\n", k, i, j);
+                                    System.out.printf("Node %d with type %d is mapped on %s\n", k, i, cfg.getNodes().get(j).getName());
                                 }
                             }
                         }
