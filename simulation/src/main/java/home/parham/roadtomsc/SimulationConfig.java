@@ -26,6 +26,8 @@ public interface SimulationConfig {
         String getName();
         int getCores();
         int getRam();
+        boolean getEgress();
+        boolean getIngress();
     }
 
     interface VNFMConfig {
@@ -42,6 +44,8 @@ public interface SimulationConfig {
         int getCores();
         boolean getVnfSupport();
         List<String> getNotManagerNodes();
+        boolean getEgress();
+        boolean getIngress();
     }
 
     interface LinkConfig {
