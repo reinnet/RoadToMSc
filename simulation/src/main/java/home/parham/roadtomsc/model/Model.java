@@ -252,7 +252,7 @@ public class Model {
         this.nodeMemoryCPUConstraint();
         this.servicePlaceConstraint();
         /*
-        check following method for more detail about its removal.
+        check following method's doc for more detail about its removal.
         this.serviceTypeConstraint();
         */
         this.manageConstraint();
@@ -263,6 +263,9 @@ public class Model {
 
         this.flowConservation();
         this.managementFlowConservation();
+
+        this.egressConstraint();
+        this.ingressConstraint();
 
         this.linkBandwidthConstraint();
         this.radiusConstraint();
@@ -358,6 +361,56 @@ public class Model {
             }
     }
 
+    /**
+     * make all physical node that does not have egress support to have zero instance with egress type
+     * @throws IloException
+     */
+    private void egressConstraint() throws IloException {
+        for (int i = 0; i < this.cfg.getF(); i++) {
+            if (!Type.get(i).isEgress()) { // do the following only for egress types
+                continue;
+            }
+            for (int j = 0; j < this.cfg.getW(); j++) {
+                // physical node without have egress support must have zero instance with egress type
+                if (!this.cfg.getNodes().get(j).isEgress()) {
+                    physicalNodeWithoutTypeConstraint(i, j);
+                }
+            }
+        }
+    }
+
+    /**
+     * make all physical node that does not have egress support to have zero instance with egress type
+     * @throws IloException
+     */
+    private void ingressConstraint() throws IloException {
+        for (int i = 0; i < this.cfg.getF(); i++) {
+            if (!Type.get(i).isIngress()) { // do the following only for ingress types
+                continue;
+            }
+            for (int j = 0; j < this.cfg.getW(); j++) {
+                // physical node without have egress support must have zero instance with ingress type
+                if (!this.cfg.getNodes().get(j).isIngress()) {
+                    physicalNodeWithoutTypeConstraint(i, j);
+                }
+            }
+        }
+    }
+
+    /**
+     * make the physical node with index _i_ to have zero instance with type _j_
+     * @param i type index
+     * @param j physical node index
+     */
+    private void physicalNodeWithoutTypeConstraint(int i, int j) throws IloException {
+        IloLinearIntExpr constraint = this.modeler.linearIntExpr();
+
+        for (int k = 0; k < this.cfg.getV(); k++) {
+            constraint.addTerm(1, this.z[i][j][k]);
+        }
+
+        this.modeler.addEq(constraint, 0, String.format("egress_constraint_type{%d}_node{%d}", i, j));
+    }
 
     /**
      * Manage Place Constraint
