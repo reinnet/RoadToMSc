@@ -71,9 +71,11 @@ nodes: # Physical nodes configuration
       vnfSupport: false
       notManagerNodes: []
     - id: switch-9
+      egress: true
+      ingress: true
       cores: 0
       ram: 0
-      vnfSupport: false
+      vnfSupport: true
       notManagerNodes: []
     - id: switch-10
       cores: 0
@@ -163,6 +165,14 @@ links: # Physical links configuration
     bandwidth: 40
 
 types:
+  - name: ingress
+    cores: 0
+    ram: 0
+    ingress: true
+  - name: egress
+    cores: 0
+    ram: 0
+    egress: true
   - name: vFW
     cores: 2
     ram: 2
@@ -176,42 +186,34 @@ types:
 chains:
   - cost: 10
     nodes:
-      - type: vFW
+      - type: ingress
         id: 0
       - type: vFW
         id: 1
-      - type: vIDS
+      - type: vFW
         id: 2
       - type: vIDS
         id: 3
+      - type: vIDS
+        id: 4
+      - type: egress
+        id: 5
     links:
+      - source: 0
+        destination: 1
+        bandwidth: 500
       - source: 0
         destination: 2
         bandwidth: 500
       - source: 1
         destination: 3
         bandwidth: 500
-  - cost: 10
-    nodes:
-      - type: vFW
-        id: 0
-      - type: vFW
-        id: 1
-      - type: vFW
-        id: 2
-      - type: vNAT
-        id: 3
-      - type: vNAT
-        id: 4
-      - type: vNAT
-        id: 5
-    links:
-      - source: 0
-        destination: 3
-        bandwidth: 500
-      - source: 1
+      - source: 2
         destination: 4
         bandwidth: 500
-      - source: 2
+      - source: 3
+        destination: 5
+        bandwidth: 500
+      - source: 4
         destination: 5
         bandwidth: 500
