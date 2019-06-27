@@ -199,7 +199,7 @@ public class Main {
                 for (int h = 0; h < cfg.getT(); h++) {
                     for (int i = 0; i < cfg.getW(); i++) {
                         if (cplex.getValue(model.getzHat()[h][i]) == 1) {
-                            writer.printf("Chain %d manager is %d\n", h, i);
+                            writer.printf("Chain %d manager is %s\n", h, cfg.getNodes().get(i).getName());
                         }
                     }
                 }
