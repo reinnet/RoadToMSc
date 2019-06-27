@@ -11,6 +11,10 @@ import ilog.concert.IloException;
 import ilog.cplex.IloCplex;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -135,6 +139,15 @@ public class Main {
         // build configuration
         cfg.build();
 
+        // create and setup the result file
+        PrintWriter writer;
+        try {
+            writer = new PrintWriter(Files.newBufferedWriter(Paths.get("result.txt")));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
         try {
             IloCplex cplex = new IloCplex();
 
@@ -144,53 +157,56 @@ public class Main {
             cplex.exportModel("simulation.lp");
 
             if (cplex.solve()) {
-                System.out.println();
-                System.out.println(" Solution Status = " + cplex.getStatus());
-                System.out.println();
-                System.out.println(" cost = " + cplex.getObjValue());
+                writer.println();
+                writer.println(" Solution Status = " + cplex.getStatus());
+                writer.println();
 
-                System.out.println();
-                System.out.println(" >> Chains");
+                writer.println();
+                writer.println(" cost = " + cplex.getObjValue());
+                writer.println();
+
+                writer.println();
+                writer.println(" >> Chains");
                 for (int i = 0; i < cfg.getT(); i++) {
                     if (cplex.getValue(model.getX()[i]) == 1) {
-                        System.out.printf("Chain %s is accepted.\n", i);
+                        writer.printf("Chain %s is accepted.\n", i);
                     } else {
-                        System.out.printf("Chain %s is not accepted.\n", i);
+                        writer.printf("Chain %s is not accepted.\n", i);
                     }
                 }
-                System.out.println();
+                writer.println();
 
-                System.out.println();
-                System.out.println(" >> Instance mapping");
+                writer.println();
+                writer.println(" >> Instance mapping");
                 int v = 0;
                 for (int h = 0; h < cfg.getT(); h++) {
-                    System.out.printf("Chain %d:\n", h);
+                    writer.printf("Chain %d:\n", h);
                     for (int k = 0; k < cfg.getChains().get(h).nodes(); k++) {
                         for (int i = 0; i < cfg.getF(); i++) {
                             for (int j = 0; j < cfg.getW(); j++) {
                                 if (cplex.getValue(model.getZ()[i][j][k + v]) == 1) {
-                                    System.out.printf("Node %d with type %d is mapped on %s\n", k, i, cfg.getNodes().get(j).getName());
+                                    writer.printf("Node %d with type %d is mapped on %s\n", k, i, cfg.getNodes().get(j).getName());
                                 }
                             }
                         }
                     }
                     v += cfg.getChains().get(h).nodes();
                 }
-                System.out.println();
+                writer.println();
 
-                System.out.println();
-                System.out.println(" >> Manager mapping");
+                writer.println();
+                writer.println(" >> Manager mapping");
                 for (int h = 0; h < cfg.getT(); h++) {
                     for (int i = 0; i < cfg.getW(); i++) {
                         if (cplex.getValue(model.getzHat()[h][i]) == 1) {
-                            System.out.printf("Chain %d manager is %d\n", h, i);
+                            writer.printf("Chain %d manager is %d\n", h, i);
                         }
                     }
                 }
-                System.out.println();
+                writer.println();
 
-                System.out.println();
-                System.out.println(" >> Instance and Management links");
+                writer.println();
+                writer.println(" >> Instance and Management links");
                 int u = 0;
                 v = 0;
                 for (int h = 0; h < cfg.getT(); h++) {
@@ -201,7 +217,7 @@ public class Main {
                                 for (int k = 0; k < cfg.getChains().get(h).links(); k++) {
                                     if (cplex.getValue(model.getTau()[i][j][u + k]) == 1) {
                                         Link l = cfg.getChains().get(h).getLink(k);
-                                        System.out.printf("Chain %d link %d (%d - %d) is on %s - %s\n", h, k,
+                                        writer.printf("Chain %d link %d (%d - %d) is on %s - %s\n", h, k,
                                                 l.getSource(), l.getDestination(),
                                                 cfg.getNodes().get(i).getName(), cfg.getNodes().get(j).getName());
                                     }
@@ -209,7 +225,7 @@ public class Main {
 
                                 for (int k = 0; k < cfg.getChains().get(h).nodes(); k++) {
                                     if (cplex.getValue(model.getTauHat()[i][j][v + k]) == 1) {
-                                        System.out.printf("Chain %d node %d manager is on %s - %s\n", h, k,
+                                        writer.printf("Chain %d node %d manager is on %s - %s\n", h, k,
                                                 cfg.getNodes().get(i).getName(), cfg.getNodes().get(j).getName());
                                     }
                                 }
@@ -220,12 +236,16 @@ public class Main {
                     u += cfg.getChains().get(h).links();
                     v += cfg.getChains().get(h).nodes();
                 }
-                System.out.println();
+                writer.println();
            } else {
-                System.out.printf("Solve failed: %s\n", cplex.getStatus());
+                System.err.printf("Solve failed: %s\n", cplex.getStatus());
             }
         } catch (IloException e) {
             e.printStackTrace();
         }
+
+        // close the result file
+        writer.flush();
+        writer.close();
     }
 }
