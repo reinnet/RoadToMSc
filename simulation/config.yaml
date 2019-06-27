@@ -2,7 +2,7 @@
 vnfm: # VNF Manager configuration
     ram: 4
     cores: 2
-    capacity: 10
+    capacity: 5
     radius: 5
     bandwidth: 1
 nodes: # Physical nodes configuration
@@ -190,30 +190,37 @@ chains:
         id: 0
       - type: vFW
         id: 1
-      - type: vFW
+      - type: vNAT
         id: 2
-      - type: vIDS
-        id: 3
-      - type: vIDS
-        id: 4
       - type: egress
-        id: 5
+        id: 3
     links:
       - source: 0
         destination: 1
-        bandwidth: 500
-      - source: 0
-        destination: 2
-        bandwidth: 500
+        bandwidth: 250
       - source: 1
-        destination: 3
-        bandwidth: 500
+        destination: 2
+        bandwidth: 250
       - source: 2
-        destination: 4
-        bandwidth: 500
-      - source: 3
-        destination: 5
-        bandwidth: 500
-      - source: 4
-        destination: 5
-        bandwidth: 500
+        destination: 3
+        bandwidth: 250
+  - cost: 10
+    nodes:
+      - type: ingress
+        id: 0
+      - type: vFW
+        id: 1
+      - type: vIDS
+        id: 2
+      - type: egress
+        id: 3
+    links:
+      - source: 0
+        destination: 1
+        bandwidth: 250
+      - source: 1
+        destination: 2
+        bandwidth: 250
+      - source: 2
+        destination: 3
+        bandwidth: 250
