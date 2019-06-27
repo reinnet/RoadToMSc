@@ -106,3 +106,7 @@ modules.xml
 
 
 # End of https://www.gitignore.io/api/intellij
+
+# result file
+# this file contains the result of the configured model
+result.txt
