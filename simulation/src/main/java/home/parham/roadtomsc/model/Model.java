@@ -465,7 +465,9 @@ public class Model {
                         IloLinearIntExpr constraint = this.modeler.linearIntExpr();
 
                         for (int n = 0; n < this.cfg.getW(); n++) {
-                            if (this.cfg.getNodes().get(n).getNotManagerNodes().contains(j)) {
+                            if (this.cfg.getNodes().get(j).getNotManagerNodes().contains(n)) {
+                                // chain h cannot manage by physical node _n_ if node _v_ from chain _h_ placed
+                                // on physical node _j_
                                 constraint.addTerm(1, this.zHat[h][n]);
                             }
                         }
