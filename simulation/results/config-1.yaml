@@ -1,0 +1,226 @@
+---
+vnfm: # VNF Manager configuration
+    ram: 4
+    cores: 2
+    capacity: 5
+    radius: 5
+    bandwidth: 1
+nodes: # Physical nodes configuration
+    - id: server-1
+      cores: 20
+      ram: 100
+      vnfSupport: true
+      notManagerNodes:
+          - server-1
+          - server-3
+          - server-5
+          - server-6
+          - server-7
+          - server-8
+    - id: server-2
+      cores: 144
+      ram: 1408
+      vnfSupport: false
+      notManagerNodes: []
+    - id: server-3
+      cores: 10
+      ram: 20
+      vnfSupport: true
+      notManagerNodes:
+        - server-1
+        - server-3
+        - server-5
+        - server-6
+        - server-7
+        - server-8
+    - id: server-4
+      cores: 72
+      ram: 288
+      vnfSupport: false
+      notManagerNodes: []
+    - id: server-5
+      cores: 20
+      ram: 60
+      vnfSupport: true
+      notManagerNodes:
+        - server-1
+        - server-2
+        - server-3
+        - server-5
+        - server-7
+        - server-8
+    - id: server-6
+      cores: 72
+      ram: 288
+      vnfSupport: false
+      notManagerNodes: []
+    - id: server-7
+      cores: 10
+      ram: 100
+      vnfSupport: true
+      notManagerNodes:
+        - server-1
+        - server-2
+        - server-3
+        - server-4
+        - server-5
+        - server-7
+    - id: server-8
+      cores: 144
+      ram: 1408
+      vnfSupport: false
+      notManagerNodes: []
+    - id: switch-9
+      egress: true
+      ingress: true
+      cores: 0
+      ram: 0
+      vnfSupport: true
+      notManagerNodes: []
+    - id: switch-10
+      cores: 0
+      ram: 0
+      vnfSupport: false
+      notManagerNodes: []
+    - id: switch-11
+      cores: 0
+      ram: 0
+      vnfSupport: false
+      notManagerNodes: []
+    - id: switch-12
+      cores: 0
+      ram: 0
+      vnfSupport: false
+      notManagerNodes: []
+    - id: switch-13
+      cores: 0
+      ram: 0
+      vnfSupport: false
+      notManagerNodes: []
+    - id: switch-14
+      cores: 0
+      ram: 0
+      vnfSupport: false
+      notManagerNodes: []
+    - id: switch-15
+      cores: 0
+      ram: 0
+      vnfSupport: false
+      notManagerNodes: []
+
+links: # Physical links configuration
+  - source: server-1
+    destination: switch-12
+    bandwidth: 40
+  - source: server-2
+    destination: switch-12
+    bandwidth: 40
+  - source: server-3
+    destination: switch-13
+    bandwidth: 40
+  - source: server-4
+    destination: switch-13
+    bandwidth: 40
+  - source: server-5
+    destination: switch-14
+    bandwidth: 40
+  - source: server-6
+    destination: switch-14
+    bandwidth: 40
+  - source: server-7
+    destination: switch-15
+    bandwidth: 40
+  - source: server-8
+    destination: switch-15
+    bandwidth: 40
+  - source: switch-12
+    destination: switch-10
+    bandwidth: 40
+  - source: switch-12
+    destination: switch-11
+    bandwidth: 40
+  - source: switch-13
+    destination: switch-10
+    bandwidth: 40
+  - source: switch-13
+    destination: switch-11
+    bandwidth: 40
+  - source: switch-14
+    destination: switch-10
+    bandwidth: 40
+  - source: switch-14
+    destination: switch-11
+    bandwidth: 40
+  - source: switch-15
+    destination: switch-10
+    bandwidth: 40
+  - source: switch-15
+    destination: switch-11
+    bandwidth: 40
+  - source: switch-10
+    destination: switch-9
+    bandwidth: 40
+  - source: switch-11
+    destination: switch-9
+    bandwidth: 40
+
+types:
+  - name: ingress
+    cores: 0
+    ram: 0
+    ingress: true
+  - name: egress
+    cores: 0
+    ram: 0
+    egress: true
+  - name: vFW
+    cores: 2
+    ram: 2
+  - name: vNAT
+    cores: 2
+    ram: 4
+  - name: vIDS
+    cores: 2
+    ram: 2
+
+chains:
+  - cost: 10
+    nodes:
+      - type: ingress
+        id: 0
+      - type: vFW
+        id: 1
+      - type: vNAT
+        id: 2
+      - type: egress
+        id: 3
+    links:
+      - source: 0
+        destination: 1
+        bandwidth: 250
+      - source: 1
+        destination: 2
+        bandwidth: 250
+      - source: 2
+        destination: 3
+        bandwidth: 250
+  - cost: 10
+    nodes:
+      - type: ingress
+        id: 0
+      - type: vFW
+        id: 1
+      - type: vIDS
+        id: 2
+      - type: egress
+        id: 3
+    links:
+      - source: 0
+        destination: 1
+        bandwidth: 250
+      - source: 1
+        destination: 2
+        bandwidth: 250
+      - source: 2
+        destination: 3
+        bandwidth: 250

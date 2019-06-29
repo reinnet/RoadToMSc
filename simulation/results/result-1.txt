@@ -1,0 +1,104 @@
+
+ Solution Status = Optimal
+
+
+ cost = 20.0
+
+
+ >> Chains
+Chain 0 is accepted.
+Chain 1 is accepted.
+
+
+ >> Instance mapping
+Chain 0:
+Node 0 with type 0 is mapped on switch-9
+Node 1 with type 2 is mapped on server-1
+Node 2 with type 3 is mapped on server-1
+Node 3 with type 1 is mapped on switch-9
+Chain 1:
+Node 0 with type 0 is mapped on switch-9
+Node 1 with type 2 is mapped on server-3
+Node 2 with type 4 is mapped on server-5
+Node 3 with type 1 is mapped on switch-9
+
+
+ >> Manager mapping
+Chain 0 manager is server-2
+Chain 1 manager is server-4
+
+
+ >> Instance and Management links
+Chain 0 link 2 (2 - 3) is on server-1 - switch-12
+Chain 0 node 1 manager is on server-1 - switch-12
+Chain 0 node 2 manager is on server-1 - switch-12
+Chain 0 node 3 manager is on switch-9 - switch-10
+Chain 0 link 0 (0 - 1) is on switch-9 - switch-11
+Chain 0 node 0 manager is on switch-9 - switch-11
+Chain 0 link 0 (0 - 1) is on switch-10 - switch-12
+Chain 0 node 3 manager is on switch-10 - switch-12
+Chain 0 link 2 (2 - 3) is on switch-10 - switch-13
+Chain 0 link 0 (0 - 1) is on switch-10 - switch-14
+Chain 0 link 1 (1 - 2) is on switch-10 - switch-14
+Chain 0 link 1 (1 - 2) is on switch-10 - switch-15
+Chain 0 link 2 (2 - 3) is on switch-11 - switch-9
+Chain 0 link 1 (1 - 2) is on switch-11 - switch-12
+Chain 0 node 0 manager is on switch-11 - switch-12
+Chain 0 link 0 (0 - 1) is on switch-11 - switch-13
+Chain 0 link 1 (1 - 2) is on switch-11 - switch-13
+Chain 0 link 0 (0 - 1) is on switch-11 - switch-15
+Chain 0 link 2 (2 - 3) is on switch-11 - switch-15
+Chain 0 link 0 (0 - 1) is on switch-12 - server-1
+Chain 0 node 0 manager is on switch-12 - server-2
+Chain 0 node 1 manager is on switch-12 - server-2
+Chain 0 node 2 manager is on switch-12 - server-2
+Chain 0 node 3 manager is on switch-12 - server-2
+Chain 0 link 1 (1 - 2) is on switch-12 - switch-10
+Chain 0 link 2 (2 - 3) is on switch-12 - switch-11
+Chain 0 link 0 (0 - 1) is on switch-13 - switch-10
+Chain 0 link 1 (1 - 2) is on switch-13 - switch-10
+Chain 0 link 2 (2 - 3) is on switch-13 - switch-11
+Chain 0 link 0 (0 - 1) is on switch-14 - switch-11
+Chain 0 link 1 (1 - 2) is on switch-14 - switch-11
+Chain 0 link 0 (0 - 1) is on switch-15 - switch-10
+Chain 0 link 2 (2 - 3) is on switch-15 - switch-10
+Chain 0 link 1 (1 - 2) is on switch-15 - switch-11
+Chain 1 link 1 (1 - 2) is on server-3 - switch-13
+Chain 1 node 1 manager is on server-3 - switch-13
+Chain 1 link 2 (2 - 3) is on server-5 - switch-14
+Chain 1 node 2 manager is on server-5 - switch-14
+Chain 1 node 3 manager is on switch-9 - switch-10
+Chain 1 link 0 (0 - 1) is on switch-9 - switch-11
+Chain 1 link 1 (1 - 2) is on switch-9 - switch-11
+Chain 1 node 0 manager is on switch-9 - switch-11
+Chain 1 link 1 (1 - 2) is on switch-10 - switch-9
+Chain 1 link 2 (2 - 3) is on switch-10 - switch-12
+Chain 1 node 3 manager is on switch-10 - switch-13
+Chain 1 link 0 (0 - 1) is on switch-10 - switch-14
+Chain 1 link 1 (1 - 2) is on switch-10 - switch-15
+Chain 1 link 2 (2 - 3) is on switch-10 - switch-15
+Chain 1 link 2 (2 - 3) is on switch-11 - switch-9
+Chain 1 link 0 (0 - 1) is on switch-11 - switch-12
+Chain 1 link 1 (1 - 2) is on switch-11 - switch-12
+Chain 1 link 0 (0 - 1) is on switch-11 - switch-13
+Chain 1 link 2 (2 - 3) is on switch-11 - switch-13
+Chain 1 node 0 manager is on switch-11 - switch-13
+Chain 1 node 2 manager is on switch-11 - switch-13
+Chain 1 link 1 (1 - 2) is on switch-11 - switch-14
+Chain 1 link 0 (0 - 1) is on switch-12 - switch-10
+Chain 1 link 1 (1 - 2) is on switch-12 - switch-10
+Chain 1 link 2 (2 - 3) is on switch-12 - switch-11
+Chain 1 link 0 (0 - 1) is on switch-13 - server-3
+Chain 1 node 0 manager is on switch-13 - server-4
+Chain 1 node 1 manager is on switch-13 - server-4
+Chain 1 node 2 manager is on switch-13 - server-4
+Chain 1 node 3 manager is on switch-13 - server-4
+Chain 1 link 1 (1 - 2) is on switch-13 - switch-10
+Chain 1 link 2 (2 - 3) is on switch-13 - switch-10
+Chain 1 link 1 (1 - 2) is on switch-14 - server-5
+Chain 1 link 2 (2 - 3) is on switch-14 - switch-10
+Chain 1 link 0 (0 - 1) is on switch-14 - switch-11
+Chain 1 node 2 manager is on switch-14 - switch-11
+Chain 1 link 1 (1 - 2) is on switch-15 - switch-11
+Chain 1 link 2 (2 - 3) is on switch-15 - switch-11
+
