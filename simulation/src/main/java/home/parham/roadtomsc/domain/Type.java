@@ -29,18 +29,19 @@ public class Type {
     private boolean egress;
 
     /**
-     * indicates that is type is an ingress type so it must be placed only on ingress nodes
+     * indicates that this type is an ingress type so it must be placed only on ingress nodes
      */
     private boolean ingress;
 
+    /**
+     * indicates that this type is a manageable type or not. manageable types need a VNFM
+     */
+    private boolean manageable;
+
     private static ArrayList<Type> types;
 
-    public static void add(int cores, int ram, boolean egress, boolean ingress) {
-        types.add(new Type(types.size(), cores, ram, egress, ingress));
-    }
-
-    public static void add(int cores, int ram) {
-        types.add(new Type(types.size(), cores, ram, false, false));
+    public static void add(int cores, int ram, boolean egress, boolean ingress, boolean manageable) {
+        types.add(new Type(types.size(), cores, ram, egress, ingress, manageable));
     }
 
     public static Type get(int id) {
@@ -51,12 +52,13 @@ public class Type {
         return types.size();
     }
 
-    private Type(int index, int cores, int ram, boolean ingress, boolean egress) {
+    private Type(int index, int cores, int ram, boolean ingress, boolean egress, boolean manageable) {
         this.cores = cores;
         this.ram = ram;
         this.index = index;
         this.egress = egress;
         this.ingress = ingress;
+        this.manageable = manageable;
     }
 
     public int getCores() {
@@ -77,5 +79,9 @@ public class Type {
 
     public boolean isEgress() {
         return egress;
+    }
+
+    public boolean isManageable() {
+        return manageable;
     }
 }

@@ -101,7 +101,8 @@ public class Main {
 
         // VNF types {{{
         config.getTypes().forEach(typeConfig -> {
-            Type.add(typeConfig.getCores(), typeConfig.getRam(),typeConfig.getEgress(), typeConfig.getIngress());
+            Type.add(typeConfig.getCores(), typeConfig.getRam(),typeConfig.getEgress(),
+                    typeConfig.getIngress(), typeConfig.getManageable());
             types.put(typeConfig.getName(), Type.len() - 1);
             logger.info(String.format("create virtual type %s [cores: %d, ram: %d, egress: %b, ingress: %b]",
                     typeConfig.getName(),

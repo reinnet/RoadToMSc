@@ -28,6 +28,7 @@ public interface SimulationConfig {
         int getRam();
         boolean getEgress();
         boolean getIngress();
+        boolean getManageable();
     }
 
     interface VNFMConfig {
