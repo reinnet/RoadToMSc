@@ -399,6 +399,7 @@ public class Model {
 
     /**
      * make the physical node with index _i_ to have zero instance with type _j_
+     * this function is used by ingress/egress constraints
      * @param i type index
      * @param j physical node index
      */
@@ -455,6 +456,10 @@ public class Model {
         for (int h = 0; h < this.cfg.getT(); h++) {
             for (int k = 0; k < this.cfg.getChains().get(h).nodes(); k++) {
                 for (int i = 0; i < this.cfg.getF(); i++) {
+
+                    if (!Type.get(i).isManageable()) {
+                        continue;
+                    }
 
                     // skip if k-th vnf does not have type i
                     if (this.cfg.getChains().get(h).getNode(k).getIndex() != i) {
@@ -560,6 +565,9 @@ public class Model {
         for (int h = 0; h < this.cfg.getT(); h++) {
             for (int i = 0; i < this.cfg.getW(); i++) {  // Source of Physical link
                 for (int n = 0; n < this.cfg.getChains().get(h).nodes(); n++) { // Virtual node
+                    if (!this.cfg.getChains().get(h).getNode(n).isManageable()) {
+                        continue;
+                    }
 
                     IloLinearIntExpr linkConstraint = this.modeler.linearIntExpr();
                     IloLinearIntExpr nodeConstraint = this.modeler.linearIntExpr();
