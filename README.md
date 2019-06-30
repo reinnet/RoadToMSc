@@ -1,8 +1,7 @@
 # RoadToMSc
 **The Road So Far**
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d0f55fe2f7dd43cebff8b96737ce56e1)](https://www.codacy.com/app/1995parham/RoadToMSc?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=1995parham/RoadToMSc&amp;utm_campaign=Badge_Grade)
-[![Drone (cloud)](https://img.shields.io/drone/build/1995parham/RoadToMSc.svg?style=flat-square)](https://cloud.drone.io/1995parham/RoadToMSc)
+[![Drone (cloud)](https://img.shields.io/drone/build/roadtomsc/RoadToMSc.svg?style=flat-square)](https://cloud.drone.io/roadtomsc/RoadToMSc)
 
 ## Intorduction
 I am MSc student of the Amirkabir University of Technology.
