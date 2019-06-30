@@ -1,4 +1,5 @@
 ---
+# all bandwidth reports in Mbps and all storages reports in GB
 vnfm: # VNF Manager configuration
     ram: 4
     cores: 2
@@ -111,58 +112,58 @@ nodes: # Physical nodes configuration
 links: # Physical links configuration
   - source: server-1
     destination: switch-12
-    bandwidth: 40
+    bandwidth: 40000
   - source: server-2
     destination: switch-12
-    bandwidth: 40
+    bandwidth: 40000
   - source: server-3
     destination: switch-13
-    bandwidth: 40
+    bandwidth: 40000
   - source: server-4
     destination: switch-13
-    bandwidth: 40
+    bandwidth: 40000
   - source: server-5
     destination: switch-14
-    bandwidth: 40
+    bandwidth: 40000
   - source: server-6
     destination: switch-14
-    bandwidth: 40
+    bandwidth: 40000
   - source: server-7
     destination: switch-15
-    bandwidth: 40
+    bandwidth: 40000
   - source: server-8
     destination: switch-15
-    bandwidth: 40
+    bandwidth: 40000
   - source: switch-12
     destination: switch-10
-    bandwidth: 40
+    bandwidth: 125
   - source: switch-12
     destination: switch-11
-    bandwidth: 40
+    bandwidth: 125
   - source: switch-13
     destination: switch-10
-    bandwidth: 40
+    bandwidth: 500
   - source: switch-13
     destination: switch-11
-    bandwidth: 40
+    bandwidth: 500
   - source: switch-14
     destination: switch-10
-    bandwidth: 40
+    bandwidth: 40000
   - source: switch-14
     destination: switch-11
-    bandwidth: 40
+    bandwidth: 40000
   - source: switch-15
     destination: switch-10
-    bandwidth: 40
+    bandwidth: 40000
   - source: switch-15
     destination: switch-11
-    bandwidth: 40
+    bandwidth: 40000
   - source: switch-10
     destination: switch-9
-    bandwidth: 40
+    bandwidth: 40000
   - source: switch-11
     destination: switch-9
-    bandwidth: 40
+    bandwidth: 40000
 
 types:
   - name: ingress

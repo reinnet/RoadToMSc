@@ -77,7 +77,7 @@ public class Main {
         // physical links {{{
         config.getLinks().forEach(linkConfig -> {
             Link l1 = new Link(
-                    linkConfig.getBandwidth() * 1000,
+                    linkConfig.getBandwidth(),
                     nodes.get(linkConfig.getSource()),
                     nodes.get(linkConfig.getDestination())
             );
@@ -85,7 +85,7 @@ public class Main {
             logger.info(String.format("create physical link from %s to %s [%s]",
                     linkConfig.getSource(), linkConfig.getDestination(), l1));
             Link l2 = new Link(
-                    linkConfig.getBandwidth() * 1000,
+                    linkConfig.getBandwidth(),
                     nodes.get(linkConfig.getDestination()),
                     nodes.get(linkConfig.getSource())
             );
