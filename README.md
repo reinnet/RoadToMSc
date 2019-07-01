@@ -1,19 +1,11 @@
 # RoadToMSc
 **The Road So Far**
 
-[![Drone (cloud)](https://img.shields.io/drone/build/roadtomsc/RoadToMSc.svg?style=flat-square)](https://cloud.drone.io/roadtomsc/RoadToMSc)
-
 ## Intorduction
 I am MSc student of the Amirkabir University of Technology.
 My research interest is NFV and my thesis about placing and routing SFC requests with management constraints.
 By management constraints, we mean providing VNFM for each SFC.
-Problem formulation implemented in [IBM Cplex](https://www.ibm.com/analytics/cplex-optimizer) and can be accessed in the
-`simulation` folder.  For running simulation, you need Cplex installed on your system after you have Cplex installed you can
-run the simulation with following java option:
 
-```
-"-Djava.library.path=$USER_HOME$/Application/CPLEX_Studio-Community128/cplex/bin/x86-64_linux"
-```
 ## Step by Step from Proposal
 When you enter MSc of the Amirkabir University of Technology you must first write a proposal
 for your problem and ideas that you have to solve it and present it in professors community.
@@ -36,6 +28,3 @@ I want to thank Behrooz Farkiani who help me so much in this dark way.
 | Dr.Bakhshi Meeting | 2018-04-24 |
 | Network Community Meeting | 2018-04-25 |
 | Dr.Bakhshi Meeting | 2018-11-07 |
-
-## Heuristic
-Heuristic implementation can be found at [Marhoom](https://github.com/1995parham/Marhoom) project.
