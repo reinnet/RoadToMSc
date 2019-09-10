@@ -17,11 +17,12 @@
     \item نمونه‌ها بین زنجیره‌ها به اشتراک گذاشته نمی‌شوند.
     \item محدودیت ظرفیت لینک‌ها
     \item محدودیت توان پردازش سرورهای فیزیکی با توجه به میزان حافظه و تعداد پردازنده‌ها
-    \item برای مدیریت یکدست و آسان‌تر زنجیره‌ها و در عین حال جمع‌آوری راحت‌تر خطاها، برای هر زنجیره یک \lr{VNFM} تخصیص می‌دهیم.
+    \item برای مدیریت یکدست و آسان‌تر زنجیره‌ها و در عین حال جمع‌آوری راحت‌تر خطاها، برای هر زنجیره یک \lr{VNFM} فیزیکی تخصیص می‌دهیم.
     \item \lr{VNFM}ها می‌توانند بین زنجیره به اشتراک گذاشته شوند.
     \item هر نمونه از \lr{VNFM}ها می‌تواند تعداد مشخصی از نمونه‌های کارکرد مجازی شبکه را سرویس دهد. 
     \item برای ارتباط میان هر نمونه از \lr{VNFM}ها و \lr{VNF}ها پهنای باند مشخصی رزرو می‌گردد.
     \item در صورتی که \lr{NFVI-PoP} بتواند از \lr{VNFM} پشتیبانی نماید می‌توان به هر تعداد که ظرفیت آن اجازه می‌دهد بر روی آن \lr{VNFM} مستقر کرد.
+    \item هر نمونه از \lr{VNFM} جهت استفاده نیاز به تهیه جواز\footnote{\lr{license}} دارد.
 \end{itemize}
 
 اگر جایگذاری \lr{VNFM}ها به صورت غیر برنامه‌ریزی شده صورت بپذیرد
@@ -33,6 +34,8 @@
 تخصیص داده شود بنابراین نمی‌توان جایگذاری آن‌ها را با روش‌های سابق و مانند سایر
 کارکردهای مجازی شبکه فرض کرد.
 
+از آنجایی که \lr{VNFM}ها نیاز به مجوز دارند می‌توان با به اشتراک گذاشتن آن‌ها در هزینه‌های سیستم صرفه‌جویی کرد.
+
 در نظرگرفتن \lr{VNFM} همراه با \lr{VNF}ها مساله‌ی جدیدی است.
 
 \section{فرمول‌بندی}
@@ -41,7 +44,7 @@
 بنابراین تابع هدف به شکل زیر می‌باشد:
 
 \begin{latin}\begin{align}
-    max \sum_{h=1}^{T} c_hx_h
+    max \sum_{h=1}^{T} c_hx_h - \sum_{w \in V_s^{PN}} licenseFee * \bar{y}_w
 \end{align}\end{latin}
 
 \begin{center}\begin{latin}\begin{tabular}{|c|p{10cm}|}
@@ -66,6 +69,14 @@
     \hline
     \(radius\) & maximum neighborhood distance for instance management \\
     \hline
+    \(licenseFee\) & VNFM license fee that must pay for each VNFM \\
+    \hline
+    \(vnfSupport(w)\) & assuming the value 1 if the physical server \(w\) can support VNF instances \\
+    \hline
+    \(isManageable(k)\) & assuming the value 1 if the type \(k\) needs a manager \\
+    \hline
+    \(notManagableBy(w1, w2)\) & assuming the value 1 if the physical server \(w1\) cannot manage by physical server \(w2\) \\
+    \hline
 \end{tabular}\end{latin}\end{center}
 
 
@@ -77,7 +88,7 @@
     \hline
     \(z^k_{vw}\) & binary variable assuming the value 1 if the VNF node \(v \in \cup_{i=1}^{T} V_{i, F}^{SFC}\) is served by the VNF instance of type k in the server \(w \in V_s^{PN}\) \\
     \hline
-    \(\bar{y}_w\) & binary varibale assuming the value 1 if VNFM on server \(w \in V_s^{PN}\) is used; otherwise its value is zero \\
+    \(\bar{y}_w\) & the number of VNFMs (each vnfm has its capacity and license fee) that are used in server \(w \in V_s^{PN} \) \\
     \hline
     \(\bar{z}_{hw}\) & binary variable assuming the value 1 if \(h\)th SFC is assigned to VNFM on server \(w \in V_s^{PN}\) \\
     \hline
@@ -151,29 +162,18 @@
     \end{align}
 \end{latin}
 
-اگر \lr{SFC}، \lr{i}
-توسط \lr{VNFM} روی سرور \lr{w}
-سرویس شود می‌بایست \lr{VNFM} سرور \lr{w}
-فعال شود.
-
-\begin{latin}
-    \textit{Manager Place Constraint:}
-    \begin{align}
-        \bar{z}_{hw} \le \bar{y}_w
-        \quad
-        \forall w \in V_{s}^{PN}, \forall h \in [1,\ldots, T]
-    \end{align}
-\end{latin}
-
 محدودیت ظرفیت سرویس‌دهی \lr{VNFM}
 این محدودیت براساس تعداد ماشین‌های محازی که هر
 \lr{VNFM}
 سرویس می‌دهد تعیین شده است.
+در نظر داشته باشید که ممکن است برخی از انواع
+\lr{VNF}‌ها
+نیازی به مدیریت شدن نداشته باشند.
 
 \begin{latin}
-    \textit{Manager Capacity Constraint:}
+    \textit{Manage Capacity Constraint \& Manage Place Constraint:}
     \begin{align}
-        \sum_{i=1}^{T} \hat{z}_{iw} * len(i) \le capacity
+        \sum_{i=1}^{T} \bar{z}_{iw} * (len(i) - \sum_{v \in V_{i, F}^{SFC}} \sum_{k \in [1, \dots, F]} type(v, k) * isManageable(k)) \le capacity * \bar{y}_{w}
         \quad
         \forall w \in V_{s}^{PN}
     \end{align}
@@ -195,6 +195,34 @@
     \end{align}
 \end{latin}
 
+در صورتی که سرور \lr{w}
+توانایی اجرای نمونه‌های \lr{VNF}
+را نداشته باشد نباید نمونه‌ای روی آن قرار گیرد.
+
+\begin{latin}
+    \textit{VNF support constraint}
+    \begin{align}
+        \sum_{k \in [1, \dots, F]} y_{wk}  = M * vnfSupport(w)
+        \quad
+        w \in V_{s}^{PN}
+    \end{align}
+\end{latin}
+
+برخی از سرورهای نمی‌توانند توسط سرورهای مشخصی مدیریت شوند.
+این ویژگی به ادمین شبکه امکان مدیریت بیشتری می‌دهد و او می‌تواند با دست باز تمامی
+سیاست‌های مورد نظرش را اعمال نماید.
+
+\begin{latin}
+    \textit{Manager to node support constraint}
+    \begin{align}
+        1 - z_{vw_1}^k + \bar{z}_{hw_2} = 0
+        \quad
+        & \forall w_1 \in V_s^{PN} \forall w_2 \in V_s^{PN} notManagableBy(w_1, w_2) = 1 \nonumber \\
+        & \forall h \in [1,\dots,T],
+        \forall v \in V_{h,F}^{SFC},
+        \forall k \in [1,\dots,T]
+    \end{align}
+\end{latin}
 
 \begin{center}\begin{latin}\begin{tabular}{|c|p{10cm}|}
     \hline
