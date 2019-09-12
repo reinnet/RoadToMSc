@@ -70,7 +70,7 @@
 %\vskip 1.5cm
 {\fontsize{16pt}{14pt}\selectfont\bfseries
 \if@mscthesis
-پروژه کارشناسی ارشد
+پایان‌نامه کارشناسی‌ارشد
 \vspace{-.8cm}
 
 \@department
