@@ -228,7 +228,7 @@
 \fontsize{16pt}{17pt}\selectfont\@latinfaculty\space 
 \vskip 5mm
  \if@mscthesis
-MSc Proposal\par
+MSc Thesis\par
 \else
 Ph.D Thesis\par
 \fi\par
