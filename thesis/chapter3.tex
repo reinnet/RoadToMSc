@@ -21,7 +21,7 @@
 
 \subsection{دیدگاه تعریف مساله}
 معماری آینده اینترنت بر اساس مدل تجاری \lr{IaaS} است که
-نقش \lr{ISP}‌ها به دو نفش فراهم کننده سرویس (\lr{SP}) و فراهم کننده زیرساخت (\lr{IP})، تبدیل می‌شود
+نقش \lr{ISP}‌ها به دو نقش فراهم کننده سرویس (\lr{SP}) و فراهم کننده زیرساخت (\lr{IP})، تبدیل می‌شود
 فراهم کننده سرویس مسئول ارائه سرویس انتها به انتها به کاربران بر روی زیرساختی است که
 از سمت \lr{IP} ارائه می‌شود و مسئولیت مدیریت منابع آن را برعهده دارد.
 بر اساس این دو نقش، مسائل را از دو جنبه می توان دسته بندی کرد:
@@ -150,17 +150,14 @@
 
 \begin{table}[h]
     \caption{مقایسه مقالات پذیرش زنجیره‌های کارکرد سرویس}
+    \label{table.1}
     \vspace{0.5cm}
-    \begin{tabularx}{\textwidth}{XXXXXXXXXXXXXXXXX}
+    \begin{tabularx}{\textwidth}{ccccccccc}
         \toprule
         منبع &
-        \multicolumn{4}{X}{منابع تخصیص یافته} &
-        \multicolumn{2}{X}{محدودیت ظرفیت پردازشی نمونه} &
-        \multicolumn{2}{X}{برخط یا برون خط} &
-        \multicolumn{2}{X}{نگاشت کارکرد و لینک} &
-        \multicolumn{2}{X}{انتساب کارکرد} &
-        \multicolumn{2}{X}{اشتراک نمونه} &
-        \multicolumn{2}{X}{تخصیص \lr{VNFM}} \\
+        \multicolumn{4}{c}{منابع تخصیص یافته} &
+        \multicolumn{2}{c}{محدودیت ظرفیت پردازشی نمونه} &
+        \multicolumn{2}{c}{برخط یا برون خط} \\
         \midrule
         \lr{\#} &
         \lr{other} &
@@ -170,15 +167,7 @@
         دارد &
         ندارد &
         برخط &
-        برون خط &
-        کارکرد &
-        لینک &
-        یک نمونه &
-        چند نمونه &
-        دارد &
-        ندارد &
-        دارد &
-        ندارد \\
+        برون خط \\
         \midrule
         \cite{Eramo2016} &
         \lr{---} &
@@ -186,14 +175,6 @@
         \checkmark&
         \checkmark&
         \lr{---}&
-        \checkmark&
-        \lr{---} &
-        \checkmark&
-        \checkmark&
-        \checkmark&
-        \checkmark&
-        \lr{---} &
-        \lr{---} &
         \checkmark&
         \lr{---} &
         \checkmark\\
@@ -206,14 +187,6 @@
         \checkmark&
         \lr{---} &
         \lr{---} &
-        \checkmark&
-        \checkmark&
-        \checkmark&
-        \lr{---} &
-        \checkmark&
-        \lr{---} &
-        \checkmark&
-        \lr{---} &
         \checkmark\\
         \midrule
         \cite{Huang2017} &
@@ -223,14 +196,6 @@
         \checkmark&
         \checkmark&
         \lr{---} &
-        \lr{---} &
-        \checkmark&
-        \checkmark&
-        \checkmark&
-        \lr{---} &
-        \checkmark&
-        \lr{---} &
-        \checkmark&
         \lr{---} &
         \checkmark\\
         \midrule
@@ -242,7 +207,58 @@
         \checkmark&
         \lr{---} &
         \lr{---} &
+        \checkmark\\
+        \bottomrule
+    \end{tabularx}
+    \begin{tabularx}{\textwidth}{ccccccccc}
+        \toprule
+        منبع &
+        \multicolumn{2}{c}{نگاشت کارکرد و لینک} &
+        \multicolumn{2}{c}{انتساب کارکرد} &
+        \multicolumn{2}{c}{اشتراک نمونه} &
+        \multicolumn{2}{c}{تخصیص \lr{VNFM}} \\
+        \midrule
+        \lr{\#} &
+        کارکرد &
+        لینک &
+        یک نمونه &
+        چند نمونه &
+        دارد &
+        ندارد &
+        دارد &
+        ندارد \\
+        \midrule
+        \cite{Eramo2016} &
         \checkmark&
+        \checkmark&
+        \checkmark&
+        \lr{---} &
+        \lr{---} &
+        \checkmark&
+        \lr{---} &
+        \checkmark\\
+        \midrule
+        \cite{Ghaznavi2017} &
+        \checkmark&
+        \checkmark&
+        \lr{---} &
+        \checkmark&
+        \lr{---} &
+        \checkmark&
+        \lr{---} &
+        \checkmark\\
+        \midrule
+        \cite{Huang2017} &
+        \checkmark&
+        \checkmark&
+        \lr{---} &
+        \checkmark&
+        \lr{---} &
+        \checkmark&
+        \lr{---} &
+        \checkmark\\
+        \midrule
+        پژوهش حاضر &
         \checkmark&
         \checkmark&
         \checkmark&
@@ -255,9 +271,9 @@
     \end{tabularx}
 \end{table}
 
-همانطور که در کارهای بیان شده دیده می‌شود،‌مساله‌ی تخصیص منابع مدیریتی در پذیرش زنجیره‌های کارکرد
+همانطور که در جدول \ref{table.1} دیده می‌شود،‌ مساله‌ی تخصیص منابع مدیریتی در پذیرش زنجیره‌های کارکرد
 مورد بررسی قرار نگرفته است و در پژوهش حاضر قصد داریم این مورد را بررسی نماییم.
-
+\pagebreak
 \section{جمع‌بندی}
 
 در این فصل انواع مسائل مطرح در حوزه‌ی \lr{NFV} و \lr{SFC}
