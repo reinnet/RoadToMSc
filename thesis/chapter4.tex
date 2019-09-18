@@ -120,7 +120,7 @@
 بنابراین تابع هدف به شکل زیر می‌باشد:
 
 \begin{latin}\begin{align}
-    max \sum_{h=1}^{T} c_hx_h - \sum_{w \in V_s^{PN}} licenseFee * \bar{y}_w
+    max \sum_{h=1}^{T} c_hx_h - \sum_{w \in V_s^{PN}} licenseFee . \bar{y}_w
 \end{align}\end{latin}
 
 \begin{table}[h!]
@@ -257,7 +257,7 @@
 \begin{latin}
     \textit{Manage Capacity Constraint \& Manage Place Constraint:}
     \begin{align}
-        \sum_{i=1}^{T} \bar{z}_{iw} * (len(i) - \sum_{v \in V_{i, F}^{SFC}} \sum_{k \in [1, \dots, F]} type(v, k) * isManageable(k)) \le capacity * \bar{y}_{w}
+        \sum_{i=1}^{T} \bar{z}_{iw} . (len(i) - \sum_{v \in V_{i, F}^{SFC}} \sum_{k \in [1, \dots, F]} type(v, k) . isManageable(k)) \le capacity . \bar{y}_{w}
         \quad
         \forall w \in V_{s}^{PN}
     \end{align}
@@ -286,7 +286,7 @@
 \begin{latin}
     \textit{VNF support constraint}
     \begin{align}
-        \sum_{k \in [1, \dots, F]} y_{wk}  = M * vnfSupport(w)
+        \sum_{k \in [1, \dots, F]} y_{wk}  = M . vnfSupport(w)
         \quad
         w \in V_{s}^{PN}
     \end{align}
@@ -343,7 +343,7 @@
 \begin{latin}
     \textit{Link Bandwidth Constraint:}
     \begin{align}
-        \sum_{v \in \cup_{i=1}^{T} V_{i,F}^{SFC}} \bar{\tau}_{ij}^{v} * \bar{bandwidth} + \sum_{(u,v) \in \cup_{i=1}^{T} E_{i}^{SFC}} \tau_{ij}^{(u,v)} * bandwidth(u,v) \le C_{ij} \nonumber \\
+        \sum_{v \in \cup_{i=1}^{T} V_{i,F}^{SFC}} \bar{\tau}_{ij}^{v} . \bar{bandwidth} + \sum_{(u,v) \in \cup_{i=1}^{T} E_{i}^{SFC}} \tau_{ij}^{(u,v)} . bandwidth(u,v) \le C_{ij} \nonumber \\
         \forall (i, j) \in E^{PN}
     \end{align}
 \end{latin}
