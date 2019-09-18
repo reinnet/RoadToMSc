@@ -1,7 +1,7 @@
 
 \chapter{ارزیابی}
 
-در این مساله هدف بیشینه کردن سود حاصل از پذیرش تقاضاهای زنجیره‌ی کارکرد سرویس می‌باشد که به این ترتیب معیار مقایسه نیز همین پارامتر خواهد بود. این پارامتر در ارزیابی با سایر مقالات مقایسه می‌شود ولی باید در نظر داشت که نیازمندی‌های مدیریتی که در این پژوهش مدنظر است در سایر پژوهش‌ها مدنظر نبوده است.
+در این مساله هدف بیشینه کردن سود حاصل از پذیرش تقاضاهای زنجیره‌ی کارکرد سرویس می‌باشد که به این ترتیب معیار مقایسه نیز همین پارامتر خواهد بود. باید در نظر داشت که نیازمندی‌های مدیریتی که در این پژوهش مدنظر است در سایر پژوهش‌ها مدنظر نبوده است.
 راه‌حل \lr{eJSD-MP} بهینه نبوده و به همین علت کارآیی آن در سناریوهایی با حل بهینه مقایسه می‌شود.
 سایر پارامترهایی چون تعداد زنجیره‌های پذیرفته شده و ... نیز در این پژوهش ارزیابی می‌گردند.
 
@@ -12,7 +12,8 @@
 چهارچوب به صورت کلی برای حل مسائل \lr{ILP} از روش \lr{B\&C} استفاده می‌کند. پیاده‌سازی فرمول‌بندی این مساله در این چهارچوب
 در پیوست آمده است.
 
-در نهایت قصد داریم در این فصل نشان دهیم الگوریتم \lr{eJSD-MP} در قیاس با الگوریتم \lr{JSD-MP} نتایج بهتری را در زمان کمتری ارائه می‌کند.
+در نهایت قصد داریم در این فصل نشان دهیم الگوریتم \lr{eJSD-MP} در قیاس با الگوریتم \lr{JSD-MP} نتایج بهتری را در زمان کمتری ارائه می‌کند
+و این نتایج برای هر دو الگوریتم به نتایج الگوریتم بهینه نزدیک است.
 
 \section{محیط ارزیابی}
 به صورت کلی در تمامی ارزیابی‌های این رساله از دو توپولوژی \lr{FatTree} و \lr{USnet} استفاده شده است.
@@ -147,7 +148,6 @@ types:
 
 تنظیمات زیر برای زیرساخت فیزیکی در نظر گرفته شده است:
 
-
 \begin{latin}
     \begin{verbatim}
     ram: 10 - 48
@@ -180,7 +180,7 @@ types:
 
 
 \begin{figure}[h]
-\center\includegraphics[scale=.5]{images/chart-5}
+\center\includegraphics[scale=.7]{images/chart-5}
 \caption{شکاف بهینه الگوریتم بهینه بر اساس زمان اجرا (بر حسب دقیقه)}
 \label{fig.10}
 \end{figure}
@@ -207,7 +207,7 @@ types:
 
 
 \begin{figure}[h]
-\center\includegraphics[scale=.5]{images/chart-1}
+\center\includegraphics[scale=.7]{images/chart-1}
 \caption{کارآیی الگوریتم \lr{eJSD-MP} و \lr{JSD-MP} در نسبت‌های مختلف سود به هزینه}
 \label{fig.4}
 \end{figure}
@@ -224,7 +224,7 @@ types:
 
 
 \begin{figure}[h!]
-\center\includegraphics[scale=.5]{images/chart-2}
+\center\includegraphics[scale=.7]{images/chart-2}
 \caption{سود نهایی الگوریتم‌های بهینه، \lr{eJSD-MP} و \lr{JSD-MP} برای توپولوژی \lr{FatTree}}
 \label{fig.7}
 \end{figure}
@@ -246,14 +246,83 @@ types:
 زیادی نمی‌گیرد.
 
 
+\begin{table}[h]
+    \caption{سود نهایی الگوریتم‌های بهینه، \lr{eJSD-MP} و \lr{JSD-MP} برای توپولوژی \lr{FatTree}}
+    \vspace{0.5cm}
+    \begin{tabularx}{\textwidth}{ccccccccc}
+        \toprule
+        تعداد زنجیره‌ها &
+        الگوریتم بهنیه &
+        \multicolumn{2}{c}{\lr{eJSD-MP}} &
+        \multicolumn{2}{c}{\lr{JSD-MP}} \\
+        \midrule
+        \lr{\#} &
+        سود نهایی &
+        سود نهایی &
+        نسبت به بهینه &
+        سود نهایی &
+        نسبت به بهینه \\
+        \midrule
+        \(130\) &
+        \(53300\) &
+        \(52600\) &
+        \(98.69\%\) &
+        \(50200\) &
+        \(94.18\%\) \\
+        \midrule
+        \(100\) &
+        \(45100\) &
+        \(41600\) &
+        \(92.24\%\) &
+        \(39500\) &
+        \(87.58\%\) \\
+        \midrule
+        \(80\) &
+        \(36300\) &
+        \(34200\) &
+        \(94.21\%\) &
+        \(32400\) &
+        \(89.26\%\) \\
+        \midrule
+        \(60\) &
+        \(27600\) &
+        \(25800\) &
+        \(93.48\%\) &
+        \(25000\) &
+        \(90.58\%\) \\
+        \midrule
+        \(50\) &
+        \(23200\) &
+        \(21300\) &
+        \(91.81\%\) &
+        \(21400\) &
+        \(92.24\%\) \\
+        \midrule
+        \(40\) &
+        \(18700\) &
+        \(17700\) &
+        \(94.65\%\) &
+        \(17800\) &
+        \(95.19\%\) \\
+        \midrule
+        \(20\) &
+        \(9400\) &
+        \(8800\) &
+        \(93.62\%\) &
+        \(8700\) &
+        \(92.55\%\) \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
 \begin{figure}[h!]
-\center\includegraphics[scale=.5]{images/chart-3}
+\center\includegraphics[scale=.7]{images/chart-3}
 \caption{تعداد زنجیره‌های پذیرفته شده الگوریتم‌های بهینه، \lr{eJSD-MP} و \lr{JSD-MP} برای توپولوژی \lr{FatTree}}
 \label{fig.8}
 \end{figure}
 
 \begin{figure}[h!]
-\center\includegraphics[scale=.5]{images/chart-4}
+\center\includegraphics[scale=.7]{images/chart-4}
 \caption{تعداد \lr{VNFM}های الگوریتم‌های بهینه، \lr{eJSD-MP} و \lr{JSD-MP} برای توپولوژی \lr{FatTree}}
 \label{fig.9}
 \end{figure}
@@ -273,7 +342,7 @@ types:
 
 
 \begin{figure}[h!]
-\center\includegraphics[scale=.5]{images/chart-6}
+\center\includegraphics[scale=.7]{images/chart-6}
 \caption{سود نهایی الگوریتم‌های بهینه، \lr{eJSD-MP} و \lr{JSD-MP} برای توپولوژی \lr{USnet}}
 \label{fig.11}
 \end{figure}
@@ -290,13 +359,13 @@ types:
 
 
 \begin{figure}[h!]
-\center\includegraphics[scale=.5]{images/chart-7}
+\center\includegraphics[scale=.7]{images/chart-7}
 \caption{تعداد زنجیره‌های پذیرفته شده الگوریتم‌های بهینه، \lr{eJSD-MP} و \lr{JSD-MP} برای توپولوژی \lr{USnet}}
 \label{fig.12}
 \end{figure}
 
 \begin{figure}[h!]
-\center\includegraphics[scale=.5]{images/chart-8}
+\center\includegraphics[scale=.7]{images/chart-8}
 \caption{تعداد \lr{VNFM}های الگوریتم‌های بهینه، \lr{eJSD-MP} و \lr{JSD-MP} برای توپولوژی \lr{USnet}}
 \label{fig.13}
 \end{figure}
