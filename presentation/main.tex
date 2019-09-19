@@ -37,16 +37,29 @@
 % To force beamer use numbering in captions
 \setbeamertemplate{caption}[numbered]{}% Number float-like environments
 
+\setbeamertemplate{footline}[frame number]
+
+\setbeamertemplate{headline}
+{
+    \begin{beamercolorbox}{section in head/foot}
+        \vskip2pt\insertnavigation{\paperwidth}\vskip2pt
+    \end{beamercolorbox}
+}
 
 
 %---------------------------------------------------------------------------------
 \title{
-    زنجیره‌سازی کارکردهای مجازی سرویس شبکه با لحاظ محدودیت منابع مدیریتی
+    زنجیره‌سازی کارکردهای مجازی سرویس شبکه با در نظر گرفتن محدودیت منابع مدیریتی
 }
 \subtitle{مهندسی فناوری اطلاعات - شبکه‌های کامپیوتری}
 \author{پرهام الوانی}
-\institute{دانشکده مهندسی کامپیوتر و فناوری اطلاعات\\دکتر بهادر بخشی}
-\date{بهار ۱۳۹۸}
+\institute{
+    دانشکده مهندسی کامپیوتر و فناوری اطلاعات\\دکتر بهادر بخشی
+    \\
+    \\
+    \includegraphics[width=1cm]{images/logo}
+}
+\date{شهریور ۱۳۹۸}
 
 \begin{document}
 \begin{persian}
@@ -61,21 +74,15 @@
 % To adjust the paragraphs in RTL
 \everypar{\rightskip\rightmargin}
 %-------------------------------------------------------------------------------
-\begin{frame}{فهرست} % 1
-    \begin{itemize}\RTList{}
-        \item مقدمه
-        \item چالش‌ها
-        \item سابقه‌ی کارها
-        \item تعریف مساله
-        \item چالش‌ها و نوآوری‌های مساله
-        \item معیار و نحوه‌ی ارزیابی
-        \item فرمول‌بندی
-        \item ارزیابی
-        \item مراجع
-    \end{itemize}
+\begin{frame}{فهرست}
+    \tableofcontents
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{مقدمه} % 2
+\begin{frame}{}
+    \section{مقدمه}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{مقدمه}
     \begin{itemize}\RTList{}
         \justifying
         \item عدم انعطاف‌پذیری معماری فعلی شبکه
@@ -85,7 +92,7 @@
     \end{itemize}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{مقدمه} % 2.5
+\begin{frame}{مقدمه}
     \begin{itemize}\RTList{}
         \justifying
         \item با توجه به جداسازی زیرساخت از نرم‌افزار کارکردهای شبکه، نیاز به هماهنگی میان آن‌ها ایجاد شده است.
@@ -99,14 +106,14 @@
     \end{itemize}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{مقدمه} % 3
+\begin{frame}{مقدمه}
     \begin{center}\begin{figure}
-        \includegraphics[scale=0.4]{images/nfv-arch.png}
+        \includegraphics[scale=0.5]{images/nfv-arch.png}
         \caption{معماری سطح بالای مجازی‌سازی کارکردهای شبکه}
     \end{figure}\end{center}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{مقدمه} % 4
+\begin{frame}{مقدمه}
     \begin{itemize}\RTList{}
         \item \lr{NFVO} وظیفه‌ی استقرار زنجیره‌های کارکرد سرویس را برعهده دارد.
         \item \lr{VNFM} مسئول چرخه‌ی زندگی کارکردهای مجازی شبکه می‌باشد.
@@ -115,7 +122,7 @@
     \end{itemize}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{چالش‌ها} % 5
+\begin{frame}{چالش‌ها}
     \begin{columns}
         \begin{column}{0.6\textwidth}
             \includegraphics[scale=0.35]{images/embedding.png}
@@ -133,7 +140,11 @@
     \end{columns}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{سابقه‌ی کارها} % 6
+\begin{frame}{}
+    \section{سابقه‌ی کارها}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{سابقه‌ی کارها}
     \fontsize{6pt}{7.2}\selectfont
     \begin{table}[h]
         \caption{مقایسه مقالات پذیرش زنجیره‌های کارکرد سرویس}
@@ -261,23 +272,28 @@
     \end{table}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{سابقه‌ی کارها} % 7
+\begin{frame}{سابقه‌ی کارها}
     \begin{itemize}\RTList{}
-        \item این مقاله به مانند کار پژوهشی حاضر تاخیر را در لینک‌های مدیریتی در نظر می‌گیرد.
-        \item این مقاله فرض می‌کند زنجیره‌ها از پیش پذیرفته شده‌اند.
-        \item هدف این مقاله جایگذاری \lr{VNFM}ها به صورت مستقل با هدف کاهش هزینه‌های عملیاتی می‌باشد.
+        \item این مفاله مساله‌ی جایگذاری \lr{VNFM}ها را مطرح می‌کند.
+        \item این مقاله فرض می‌کند زنجیره‌های جایگذاری شده‌اند و هر در بازه‌ی زمانی می‌توانند بازنگاشت شوند.
+        \item این مساله قصد دارد با در نظر گرفتن هزینه‌های عملیاتی مساله‌ی بازنشگات \lr{VNFM}ها در بازه‌های زمانی را حل کند.
     \end{itemize}
     \begin{latin}
     \fullcite{AbuLebdeh2017}
     \end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{تعریف مساله} % 8
+\begin{frame}{}
+    \section{تعریف مساله}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{تعریف مساله}
     \par
-    پذیرفتن بیشترین تقاضای زنجیره‌ کارکرد سرویس با در نظر گرفتن نیاز برخی از نمونه‌ها کارکرد مجازی شبکه به یک \lr{VNFM}.
+    بیشینه‌سازی سود حاصل از پذیرش زنجیره‌های کارکرد سرویس با در نظر گرفتن کارکرد سرویس با در نظر گرفتن نیاز برخی از نمونه‌های کارکرد
+    مجازی شبکه به \lr{VNFM}.
 \end{frame}‌
 %-------------------------------------------------------------------------------
-\begin{frame}{تعریف مساله} % 9
+\begin{frame}{تعریف مساله}
     \begin{itemize}\RTList{}
         \justifying
         \item توپولوژی زیرساخت شامل پنهای باند لینک‌ها و ظرفیت \lr{NFVI-PoP}ها، موجود است.
@@ -287,7 +303,7 @@
     \end{itemize}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{تعریف مساله} % 10
+\begin{frame}{تعریف مساله}
     \justifying
     \begin{itemize}\RTList{}
         \item نمونه‌ها بین زنجیره‌ها به اشتراک گذاشته نمی‌شوند.
@@ -299,7 +315,7 @@
     \end{itemize}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{تعریف مساله} % 11
+\begin{frame}{تعریف مساله}
     \justifying
     \begin{itemize}\RTList{}
         \item برای مدیریت یکدست و آسان‌تر زنجیره‌ها و در عین حال جمع‌آوری راحتر خطاها، برای هر زنجیره یک \lr{VNFM} تخصیص می‌دهیم.
@@ -311,7 +327,7 @@
     \end{itemize}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{چالش‌ها و نوآوری‌های مساله} % 12
+\begin{frame}{چالش‌ها و نوآوری‌های مساله}
     \begin{itemize}\RTList{}
         \item در نظر گرفتن نیازمندی نمونه‌های کارکرد مجازی به یک \lr{VNFM}
         \item در نظر گرفتن نیازمندی تاخیر برای لینک‌های مدیریتی
@@ -320,24 +336,21 @@
     \end{itemize}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{معیار و نحوه‌ی ارزیابی} % 13
+\begin{frame}{معیار و نحوه‌ی ارزیابی}
     \begin{itemize}\RTList{}
         \item مدل‌سازی مساله
         \item حل مساله‌ی بهینه در ابعاد کوچک
         \item پیاده‌سازی راه‌حل مکاشفه‌ای
-        \item معیار مقایسه این راه حل نرخ پذیرش تقاضاهای زنجیره‌های کارکرد سرویس می‌باشد.
+        \item معیار مقایسه این راه حل سود حاصل از پذیرش تقاضاهای زنجیره‌های کارکرد سرویس می‌باشد.
         \item مقایسه‌ی نتایج راه‌حل مکاشفه‌ای با جواب بهینه
-        \item مقایسه با کارهای مرتبط که نیازمندی‌های مدیریتی را مدنظر قرار نداده‌اند.
     \end{itemize}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{} % 14
-    \begin{center}
-        فرمول‌بندی و مدل‌سازی ریاضی مساله
-    \end{center}
+\begin{frame}{}
+    \section{فرمول‌بندی و مدل‌سازی ریاضی مساله}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی} % 15
+\begin{frame}{فرمول‌بندی}
     \par پارامترهای مساله
     \begin{center}\begin{latin}\begin{tabular}{|c|p{5cm}|}
         \hline
@@ -356,7 +369,7 @@
     \end{tabular}\end{latin}\end{center}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی} % 16
+\begin{frame}{فرمول‌بندی}
     \par پارامترهای مساله
     \begin{center}\begin{latin}\begin{tabular}{|c|p{5cm}|}
         \hline
@@ -371,7 +384,22 @@
     \end{tabular}\end{latin}\end{center}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی} % 17
+\begin{frame}{فرمول‌بندی}
+    \par پارامترهای مساله
+    \begin{center}\begin{latin}\begin{tabular}{|c|p{5cm}|}
+        \hline
+        \(licenseFee\) & VNFM license fee that must pay for each VNFM \\
+        \hline
+        \(vnfSupport(w)\) & assuming the value 1 if the physical server \(w\) can support VNF instances \\
+        \hline
+        \(isManageable(k)\) & assuming the value 1 if the type \(k\) needs a manager \\
+        \hline
+        \(notManagableBy(w1, w2)\) & assuming the value 1 if the physical server \(w1\) cannot manage by physical server \(w2\) \\
+        \hline
+    \end{tabular}\end{latin}\end{center}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی}
     \par
     متغیرهای تصمیم‌گیری
     \begin{latin}\begin{tabular}{c p{10cm}}
@@ -381,7 +409,7 @@
     \end{tabular}\end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی} % 18
+\begin{frame}{فرمول‌بندی}
     \par
     متغیرهای تصمیم‌گیری
     \begin{latin}\begin{tabular}{c p{10cm}}
@@ -390,7 +418,7 @@
     \end{tabular}\end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی} % 19
+\begin{frame}{فرمول‌بندی}
     \par
     هدف اصلی مساله پذیریش بیشترین تعداد تقاضا می‌باشد.
     در اینجا فرض می‌کنیم پذیرش هر تقاضا سودی منحصر به فرد خواهد داشت.
@@ -400,7 +428,7 @@
     \end{align}\end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی} % 20
+\begin{frame}{فرمول‌بندی}
     \par
     محدودیت حافظه نودها
     \begin{latin}\begin{align}
@@ -417,7 +445,7 @@
     \end{align}\end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی} % 21
+\begin{frame}{فرمول‌بندی}
     \par
     اگر \lr{VNF}, \lr{v}
     توسط \lr{VNF instance} نوع \lr{k}
@@ -433,7 +461,7 @@
     \end{align}\end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی} % 22
+\begin{frame}{فرمول‌بندی}
     \par
     اگر تقاضای \lr{h}ام پذیرفته شده باشد
     می‌بایست تمام \lr{VNF node}های آن‌
@@ -446,7 +474,7 @@
     \end{align}\end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی} % 23
+\begin{frame}{فرمول‌بندی}
     \par
     اگر تقاضای \lr{h}ام پذیرفته شده باشد
     می‌بایست توسط یک \lr{VNFM} سرویس شده باشد.
@@ -459,7 +487,7 @@
     \end{align}\end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی} % 24
+\begin{frame}{فرمول‌بندی}
     \par
     اگر \lr{SFC}، \lr{i}
     توسط \lr{VNFM} روی سرور \lr{w}
@@ -480,7 +508,7 @@
     \end{align}\end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی} % 25
+\begin{frame}{فرمول‌بندی}
     \par
     اگر \lr{VNF}، \lr{v}
     توسط نمونه‌ای نوع \lr{k}
@@ -495,7 +523,7 @@
     \end{align}\end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی} % 26
+\begin{frame}{فرمول‌بندی}
     \par
     متغیرهای تصمیم‌گیری
     \begin{latin}\begin{tabular}{c p{10cm}}
@@ -504,7 +532,7 @@
     \end{tabular}\end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی} % 27
+\begin{frame}{فرمول‌بندی}
     \par
     \lr{Flow Conservation}
     \begin{latin}\begin{align}
@@ -513,7 +541,7 @@
     \end{align}\end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی} % 28
+\begin{frame}{فرمول‌بندی}
     \par
     \lr{Flow Conservation}
     \begin{latin}\begin{align}
@@ -522,7 +550,7 @@
     \end{align}\end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی} % 29
+\begin{frame}{فرمول‌بندی}
     \par
     محدودیت ظرفیت لینک‌ها
     \begin{latin}\begin{align}
@@ -531,11 +559,11 @@
     \end{align}\end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی} % 30
+\begin{frame}{فرمول‌بندی}
     \par
     شعاع همسایگی تضمین می‌کند که زمان سرویس‌دهی توسط
     \lr{VNFM}ها
-    در یک بازه مشخص (از نظر تعداد هاب)
+    در یک بازه مشخص (از نظر تعداد گام)
     خواهد بود.
     \begin{latin}\begin{align}
         \sum_{(i, j) \in E^{PN}} \bar{\tau}_{ij}^{v} \le radius
@@ -544,13 +572,63 @@
     \end{align}\end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{} % 31
+\begin{frame}{مساله‌ی نمونه}
+    \par
+    زنجیره‌های زیر را به عنوان تقاضاها در نظر می‌گیریم.
+
+    \begin{center}
+        \includegraphics[scale=0.4]{../diagrams/chains.pdf}
+    \end{center}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{مساله‌ی نمونه}
+    \par
+    فرض می‌کنیم مرکز داده‌ای دارای توپولوژی زیر می‌باشد.
+
+    \begin{center}
+        \includegraphics[scale=0.4]{../diagrams/topology.pdf}
+    \end{center}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{}
+    \section{راه‌حل پیشنهادی}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{راه‌حل پیشنهادی}
+    \begin{itemize}\RTList{}
+        \item مساله‌ی اصلی یک مساله‌ی \lr{NP-Hard} می‌باشد.
+        \item برای حل مساله در زمان معقول برای ابعاد بزرگ نیاز به یک الگوریتم مکاشفه‌ای می‌باشد.
+        \item از ایده‌ی الگوریتم \lr{\cite{Bari2015}} برای جایگذاری زنجیره‌ها شروع می‌کنیم.
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{\lr{JSD-MP}}
+    \begin{itemize}\RTList{}
+        \item \lr{Joint Service Deployment - Manager Placement}
+        \item زنجیره‌ها را با استفاده از الگوریتم \lr{\cite{Bari2015}} جایگذاری می‌کنیم.
+        \item در زمان انتخاب مجموعه‌ی امکان‌پذیر محدودیت‌های مساله را اعمال می‌کنیم.
+        \item بعد از جایگذاری هر زنجیره \lr{VNFM} آن را انتخاب می‌کنیم.
+        \item برای انتخاب \lr{VNFM} اولویت با نمونه‌هایی است که ظرفیت آن‌ها کامل استفاده نشده است.
+        \item در بین \lr{VNFM}هایی که ظرفیت خالی دارند اولویت با نمونه‌هایی است که منابع پردازشی بیشتری دارند.
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{\lr{eJSD-MP}}
+    \begin{itemize}\RTList{}
+        \item الگوریتم پیشنهادی \lr{JSD-MP} زمان اجرای زیادی دارد که می‌توان آن را کاهش داد.
+        \item الگوریتم پیشنهادی \lr{eJSD-MP} از برون‌خط بودن مساله استفاده نمی‌کند.
+        \item برای استفاده از ویژگی برون‌خط بودن مساله زنجیره‌ها را بر اساس قیمت‌شان مرتب می‌کنیم.
+        \item برای کاهش زمان اجرای الگوریتم نسب مشخصی از زنجیره‌ها را با الگوریتم \lr{first-fit} جایگذاری می‌کنیم.
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{}
     \begin{center}
         ارزیابی
     \end{center}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{ارزیابی} % 32
+\begin{frame}{ارزیابی}
     \par
     فرمول‌بندی ارائه شده بر روی نرم‌افزار
     \lr{cplex}
@@ -564,64 +642,7 @@
     \end{center}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{ارزیابی} % 33
-    \par
-    زنجیره‌های زیر را به عنوان تقاضاها در نظر می‌گیریم.
-
-    \begin{center}
-        \includegraphics[scale=0.4]{../diagrams/chains.pdf}
-    \end{center}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{ارزیابی} % 34
-    \par
-    فرض می‌کنیم مرکز داده‌ای دارای توپولوژی زیر می‌باشد.
-
-    \begin{center}
-        \includegraphics[scale=0.4]{../diagrams/topology.pdf}
-    \end{center}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}[fragile]{ارزیابی} % 35
-    \par
-    در نهایت نتیجه زیر از مساله حاصل می‌گردد.
-    \begin{latin}\begin{verbatim}
-cost = 20.0
-
->> Chains
-Chain 0 is accepted.
-Chain 1 is accepted.
-       
->> Instance mapping
-Chain 0:
-Node 0 with type 0 is mapped on 3
-Chain 1:
-Node 0 with type 0 is mapped on 2
-Node 1 with type 0 is mapped on 1
-Node 2 with type 0 is mapped on 2
-    \end{verbatim}\end{latin}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}[fragile]{ارزیابی} % 36
-    \begin{latin}\begin{verbatim}
->> Manager mapping
-Chain 0 manager is 4
-Chain 1 manager is 0
-       
->> Instance links
-Chain 1 link 1 (0 - 2) is on 2-0
-Chain 1 link 0 (0 - 1) is on 3-4
-       
->> Management links
-Chain 0 node 0 manager is on 3-4
-Chain 1 node 1 manager is on 1-2
-Chain 1 node 0 manager is on 2-0
-Chain 1 node 1 manager is on 2-0
-Chain 1 node 2 manager is on 2-0
-    \end{verbatim}\end{latin}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}[shrink=25]{مراجع} % 37
+\begin{frame}[shrink=25]{مراجع}
     \begin{latin}
     \printbibliography[heading=none]
     \end{latin}
