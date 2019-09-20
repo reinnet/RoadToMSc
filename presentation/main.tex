@@ -45,27 +45,60 @@
 \setbeamertemplate{headline}
 {
     \begin{beamercolorbox}{section in head/foot}
-        \vskip2pt\insertnavigation{\paperwidth}\vskip2pt
+        \vspace{2pt}\insertnavigation{\paperwidth}\vspace{2pt}
     \end{beamercolorbox}
 }
-
 
 %---------------------------------------------------------------------------------
 \title{
     زنجیره‌سازی کارکردهای مجازی سرویس شبکه با در نظر گرفتن محدودیت منابع مدیریتی
 }
-\subtitle{مهندسی فناوری اطلاعات - شبکه‌های کامپیوتری}
+\subtitle{}
 \author{پرهام الوانی}
 \institute{
-    دانشکده مهندسی کامپیوتر و فناوری اطلاعات\\دکتر بهادر بخشی
-    \\
-    \\
-    \includegraphics[width=1cm]{images/logo}
+    دانشکده مهندسی کامپیوتر\\دکتر بهادر بخشی
 }
 \date{شهریور ۱۳۹۸}
 
 \begin{document}
 \begin{persian}
+
+\makeatletter
+\setbeamertemplate{title page}{
+  \begin{minipage}[b][\paperheight]{\textwidth}
+    \begin{center}
+        \ifx\inserttitlegraphic\@empty\else\usebeamertemplate*{title graphic}\fi
+    \end{center}
+    \vfill%
+    \ifx\inserttitle\@empty\else\usebeamertemplate*{title}\fi
+    \ifx\insertsubtitle\@empty\else\usebeamertemplate*{subtitle}\fi
+    \usebeamertemplate*{title separator}
+    \ifx\beamer@shortauthor\@empty\else\usebeamertemplate*{author}\fi
+    \ifx\insertdate\@empty\else\usebeamertemplate*{date}\fi
+    \ifx\insertinstitute\@empty\else\usebeamertemplate*{institute}\fi
+    \vspace*{5mm}
+    \begin{center}
+        \includegraphics[width=1cm]{images/logo}
+    \end{center}
+    \vfill
+    \vspace*{1mm}
+  \end{minipage}
+}
+
+\setbeamertemplate{title}{
+%  \raggedright%  % <-- Comment here
+  \linespread{1.0}%
+  \inserttitle%
+  \par%
+  \vspace*{0.5em}
+}
+\setbeamertemplate{subtitle}{
+%  \raggedright%  % <-- Comment here
+  \insertsubtitle%
+  \par%
+  \vspace*{0.5em}
+}
+\makeatother
 
 %------------------------------------------
 % Title frame (0)
