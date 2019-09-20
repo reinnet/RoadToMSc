@@ -60,10 +60,6 @@
 
 \begin{latin}
     \begin{verbatim}
-          sorts.Slice(chains, func (i, j int) {
-            return len(chains[i]) > len(chains[j])
-          })
-          
           for i := 0; i < len(chains); i++ {
             chain := chains[i]
             var feasibleSet []Node

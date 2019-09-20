@@ -397,7 +397,7 @@
     \label{fig.16}
 \end{table}
 
-\begin{figure}[h!]
+\begin{table}[h!]
     \caption{مشخصات سرورهای زیرساخت مساله‌ی نمونه}
     \vspace{0.5cm}
     \begin{center}\begin{latin}\begin{tabular}{|c|c|c|}
@@ -412,7 +412,7 @@
         \hline
     \end{tabular}\end{latin}\end{center}
     \label{fig.17}
-\end{figure}
+\end{table}
 
 نمونه‌ها تنها می‌توانند روی سرورهای ۱، ۳، ۵ و ۷ قرار گیرند.
 مدیریت سرورهای ۱ و ۳ تنها می‌تواند روی سرورهای ۲ و ۴ انجام شود،
@@ -423,6 +423,23 @@
 تمامی لینک‌های فیزیکی ظرفیت ۴۰ گیگابیت بر ثانیه را دارا می‌باشند.
 
 این مثال به صورت کامل بر روی چهارچوب این مساله قابل پیاده‌سازی می‌باشد.
+نتایج در جدول \ref{table.2} خلاصه شده‌اند.
+
+
+\begin{table}[h!]
+    \caption{نتایج مساله‌ی نمونه}
+    \vspace{0.5cm}
+    \begin{center}\begin{latin}\begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        & Src & Node-0 & Node-1 & Dst & VNFM \\
+        \hline
+        Chain 0 & Switch-9 & Server-7 & Server-5 & Switch-9 & Server-6 \\
+        \hline
+        Chain 1 & Switch-9 & Server-3 & Server-3 & Switch-9 & Server-4 \\
+        \hline
+    \end{tabular}\end{latin}\end{center}
+    \label{table.2}
+\end{table}
 
 \section{جمع‌بندی}
 
