@@ -379,19 +379,39 @@
 \label{fig.15}
 \end{figure}
 
-نیازمندی‌های نمونه‌ها در شکل \ref{fig.16} آمده است و منابع سرور‌ها نیز در شکل \ref{fig.17} جمع‌آوری شده است.
+نیازمندی‌های نمونه‌ها در جدول \ref{fig.16} آمده است و منابع سرور‌ها نیز در جدول \ref{fig.17} جمع‌آوری شده است.
 
 
-\begin{figure}[h]
-\center\includegraphics[scale=1]{images/example-types}
-\caption{نیازمندی نمونه‌های مساله‌ی نمونه}
-\label{fig.16}
-\end{figure}
+\begin{table}[h]
+    \caption{نیازمندی نمونه‌های مساله‌ی نمونه}
+    \vspace{0.5cm}
+    \begin{center}\begin{latin}\begin{tabular}{|c|c|c|c|}
+        \hline
+        Spec/VNF & vFW & vNAT & vIDS \\
+        \hline
+        CPU (vCore) & 2 & 2 & 2 \\
+        \hline
+        Memory (GB) & 2 & 4 & 2 \\
+        \hline
+    \end{tabular}\end{latin}\end{center}
+    \label{fig.16}
+\end{table}
 
 \begin{figure}[h!]
-\center\includegraphics[scale=1]{images/example-spec}
-\caption{مشخصات سرورهای زیرساخت مساله‌ی نمونه}
-\label{fig.17}
+    \caption{مشخصات سرورهای زیرساخت مساله‌ی نمونه}
+    \vspace{0.5cm}
+    \begin{center}\begin{latin}\begin{tabular}{|c|c|c|}
+        \hline
+        & Server 1,2,7,8 & Servers 3,4,5,6 \\
+        \hline
+        Installed vCPU & 144 & 72 \\
+        \hline
+        Installed Memory (GB) & 1408 & 288 \\
+        \hline
+        Link (Gbps) & 40 & 40 \\
+        \hline
+    \end{tabular}\end{latin}\end{center}
+    \label{fig.17}
 \end{figure}
 
 نمونه‌ها تنها می‌توانند روی سرورهای ۱، ۳، ۵ و ۷ قرار گیرند.
