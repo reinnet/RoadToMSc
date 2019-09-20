@@ -28,3 +28,10 @@ I want to thank Behrooz Farkiani who help me so much in this dark way.
 | Dr.Bakhshi Meeting | 2018-04-24 |
 | Network Community Meeting | 2018-04-25 |
 | Dr.Bakhshi Meeting | 2018-11-07 |
+
+## Defense Session
+Defense session will be held on Saturday 21 Sep 2019 on Amphitheater of CEIT Department.
+
+Referee Committee:
+- Dr. Siavash Khorsandi (Amirkabir University of Technology)
+- Dr. Ali Movaghar (Sharif University of Technology)
