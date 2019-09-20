@@ -441,6 +441,60 @@
     \label{table.2}
 \end{table}
 
+در نهایت جایگذاری لینک‌ها به شرح زیر می‌باشد:
+
+\begin{latin}
+    \begin{verbatim}
+        Chain 0 link 0 (0 - 1) is on switch-9 - switch-11
+        Chain 0 link 0 (0 - 1) is on switch-11 - switch-15
+        Chain 0 link 0 (0 - 1) is on switch-15 - server-7
+
+        Chain 0 link 1 (1 - 2) is on server-7 - switch-15
+        Chain 0 link 1 (1 - 2) is on switch-15 - switch-11
+        Chain 0 link 1 (1 - 2) is on switch-11 - switch-9
+        Chain 0 link 1 (1 - 2) is on switch-9 - switch-10
+        Chain 0 link 1 (1 - 2) is on switch-10 - switch-14
+        Chain 0 link 1 (1 - 2) is on switch-14 - server-5
+
+        Chain 0 link 2 (2 - 3) is on server-5 - switch-14
+        Chain 0 link 2 (2 - 3) is on switch-14 - switch-11
+        Chain 0 link 2 (2 - 3) is on switch-11 - switch-9
+
+        Chain 0 node 1 manager is on server-7 - switch-15
+        Chain 0 node 1 manager is on switch-15 - switch-11
+        Chain 0 node 1 manager is on switch-11 - switch-14
+        Chain 0 node 1 manager is on switch-14 - server-6
+
+        Chain 0 node 2 manager is on server-5 - switch-14
+        Chain 0 node 2 manager is on switch-14 - server-6
+
+        Chain 1 link 0 (0 - 1) is on switch-9 - switch-10
+        Chain 1 link 0 (0 - 1) is on switch-10 - switch-14
+        Chain 1 link 0 (0 - 1) is on switch-14 - switch-11
+        Chain 1 link 0 (0 - 1) is on switch-11 - switch-13
+        Chain 1 link 0 (0 - 1) is on switch-13 - server-3
+
+        Chain 1 link 1 (1 - 2) is on switch-10 - switch-14
+        Chain 1 link 1 (1 - 2) is on switch-14 - switch-11
+        Chain 1 link 1 (1 - 2) is on switch-11 - switch-15
+        Chain 1 link 1 (1 - 2) is on switch-15 - switch-10
+
+        Chain 1 link 2 (2 - 3) is on server-3 - switch-13
+        Chain 1 link 2 (2 - 3) is on switch-13 - switch-10
+        Chain 1 link 2 (2 - 3) is on switch-10 - switch-15
+        Chain 1 link 2 (2 - 3) is on switch-15 - switch-11        
+        Chain 1 link 2 (2 - 3) is on switch-11 - switch-14
+        Chain 1 link 2 (2 - 3) is on switch-14 - switch-10
+        Chain 1 link 2 (2 - 3) is on switch-10 - switch-9
+
+        Chain 1 node 1 manager is on server-3 - switch-13
+        Chain 1 node 1 manager is on switch-13 - server-4
+
+        Chain 1 node 2 manager is on server-3 - switch-13
+        Chain 1 node 2 manager is on switch-13 - server-4
+    \end{verbatim}
+\end{latin}
+
 \section{جمع‌بندی}
 
 در این بخش مساله‌ی اصلی بیان شده و شرایط آن شرح داده شد.
