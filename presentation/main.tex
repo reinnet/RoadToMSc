@@ -16,7 +16,7 @@
 \usepackage{multirow}
 \usepackage{tabularx}
 \usepackage{booktabs}
-\usepackage[sorting=none,style=ieee]{biblatex}
+\usepackage[style=numeric]{biblatex}
 \addbibresource{references.bib}
 \usepackage{xepersian}
 \settextfont[Path=fonts/]{Parastoo}
@@ -38,6 +38,9 @@
 \setbeamertemplate{caption}[numbered]{}% Number float-like environments
 
 \setbeamertemplate{footline}[frame number]
+\setbeamertemplate{section in toc}[circle]
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamercolor{block body}{bg=lightgray}
 
 \setbeamertemplate{headline}
 {
@@ -82,31 +85,75 @@
     \section{مقدمه}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{مقدمه}
+\begin{frame}{شبکه‌های سنتی}
     \begin{itemize}\RTList{}
         \justifying
-        \item عدم انعطاف‌پذیری معماری فعلی شبکه
-        \item در مجازی‌سازی کارکرد شبکه با استفاده از مجازی‌سازی منابع، می‌توان کارکردها را بر روی سرورهای استاندارد اجرا کرد
-        و بهره‌وری منابع را فزایش داده و هزینه‌های انرژی را کاهش داد.
-        \item زنجیره سازی کارکرد سرویس نیز امکان ایجاد زنجیره‌ای از کارکردها را به صورت پویا فراهم می‌کند.
+        \item یک سرویس شبکه به صورت تعدادی کارکرد مشخص که ترافیک با ترتیب مشخصی از آن ها عبور می‌کند، تعریف می‌شود.
+        \item کارکردهای شبکه به صورت سخت‌افزار و نرم‌افزار اختصاصی تهیه شده از سازندگان مختلف استفاده می‌شوند.
+        \item کارکردها باید در مکان مناسب در شبکه قرار گیرند و ترافیک به سمت آن‌ها هدایت شود.
     \end{itemize}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{مقدمه}
+\begin{frame}{شبکه های سنتی}
     \begin{itemize}\RTList{}
         \justifying
-        \item با توجه به جداسازی زیرساخت از نرم‌افزار کارکردهای شبکه، نیاز به هماهنگی میان آن‌ها ایجاد شده است.
-        \item به صورت کلی تفاوت‌هایی که با توجه به فرآیند مجازی‌سازی کارکردهای شبکه ایجاد شده‌اند را  می‌توان
-        به ترتیب زیر دسته‌بندی نمود:
+        \item افزایش نیازمندی به سرویس‌های متنوع با عمرکوتاه و نرخ بالای ترافیک
         \begin{itemize}\RTList{}
-            \item زیرساخت مجازی‌سازی شده
-            \item کارکردهای شبکه‌ای مجازی‌سازی شده
-            \item سرویس‌های شبکه‌ای
+            \item خریداری، انبارداری و استقرار سخت‌افزارهای اختصاصی
+            \item افزایش هزینه‌های خرید، آموزش و انبارداری
+            \item کاهش فضای فیزیکی
+            \item سربار آموزش کارکنان
+            \item محدودیت نوآوری در سخت‌افزار و سرویس
+        \end{itemize}
+    \end{itemize}
+    \begin{block}{}
+        \centering
+        \lr{Network Functions Virtualization}\\
+        مجازی‌سازی کارکردهای شبکه
+    \end{block}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{شبکه های سنتی}
+    \begin{itemize}\RTList{}
+        \justifying
+        \item ترافیک کاربر باید از تعدادی کارکرد شبکه به ترتیب معینی عبور کند.
+        \item کارکردها به صورت سخت‌افزاری به یکدیگر متصلند و ترافیک با استفاده از جداول مسیریابی به سمت آن‌ها هدایت می شود.
+        \item نیاز به تغییر همبندی سریع و یا مکان کارکردها برای سرویس‌دهی بهتر 
+        \begin{itemize}\RTList{}
+            \item استقرار و تغییر ترتیب کارکردها دشوار است
+            \item امکان رخدادن خطاهای متعدد
+        \end{itemize}
+    \end{itemize}
+    \begin{block}{}
+        \centering
+        \lr{Service Function Chaining}\\
+        زنجیره‌سازی کارکرد سرویس
+    \end{block}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{معماری پیشنهادی}
+    \begin{itemize}\RTList{}
+        \justifying
+        \item مجازی‌سازی کارکردهای شبکه 
+        \begin{itemize}\RTList{}
+            \item اواخر سال ۲۰۱۲، \lr{ETSI NFV ISG} توسط هفت اپراتور جهانی شبکه تأسیس شد.
+            \item اکنون بیش از 250 سازمان با آن همکاری می‌کنند.
+            \item اجرای کارکردها بر روی سرورهای استاندارد با توان بالا به وسیله مجازی‌سازی کارکردها
+            \begin{itemize}\RTList{}
+                \item کاهش نیاز به تجهیزات سخت‌افزاری خاص منظوره
+                \item اشتراک گذاری منابع بین کارکرد‌ها
+                \item کاهش هزینه‌های تجهیزات و مصرف انرژی از طریق تجمیع کارکردها
+            \end{itemize}
+        \end{itemize}
+        \item زنجیره‌سازی کارکرد سرویس
+        \begin{itemize}\RTList{}
+            \item امکان تعریف زنجیره کارکردها به صورت پویا و بدون تغییر در زیرساخت فیزیکی
+            \item \lr{RFC 7665}
         \end{itemize}
     \end{itemize}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{مقدمه}
+\begin{frame}{معماری پیشنهادی}
     \begin{center}\begin{figure}
         \includegraphics[scale=0.5]{images/nfv-arch.png}
         \caption{معماری سطح بالای مجازی‌سازی کارکردهای شبکه}
@@ -274,9 +321,9 @@
 %-------------------------------------------------------------------------------
 \begin{frame}{سابقه‌ی کارها}
     \begin{itemize}\RTList{}
-        \item این مفاله مساله‌ی جایگذاری \lr{VNFM}ها را مطرح می‌کند.
+        \item این مقاله مساله‌ی جایگذاری \lr{VNFM}ها را مطرح می‌کند.
         \item این مقاله فرض می‌کند زنجیره‌های جایگذاری شده‌اند و هر در بازه‌ی زمانی می‌توانند بازنگاشت شوند.
-        \item این مساله قصد دارد با در نظر گرفتن هزینه‌های عملیاتی مساله‌ی بازنشگات \lr{VNFM}ها در بازه‌های زمانی را حل کند.
+        \item این مساله قصد دارد با در نظر گرفتن هزینه‌های عملیاتی مساله‌ی بازنگاشت \lr{VNFM}ها در بازه‌های زمانی را حل کند.
     \end{itemize}
     \begin{latin}
     \fullcite{AbuLebdeh2017}
@@ -311,7 +358,7 @@
         \item محدودیت توان پردازش سرورهای فیزیکی با توجه به میزان حافظه و تعداد پردازنده‌ها
         \item برخی از سرور‌های فیزیکی نمی‌توانند سرور‌های فیزیکی مشخصی را مدیریت کنند.
         \item برخی از سرورهای فیزیکی توانایی پشتیبانی از کارکردهای مجازی را ندارد.
-        \item تنها برخی از نمونه‌های کارکردهای مجازی نیاز به مدیریت دارند.
+        \item برخی از نمونه‌های کارکرد مجازی تنها می‌توانند روی سرورهایی خاص نگاشته شوند.
     \end{itemize}
 \end{frame}
 %-------------------------------------------------------------------------------
@@ -333,6 +380,7 @@
         \item در نظر گرفتن نیازمندی تاخیر برای لینک‌های مدیریتی
         \item تخصیص منابع مدیریتی به زنجیره‌ها و مسیریابی ارتباط مدیریتی
         \item جایگذاری و مسیریابی توامان زنجیره‌های کارکرد سرویس
+        \item طراحی مساله‌ی نزدیک به واقعیت
     \end{itemize}
 \end{frame}
 %-------------------------------------------------------------------------------
@@ -349,6 +397,373 @@
 \begin{frame}{}
     \section{فرمول‌بندی و مدل‌سازی ریاضی مساله}
 \end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی}
+    \par
+    هدف اصلی مساله پذیریش بیشترین تعداد تقاضا می‌باشد.
+    در اینجا فرض می‌کنیم پذیرش هر تقاضا سودی منحصر به فرد و هزینه‌ای برای تهیه گواهی \lr{VNFM} در بر خواهد داشت.
+    بنابراین تابع هدف به شکل زیر می‌باشد:
+
+    \begin{latin}\begin{align}
+        max \sum_{h=1}^{T} c_hx_h - \sum_{w \in V_s^{PN}} licenseFee . \bar{y}_w
+    \end{align}\end{latin}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی}
+    \par
+    محدودیت حافظه نودها
+    \begin{latin}\begin{align}
+        \sum_{k=1}^F y_{wk} memory(k) + \bar{y_w} \bar{memory} \le N_{ram}^{PN}(w)
+        \quad
+        \forall w \in V_s^{PN}
+    \end{align}\end{latin}
+    \par
+    محدودیت تعداد پردازنده‌های نودها
+    \begin{latin}\begin{align}
+        \sum_{k=1}^F y_{wk} core(k) + \bar{y_w} \bar{core} \le N_{core}^{PN}(w)
+        \quad
+        \forall w \in V_s^{PN}
+    \end{align}\end{latin}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی}
+    \par
+    اگر تقاضای \lr{h}ام پذیرفته شده باشد
+    می‌بایست تمام \lr{VNF node}های آن‌
+    سرویس شده باشند.
+    یک \lr{VNF} حداکثر یکبار سرویس داده شود.
+    \begin{latin}\begin{align}
+        x_h = \sum_{k=1}^{F} \sum_{w \in V_{s}^{PN}} z_{vw}^{k}
+        \quad
+        \forall v \in V_{h,F}^{SFC}, \forall h \in [1,\ldots, T]
+    \end{align}\end{latin}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی}
+    \par
+    اگر تقاضای \lr{h}ام پذیرفته شده باشد
+    می‌بایست توسط یک \lr{VNFM} سرویس شده باشد.
+    توجه شود که این محدودیت اجازه‌ی تخصیص بیش از یک \lr{VNFM}
+    به زنجیره نمی‌دهد.
+    \begin{latin}\begin{align}
+        x_h = \sum_{w \in V_{s}^{PN}} \bar{z}_{hw}
+        \quad
+        \forall h \in [1,\ldots, T]
+    \end{align}\end{latin}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی}
+    \par
+    محدودیت ظرفیت سرویس‌دهی \lr{VNFM}
+    این محدودیت براساس تعداد ماشین‌های مجازی که هر
+    \lr{VNFM}
+    سرویس می‌دهد تعیین شده است.
+    در نظر داشته باشید که ممکن است برخی از انواع
+    \lr{VNF}‌ها
+    نیازی به مدیریت شدن نداشته باشند.
+
+    \begin{latin}
+        \begin{align}
+            \sum_{i=1}^{T} \bar{z}_{iw} . (len(i) - \sum_{v \in V_{i, F}^{SFC}} \sum_{k \in [1, \dots, F]} type(v, k) . isManageable(k)) \le \nonumber \\
+            capacity . \bar{y}_{w}
+            \quad
+            \forall w \in V_{s}^{PN}
+        \end{align}
+    \end{latin}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی}
+    \par
+    اگر \lr{VNF}، \lr{v}
+    توسط نمونه‌ای نوع \lr{k}
+    روی سرور \lr{w} سرویس می‌شود می‌بایست
+    این \lr{VNF} از نوع \lr{k}ام باشد.
+    \begin{latin}\begin{align}
+        z_{vw}^{k} \le type(v, k)
+        \quad
+        \forall w \in V_{s}^{PN},
+        \forall k \in [1,\ldots, F],
+        \forall v \in \cup_{i=1}^T V_{i, F}^{SFC}
+    \end{align}\end{latin}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی}
+    \par
+    در صورتی که سرور \lr{w}
+    توانایی اجرای نمونه‌های \lr{VNF}
+    را نداشته باشد نباید نمونه‌ای روی آن قرار گیرد.
+
+    \begin{latin}
+        \begin{align}
+            \sum_{k \in [1, \dots, F]} y_{wk} \le M . vnfSupport(w)
+            \quad
+            w \in V_{s}^{PN}
+        \end{align}
+    \end{latin}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی}
+    \par
+    برخی از سرورهای نمی‌توانند توسط سرورهای مشخصی مدیریت شوند.
+    این ویژگی به ادمین شبکه امکان مدیریت بیشتری می‌دهد و او می‌تواند با دست باز تمامی
+    سیاست‌های مورد نظرش را اعمال نماید.
+
+    \begin{latin}
+        \begin{align}
+            1 - z_{vw_1}^k + \bar{z}_{hw_2} = 0
+            \quad
+            & \forall w_1 \in V_s^{PN} \forall w_2 \in V_s^{PN} \nonumber \\
+            & notManagableBy(w_1, w_2) = 1 \nonumber \\
+            & \forall h \in [1,\dots,T],
+            \forall v \in V_{h,F}^{SFC},
+            \forall k \in [1,\dots,T]
+        \end{align}
+    \end{latin}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی}
+    \par
+    \lr{Flow Conservation}
+    \begin{latin}\begin{align}
+        \sum_{(i,j) \in E^{PN}} \tau_{ij}^{(u,v)} - \sum_{(j,i) \in E^{PN}} \tau_{ji}^{(u,v)} = \sum_{k=1}^{F} z_{ui}^{k} - \sum_{k=1}^{F} z_{vi}^{k} \nonumber \\
+        \forall i \in V_{S}^{PN}, (u,v) \in E_{h}^{SFC}, h \in [1,\ldots, T]
+    \end{align}\end{latin}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی}
+    \par
+    \lr{Flow Conservation}
+    \begin{latin}\begin{align}
+        \sum_{(i,j) \in E^{PN}} \bar{\tau}_{ij}^{v} - \sum_{(j,i) \in E^{PN}} \bar{\tau}_{ji}^{v} = \sum_{k=1}^{F} z_{vi}^{k} - \bar{z}_{hi} \nonumber \\
+        \forall i \in V_{S}^{PN}, v \in V_{h, F}^{SFC}, h \in [1,\ldots, T]
+    \end{align}\end{latin}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی}
+    \par
+    محدودیت ظرفیت لینک‌ها
+    \begin{latin}\begin{align}
+        \sum_{v \in \cup_{i=1}^{T} V_{i,F}^{SFC}} \bar{\tau}_{ij}^{v} * \bar{bandwidth} + \sum_{(u,v) \in \cup_{i=1}^{T} E_{i}^{SFC}} \tau_{ij}^{(u,v)} * bandwidth(u,v) \le C_{ij} \nonumber \\
+        \forall (i, j) \in E^{PN}
+    \end{align}\end{latin}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{فرمول‌بندی}
+    \par
+    شعاع همسایگی تضمین می‌کند که زمان سرویس‌دهی توسط
+    \lr{VNFM}ها
+    در یک بازه مشخص (از نظر تعداد گام)
+    خواهد بود.
+    \begin{latin}\begin{align}
+        \sum_{(i, j) \in E^{PN}} \bar{\tau}_{ij}^{v} \le radius
+        \quad
+        \forall v \in \cup_{i=1}^T V_{i, F}^{SFC}
+    \end{align}\end{latin}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{مساله‌ی نمونه}
+    \par
+    زنجیره‌های زیر را به عنوان تقاضاها در نظر می‌گیریم.
+
+    \begin{center}
+        \includegraphics[scale=0.5]{../diagrams/chains.pdf}
+    \end{center}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{مساله‌ی نمونه}
+    \par
+    فرض می‌کنیم مرکز داده‌ای دارای توپولوژی زیر می‌باشد.
+
+    \begin{center}
+        \includegraphics[scale=0.4]{../diagrams/topology.pdf}
+    \end{center}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{مساله‌ی نمونه}
+    \begin{table}[h]
+        \caption{نیازمندی نمونه‌های مساله‌ی نمونه}
+        \vspace{0.5cm}
+        \begin{center}\begin{latin}\begin{tabular}{|c|c|c|c|}
+            \hline
+            Spec/VNF & vFW & vNAT & vIDS \\
+            \hline
+            CPU (vCore) & 2 & 2 & 2 \\
+            \hline
+            Memory (GB) & 2 & 4 & 2 \\
+            \hline
+        \end{tabular}\end{latin}\end{center}
+    \end{table}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{مساله‌ی نمونه}
+    \begin{figure}[h!]
+        \caption{مشخصات سرورهای زیرساخت مساله‌ی نمونه}
+        \vspace{0.5cm}
+        \begin{center}\begin{latin}\begin{tabular}{|c|c|c|}
+            \hline
+            & Server 1,2,7,8 & Servers 3,4,5,6 \\
+            \hline
+            Installed vCPU & 144 & 72 \\
+            \hline
+            Installed Memory (GB) & 1408 & 288 \\
+            \hline
+            Link (Gbps) & 40 & 40 \\
+            \hline
+        \end{tabular}\end{latin}\end{center}
+    \end{figure}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{مساله‌ی نمونه}
+    \begin{itemize}\RTList{}
+        \item نمونه‌ها تنها می‌توانند روی سرورهای ۱، ۳، ۵ و ۷ قرار گیرند.
+        \item مدیریت سرورهای ۱ و ۳ تنها می‌تواند روی سرورهای ۲ و ۴  صورت گیرد،
+        \item مدیریت سرور ۵ تنها می‌تواند روی سرورهای ۴ و ۶ صورت گیرد.
+        \item مدیریت سرور ۷ تنها می‌تواند روی سرورهای ۶ و ۸ صورت گیرد.
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{مساله‌ی نمونه}
+    \begin{itemize}\RTList{}
+        \item هر \lr{VNFM} تنها می‌تواند ۵ نمونه را پشتیبانی کند.
+        \item هر \lr{VNFM} نیاز به ۴ گیگابایت حافظه و ۲ هسته‌ی پردازشی دارد.
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{مساله‌ی نمونه}
+    \begin{table}[h!]
+        \caption{نتایج مساله‌ی نمونه}
+        \vspace{0.5cm}
+        \begin{center}\begin{latin}\begin{tabular}{|c|c|c|c|c|c|}
+            \hline
+            & Src & Node-0 & Node-1 & Dst & VNFM \\
+            \hline
+            Chain 0 & Switch-9 & Server-7 & Server-5 & Switch-9 & Server-6 \\
+            \hline
+            Chain 1 & Switch-9 & Server-3 & Server-3 & Switch-9 & Server-4 \\
+            \hline
+        \end{tabular}\end{latin}\end{center}
+    \end{table}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{}
+    \section{راه‌حل پیشنهادی}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{راه‌حل پیشنهادی}
+    \begin{itemize}\RTList{}
+        \item مساله‌ی اصلی یک مساله‌ی \lr{NP-Hard} می‌باشد.
+        \item برای حل مساله در زمان معقول برای ابعاد بزرگ نیاز به یک الگوریتم مکاشفه‌ای می‌باشد.
+        \item از ایده‌ی الگوریتم \lr{\cite{Bari2015}} برای جایگذاری زنجیره‌ها شروع می‌کنیم.
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{ایده‌ی اصلی}
+    \begin{center}
+        \includegraphics[scale=0.3]{images/bari.png}
+    \end{center}
+    \begin{itemize}\RTList{}
+        \item الگوریتم برای جایگذاری زنجیره از یک گراف چند مرحله‌ای استفاده می‌کند.
+        \item در هر مرحله جایگذاری مرحله‌ی قبلی نهایی می‌شود و بر اساس آن یک مجموعه‌ی امکان‌پذیر شکل می‌گیرد.
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{\lr{JSD-MP}}
+    \begin{itemize}\RTList{}
+        \item \lr{Joint Service Deployment - Manager Placement}
+        \item زنجیره‌ها را با استفاده از الگوریتم \lr{\cite{Bari2015}} جایگذاری می‌کنیم.
+        \item در زمان انتخاب مجموعه‌ی امکان‌پذیر محدودیت‌های مساله را اعمال می‌کنیم.
+        \item بعد از جایگذاری هر زنجیره \lr{VNFM} آن را انتخاب می‌کنیم.
+        \item برای انتخاب \lr{VNFM} اولویت با نمونه‌هایی است که ظرفیت آن‌ها کامل استفاده نشده است.
+        \item در بین \lr{VNFM}هایی که ظرفیت خالی دارند اولویت با نمونه‌هایی است که منابع پردازشی بیشتری دارند.
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{\lr{eJSD-MP}}
+    \begin{itemize}\RTList{}
+        \item الگوریتم پیشنهادی \lr{JSD-MP} زمان اجرای زیادی دارد که می‌توان آن را کاهش داد.
+        \item الگوریتم پیشنهادی \lr{eJSD-MP} از برون‌خط بودن مساله استفاده نمی‌کند.
+        \item برای استفاده از ویژگی برون‌خط بودن مساله زنجیره‌ها را بر اساس قیمت‌شان مرتب می‌کنیم.
+        \item برای کاهش زمان اجرای الگوریتم نسب مشخصی از زنجیره‌ها را با الگوریتم \lr{first-fit} جایگذاری می‌کنیم.
+        \item \lr{enhanced JSD-MP}
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{}
+    \section{ارزیابی}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{پیاده‌سازی بهینه}
+    \par
+    فرمول‌بندی ارائه شده بر روی نرم‌افزار
+    \lr{CPLEX}
+    که محصول شرکت \lr{IBM} بوده و برای حل مسائل برنامه‌ریزی خطی و ...
+    استفاده می‌شود،
+    به زبان جاوا پیاده‌سازی شده است.
+
+    \begin{center}
+        \includegraphics[scale=0.4]{images/ibm-cplex.png}
+    \end{center}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{توپولوژی \lr{FatTree}}
+    \begin{center}
+        \includegraphics[scale=0.15]{images/fattree.png}
+    \end{center}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{توپولوژی \lr{USnet}}
+    \begin{center}
+        \includegraphics[scale=0.4]{images/usnet.png}
+    \end{center}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{محیط ارزیابی}
+    \begin{itemize}\RTList{}
+        \item برای ارزیابی از زنجیره‌های تصادفی استفاده می‌شود و هر نمونه از ارزیابی میانگین ۱۰ اجرا می‌باشد.
+        \item 
+        زنجیره‌های تولید شده دارای گره‌ی آغازی و پایانی می‌باشند
+        و ترافیک عبوری از آن‌ها ۲۵۰ واحد است.
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{شکاف بهینه الگوریتم بهینه}
+    \begin{center}
+        \includegraphics[scale=0.5]{images/chart-5.png}
+    \end{center}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{نسبت سود به هزینه}
+    \begin{center}
+        \includegraphics[scale=0.5]{images/chart-1.png}
+    \end{center}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{سود نهایی در توپولوژی \lr{FatTree}}
+    \begin{center}
+        \includegraphics[scale=0.5]{images/chart-2.png}
+    \end{center}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{سود نهایی در توپولوژی \lr{USnet}}
+    \begin{center}
+        \includegraphics[scale=0.5]{images/chart-6.png}
+    \end{center}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}{جمع‌بندی}
+    \begin{itemize}\RTList{}
+        \item هر دو الگوریتم ارائه شده سود نهایی نزدیکی به الگوریتم بهینه ارائه می‌کنند.
+        \item الگوریتم \lr{eJSD-MP} در زمان کمتر نتایجی بهتر یا برابر با الگوریثتم \lr{JSD-MP} ارائه می‌کند.
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+\begin{frame}[shrink=25]{مراجع}
+    \begin{latin}
+        \printbibliography[heading=none]
+    \end{latin}
+\end{frame}
+%-------------------------------------------------------------------------------
+% These are the hidden slides for giving more information
 %-------------------------------------------------------------------------------
 \begin{frame}{فرمول‌بندی}
     \par پارامترهای مساله
@@ -420,111 +835,6 @@
 %-------------------------------------------------------------------------------
 \begin{frame}{فرمول‌بندی}
     \par
-    هدف اصلی مساله پذیریش بیشترین تعداد تقاضا می‌باشد.
-    در اینجا فرض می‌کنیم پذیرش هر تقاضا سودی منحصر به فرد خواهد داشت.
-    بنابراین تابع هدف به شکل زیر می‌باشد:
-    \begin{latin}\begin{align}
-    \max \sum_{h=1}^T x_h
-    \end{align}\end{latin}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی}
-    \par
-    محدودیت حافظه نودها
-    \begin{latin}\begin{align}
-    \sum_{k=1}^F y_{wk} memory(k) + \bar{y_w} \bar{memory} \le N_{ram}^{PN}(w)
-    \quad
-    \forall w \in V_s^{PN}
-    \end{align}\end{latin}
-    \par
-    محدودیت تعداد پردازنده‌های نودها
-    \begin{latin}\begin{align}
-    \sum_{k=1}^F y_{wk} core(k) + \bar{y_w} \bar{core} \le N_{core}^{PN}(w)
-    \quad
-    \forall w \in V_s^{PN}
-    \end{align}\end{latin}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی}
-    \par
-    اگر \lr{VNF}, \lr{v}
-    توسط \lr{VNF instance} نوع \lr{k}
-    روی سرور \lr{w} سرویس شود می‌بایست
-    \lr{VNF instance} نوع \lr{k}
-    روی سرور \lr{w} فعال شود.
-    توجه شود که
-    اشتراک گذاری \lr{VNF}ها پشتیبانی نمی‌گردد.
-    \begin{latin}\begin{align}
-    \sum_{v \in \cup_{i=1}^T V_{i, F}^{SFC}} z_{vw}^k \le y_{wk}
-    \quad
-    \forall w \in V_s^{PN}, \forall k \in [1,\ldots, F]
-    \end{align}\end{latin}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی}
-    \par
-    اگر تقاضای \lr{h}ام پذیرفته شده باشد
-    می‌بایست تمام \lr{VNF node}های آن‌
-    سرویس شده باشند.
-    یک \lr{VNF} حداکثر یکبار سرویس داده شود.
-    \begin{latin}\begin{align}
-        x_h = \sum_{k=1}^{F} \sum_{w \in V_{s}^{PN}} z_{vw}^{k}
-        \quad
-        \forall v \in V_{h,F}^{SFC}, \forall h \in [1,\ldots, T]
-    \end{align}\end{latin}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی}
-    \par
-    اگر تقاضای \lr{h}ام پذیرفته شده باشد
-    می‌بایست توسط یک \lr{VNFM} سرویس شده باشد.
-    توجه شود که این محدودیت اجازه‌ی تخصیص بیش از یک \lr{VNFM}
-    به زنجیره نمی‌دهد.
-    \begin{latin}\begin{align}
-        x_h = \sum_{w \in V_{s}^{PN}} \bar{z}_{hw}
-        \quad
-        \forall h \in [1,\ldots, T]
-    \end{align}\end{latin}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی}
-    \par
-    اگر \lr{SFC}، \lr{i}
-    توسط \lr{VNFM} روی سرور \lr{w}
-    سرویس شود می‌بایست یک \lr{VNFM} سرور \lr{w}
-    برای آن فعال شود.
-    \begin{latin}\begin{align}
-        \sum_{h=1}^T
-        \bar{z}_{hw} \le \bar{y}_w
-        \quad
-        \forall w \in V_{s}^{PN}
-    \end{align}\end{latin}
-    \par
-    محدودیت ظرفیت سرویس‌دهی \lr{VNFM}
-    \begin{latin}\begin{align}
-        \sum_{i=1}^{T} \bar{z}_{iw} * len(i) \le capacity
-        \quad
-        \forall w \in V_{s}^{PN}
-    \end{align}\end{latin}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی}
-    \par
-    اگر \lr{VNF}، \lr{v}
-    توسط نمونه‌ای نوع \lr{k}
-    روی سرور \lr{w} سرویس می‌شود می‌بایست
-    این \lr{VNF} از نوع \lr{k}ام باشد.
-    \begin{latin}\begin{align}
-        z_{vw}^{k} \le type(v, k)
-        \quad
-        \forall w \in V_{s}^{PN},
-        \forall k \in [1,\ldots, F],
-        \forall v \in \cup_{i=1}^T V_{i, F}^{SFC}
-    \end{align}\end{latin}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی}
-    \par
     متغیرهای تصمیم‌گیری
     \begin{latin}\begin{tabular}{c p{10cm}}
         $\tau^{(u,v)}_{ij}$ & binary variable assuming the value 1 if the virual link $(u,v)$ is routed on the physical network link $(i,j)$\\
@@ -532,120 +842,5 @@
     \end{tabular}\end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی}
-    \par
-    \lr{Flow Conservation}
-    \begin{latin}\begin{align}
-        \sum_{(i,j) \in E^{PN}} \tau_{ij}^{(u,v)} - \sum_{(j,i) \in E^{PN}} \tau_{ji}^{(u,v)} = \sum_{k=1}^{F} z_{ui}^{k} - \sum_{k=1}^{F} z_{vi}^{k} \nonumber \\
-        \forall i \in V_{S}^{PN}, (u,v) \in E_{h}^{SFC}, h \in [1,\ldots, T]
-    \end{align}\end{latin}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی}
-    \par
-    \lr{Flow Conservation}
-    \begin{latin}\begin{align}
-        \sum_{(i,j) \in E^{PN}} \bar{\tau}_{ij}^{v} - \sum_{(j,i) \in E^{PN}} \bar{\tau}_{ji}^{v} = \sum_{k=1}^{F} z_{vi}^{k} - \bar{z}_{hi} \nonumber \\
-        \forall i \in V_{S}^{PN}, v \in V_{h, F}^{SFC}, h \in [1,\ldots, T]
-    \end{align}\end{latin}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی}
-    \par
-    محدودیت ظرفیت لینک‌ها
-    \begin{latin}\begin{align}
-        \sum_{v \in \cup_{i=1}^{T} V_{i,F}^{SFC}} \bar{\tau}_{ij}^{v} * \bar{bandwidth} + \sum_{(u,v) \in \cup_{i=1}^{T} E_{i}^{SFC}} \tau_{ij}^{(u,v)} * bandwidth(u,v) \le C_{ij} \nonumber \\
-        \forall (i, j) \in E^{PN}
-    \end{align}\end{latin}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی}
-    \par
-    شعاع همسایگی تضمین می‌کند که زمان سرویس‌دهی توسط
-    \lr{VNFM}ها
-    در یک بازه مشخص (از نظر تعداد گام)
-    خواهد بود.
-    \begin{latin}\begin{align}
-        \sum_{(i, j) \in E^{PN}} \bar{\tau}_{ij}^{v} \le radius
-        \quad
-        \forall v \in \cup_{i=1}^T V_{i, F}^{SFC}
-    \end{align}\end{latin}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{مساله‌ی نمونه}
-    \par
-    زنجیره‌های زیر را به عنوان تقاضاها در نظر می‌گیریم.
-
-    \begin{center}
-        \includegraphics[scale=0.4]{../diagrams/chains.pdf}
-    \end{center}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{مساله‌ی نمونه}
-    \par
-    فرض می‌کنیم مرکز داده‌ای دارای توپولوژی زیر می‌باشد.
-
-    \begin{center}
-        \includegraphics[scale=0.4]{../diagrams/topology.pdf}
-    \end{center}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{}
-    \section{راه‌حل پیشنهادی}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{راه‌حل پیشنهادی}
-    \begin{itemize}\RTList{}
-        \item مساله‌ی اصلی یک مساله‌ی \lr{NP-Hard} می‌باشد.
-        \item برای حل مساله در زمان معقول برای ابعاد بزرگ نیاز به یک الگوریتم مکاشفه‌ای می‌باشد.
-        \item از ایده‌ی الگوریتم \lr{\cite{Bari2015}} برای جایگذاری زنجیره‌ها شروع می‌کنیم.
-    \end{itemize}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{\lr{JSD-MP}}
-    \begin{itemize}\RTList{}
-        \item \lr{Joint Service Deployment - Manager Placement}
-        \item زنجیره‌ها را با استفاده از الگوریتم \lr{\cite{Bari2015}} جایگذاری می‌کنیم.
-        \item در زمان انتخاب مجموعه‌ی امکان‌پذیر محدودیت‌های مساله را اعمال می‌کنیم.
-        \item بعد از جایگذاری هر زنجیره \lr{VNFM} آن را انتخاب می‌کنیم.
-        \item برای انتخاب \lr{VNFM} اولویت با نمونه‌هایی است که ظرفیت آن‌ها کامل استفاده نشده است.
-        \item در بین \lr{VNFM}هایی که ظرفیت خالی دارند اولویت با نمونه‌هایی است که منابع پردازشی بیشتری دارند.
-    \end{itemize}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{\lr{eJSD-MP}}
-    \begin{itemize}\RTList{}
-        \item الگوریتم پیشنهادی \lr{JSD-MP} زمان اجرای زیادی دارد که می‌توان آن را کاهش داد.
-        \item الگوریتم پیشنهادی \lr{eJSD-MP} از برون‌خط بودن مساله استفاده نمی‌کند.
-        \item برای استفاده از ویژگی برون‌خط بودن مساله زنجیره‌ها را بر اساس قیمت‌شان مرتب می‌کنیم.
-        \item برای کاهش زمان اجرای الگوریتم نسب مشخصی از زنجیره‌ها را با الگوریتم \lr{first-fit} جایگذاری می‌کنیم.
-    \end{itemize}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{}
-    \begin{center}
-        ارزیابی
-    \end{center}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}{ارزیابی}
-    \par
-    فرمول‌بندی ارائه شده بر روی نرم‌افزار
-    \lr{cplex}
-    که محصول شرکت \lr{IBM} بوده و برای حل مسائل برنامه‌ریزی خطی و ...
-    استفاده می‌شود،
-    به زبان جاوا پیاده‌سازی شده
-    و تست گشت.
-
-    \begin{center}
-        \includegraphics[scale=0.4]{images/ibm-cplex.png}
-    \end{center}
-\end{frame}
-%-------------------------------------------------------------------------------
-\begin{frame}[shrink=25]{مراجع}
-    \begin{latin}
-    \printbibliography[heading=none]
-    \end{latin}
-\end{frame}
 \end{persian}
 \end{document}
