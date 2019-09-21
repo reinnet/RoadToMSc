@@ -16,7 +16,7 @@
 \usepackage{multirow}
 \usepackage{tabularx}
 \usepackage{booktabs}
-\usepackage[style=numeric]{biblatex}
+\usepackage[style=numeric,sorting=ynt]{biblatex}
 \addbibresource{references.bib}
 \usepackage{xepersian}
 \settextfont[Path=fonts/]{Parastoo}
@@ -253,7 +253,6 @@
         \begin{itemize}\RTList{}
             \item تاخیر در جمع‌اوری داده‌های نظارت
             \item نگاشت \lr{VNFM}ها به نمونه‌ها با توجه به تعداد بالای آن‌ها
-            \item تشخیص و بازگشت از خطا
         \end{itemize}
     \end{itemize}
 \end{frame}
@@ -488,6 +487,13 @@
     \end{itemize}
 \end{frame}
 %-------------------------------------------------------------------------------
+\begin{frame}{تعریف مساله}
+    \begin{block}{}
+        بیشینه‌سازی سود حاصل از پذیرش زنجیره‌های کارکرد سرویس با در نظر گرفتن نیاز نمونه‌های کارکرد
+        مجازی شبکه به \lr{VNFM}.
+    \end{block}
+\end{frame}
+%-------------------------------------------------------------------------------
 \begin{frame}{چالش‌ها و نوآوری‌های مساله}
     \begin{itemize}\RTList{}
         \justifying
@@ -499,20 +505,12 @@
     \end{itemize}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{تعریف مساله}
-    \begin{block}{}
-        بیشینه‌سازی سود حاصل از پذیرش زنجیره‌های کارکرد سرویس با در نظر گرفتن نیاز نمونه‌های کارکرد
-        مجازی شبکه به \lr{VNFM}.
-    \end{block}
-\end{frame}‌
-%-------------------------------------------------------------------------------
 \begin{frame}{روند حل مساله}
     \begin{itemize}\RTList{}
         \justifying
         \item مدل‌سازی مساله
         \item حل مساله‌ی بهینه در ابعاد کوچک
         \item پیاده‌سازی راه‌حل مکاشفه‌ای
-        \item معیار مقایسه این راه حل سود حاصل از پذیرش تقاضاهای زنجیره‌های کارکرد سرویس می‌باشد.
         \item مقایسه‌ی نتایج راه‌حل مکاشفه‌ای با جواب بهینه
     \end{itemize}
 \end{frame}
@@ -668,25 +666,12 @@
     \end{align}\end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
-\begin{frame}{فرمول‌بندی}
-    \par
-    شعاع همسایگی تضمین می‌کند که زمان سرویس‌دهی توسط
-    \lr{VNFM}ها
-    در یک بازه مشخص (از نظر تعداد گام)
-    خواهد بود.
-    \begin{latin}\begin{align}
-        \sum_{(i, j) \in E^{PN}} \bar{\tau}_{ij}^{v} \le radius
-        \quad
-        \forall v \in \cup_{i=1}^T V_{i, F}^{SFC}
-    \end{align}\end{latin}
-\end{frame}
-%-------------------------------------------------------------------------------
 \begin{frame}{مساله‌ی نمونه}
     \par
     زنجیره‌های زیر را به عنوان تقاضاها در نظر می‌گیریم.
 
     \begin{center}
-        \includegraphics[scale=0.5]{../diagrams/chains.pdf}
+        \includegraphics[scale=0.5]{./images/chains.pdf}
     \end{center}
 \end{frame}
 %-------------------------------------------------------------------------------
@@ -695,7 +680,7 @@
     فرض می‌کنیم مرکز داده‌ای دارای توپولوژی زیر می‌باشد.
 
     \begin{center}
-        \includegraphics[scale=0.4]{../diagrams/topology.pdf}
+        \includegraphics[scale=0.4]{./images/topology.pdf}
     \end{center}
 \end{frame}
 %-------------------------------------------------------------------------------
@@ -747,8 +732,6 @@
 %-------------------------------------------------------------------------------
 \begin{frame}{مساله‌ی نمونه}
     \begin{table}[h!]
-        \caption{نتایج مساله‌ی نمونه}
-        \vspace{0.5cm}
         \begin{center}\begin{latin}\begin{tabular}{|c|c|c|c|c|c|}
             \hline
             & Src & Node-0 & Node-1 & Dst & VNFM \\
@@ -759,6 +742,11 @@
             \hline
         \end{tabular}\end{latin}\end{center}
     \end{table}
+    \begin{center}
+        \includegraphics[scale=0.3]{./images/topology.pdf}
+        \vspace{1mm}
+        \includegraphics[scale=0.3]{./images/chains.pdf}
+    \end{center}
 \end{frame}
 %-------------------------------------------------------------------------------
 \begin{frame}{}
@@ -768,7 +756,7 @@
 \begin{frame}{راه‌حل پیشنهادی}
     \begin{itemize}\RTList{}
         \item مساله‌ی اصلی یک مساله‌ی \lr{NP-Hard} می‌باشد.
-        \item برای حل مساله در زمان معقول برای ابعاد بزرگ نیاز به یک الگوریتم مکاشفه‌ای می‌باشد.
+        \item برای حل مساله در زمان معقول برای ابعاد بزرگ نیاز به یک الگوریتم سریع می‌باشد.
         \item از ایده‌ی الگوریتم \lr{\cite{Bari2015}} برای جایگذاری زنجیره‌ها شروع می‌کنیم.
     \end{itemize}
 \end{frame}
@@ -798,10 +786,10 @@
 \begin{frame}{\lr{eJSD-MP}}
     \begin{itemize}\RTList{}
         \justifying
-        \item الگوریتم پیشنهادی \lr{JSD-MP} زمان اجرای زیادی دارد که می‌توان آن را کاهش داد.
         \item الگوریتم پیشنهادی \lr{JSD-MP} از برون‌خط بودن مساله استفاده نمی‌کند.
         \item برای استفاده از ویژگی برون‌خط بودن مساله زنجیره‌ها را بر اساس قیمت‌شان مرتب می‌کنیم.
-        \item برای کاهش زمان اجرای الگوریتم نسب مشخصی از زنجیره‌ها را با الگوریتم \lr{first-fit} جایگذاری می‌کنیم.
+        \item الگوریتم پیشنهادی \lr{JSD-MP} زمان اجرای زیادی دارد که می‌توان آن را کاهش داد.
+        \item برای کاهش زمان اجرای الگوریتم نسبت مشخصی از زنجیره‌ها را با الگوریتم \lr{first-fit} جایگذاری می‌کنیم.
         \item \lr{enhanced JSD-MP}
     \end{itemize}
 \end{frame}
@@ -881,9 +869,22 @@
     \end{itemize}
 \end{frame}
 %-------------------------------------------------------------------------------
+\begin{frame}{کارهای آینده}
+    \begin{itemize}\RTList{}
+        \item در نظر گرفتن نگاشت سایر منابع مدیریتی مانند \lr{EM} و \lr{VNMFO}
+        \item اعمال محدودیت برای تاخیرهای لینک‌های مدیریتی
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
 \begin{frame}[shrink=25]{مراجع}
     \begin{latin}
-        \printbibliography[heading=none]
+    \begin{itemize}
+        \item \cite{Bari2015} \fullcite{Bari2015}
+        \item \cite{Eramo2016} \fullcite{Eramo2016}
+        \item \cite{Ghaznavi2017} \fullcite{Ghaznavi2017}
+        \item \cite{AbuLebdeh2017} \fullcite{AbuLebdeh2017}
+        \item \cite{Huang2017} \fullcite{Huang2017}
+    \end{itemize}
     \end{latin}
 \end{frame}
 %-------------------------------------------------------------------------------
