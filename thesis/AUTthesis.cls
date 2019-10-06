@@ -159,6 +159,8 @@
 \newcommand{\englishTOfarsi}[2]{\par\bigskip\rl{#2}\dotfill\lr{#1}\par} 
 % دستوری برای تعریف واژه‌نامه فارسی به انگلیسی 
 \newcommand{\farsiTOenglish}[2]{\par\bigskip#1\dotfill\lr{#2}\par}
+% دستوری برای تعریف اختصارات
+\newcommand{\abbr}[2]{\par\bigskip\lr{#2}\dotfill\lr{#1}\par}
 %-----------------------------------------------
 \def\frame{\newpage
 \thispagestyle{empty}
